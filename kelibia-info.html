@@ -553,7 +553,6 @@ footer{background:#0f1f2e;color:#e5e7eb;}
       <button class="nl" id="nl-immo" onclick="go('immo')" style="color:var(--sea);font-weight:600;border:1px solid var(--sea);border-radius:var(--r);">Immobilier</button>
       <button class="nl" id="nl-ajouter" onclick="go('ajouter')">Ajouter</button>
       <button class="nav-cta" onclick="go('ajouter')">+ Proposer un bon plan</button>
-      <button class="nl" onclick="goAdmin()" style="color:var(--muted);font-size:.78rem;border:1px dashed var(--border);border-radius:var(--r);padding:.4rem .7rem;margin-left:.25rem;">⚙ Admin</button>
     </nav>
     <button class="burger" onclick="toggleMob()" aria-label="Menu">
       <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -566,7 +565,6 @@ footer{background:#0f1f2e;color:#e5e7eb;}
       <button class="ml" onclick="go('events');toggleMob()">Événements</button>
       <button class="ml" onclick="go('annuaire');toggleMob()">Annuaire</button>
       <button class="ml" onclick="go('immo');toggleMob()">Immobilier</button>
-      <button class="ml" onclick="goAdmin();toggleMob()" style="color:var(--muted);border-top:1px solid var(--border);margin-top:.5rem;">⚙ Administration</button>
       <button class="ml" onclick="go('ajouter');toggleMob()">Ajouter</button>
       <button class="mob-cta" onclick="go('ajouter');toggleMob()">+ Proposer un bon plan</button>
     </div>
@@ -1555,6 +1553,15 @@ function tryLogin(){
 }
 function admLogout(){admLogged=false;go("admin-login");}
 function goAdmin(){if(admLogged){go("admin");initAdmin();}else{go("admin-login");}}
+// Accès admin via URL secrète
+function checkSecretHash(){
+  if(window.location.hash==='#admin-kelibia2025'){
+    window.location.hash='';
+    goAdmin();
+  }
+}
+window.addEventListener('hashchange', checkSecretHash);
+window.addEventListener('load', checkSecretHash);
 function admSec(s){
   ["dash","bons","events","annuaire","immo","users","pub","imgs","settings"].forEach(x=>{
     const c=document.getElementById("as-"+x);if(c)c.style.display=x===s?"block":"none";
