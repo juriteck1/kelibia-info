@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kélibia.info — Plateforme communautaire</title>
+<meta name="description" content="Découvrez Kélibia, Tunisie : bons plans, restaurants, plages, activités et services locaux."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Source Sans 3',sans-serif;color:#1c2b3a;background:#faf9f7;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+button,input,textarea,select{font-family:'Source Sans 3',sans-serif;}
+:root{--sea:#1e4d8c;--sea-dk:#163d70;--turq:#29a8d8;--turq-dk:#2196ba;--cream:#faf9f7;--bg2:#e8f4fc;--muted:#6b7f9e;--text:#1c2b3a;--border:#d9eaf3;--r:8px;--r-lg:12px;--sh:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--sh-md:0 4px 12px rgba(0,0,0,.08);}
+.container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:50px;font-size:.72rem;font-weight:600;border:1px solid;}
+.bp{background:#e0f2fe;color:#075985;border-color:#bae6fd;}
+.br{background:#fff7ed;color:#9a3412;border-color:#fed7aa;}
+.ba{background:#f0fdf4;color:#166534;border-color:#bbf7d0;}
+.bc{background:#fefce8;color:#854d0e;border-color:#fef08a;}
+.bs{background:#faf5ff;color:#6b21a8;border-color:#e9d5ff;}
+.bh{background:#eff6ff;color:#1e40af;border-color:#bfdbfe;}
+.bf{background:#fef9c3;color:#713f12;padding:.2rem .6rem;border-radius:50px;font-size:.7rem;font-weight:600;}
+.sf{color:#f59e0b;fill:#f59e0b;} .se{color:#e5e7eb;fill:#e5e7eb;}
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);box-shadow:var(--sh);}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:.6rem;background:none;border:none;cursor:pointer;}
+.nli{width:32px;height:32px;border-radius:50%;background:var(--sea);display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+.nli:hover{transform:scale(1.05);}
+.nli svg{width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;}
+.nlt{display:flex;flex-direction:column;line-height:1;}
+.nln{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:var(--sea);}
+.nls{font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:.25rem;}
+.nl{padding:.5rem 1rem;border-radius:var(--r);font-size:.875rem;font-weight:500;color:#374151;transition:all .15s;border:none;background:none;cursor:pointer;}
+.nl:hover{background:#f3f9fd;color:var(--sea);}
+.nl.on{background:var(--bg2);color:var(--sea);}
+.nav-cta{margin-left:.75rem;background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.5rem 1.1rem;font-size:.85rem;font-weight:500;cursor:pointer;}
+.nav-cta:hover{background:var(--sea-dk);}
+.burger{display:none;background:none;border:none;padding:.5rem;border-radius:var(--r);color:var(--sea);cursor:pointer;}
+.burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+.mob-menu{display:none;border-top:1px solid var(--border);background:#fff;}
+.mob-menu.open{display:block;}
+.mob-links{padding:.75rem 1.5rem;display:flex;flex-direction:column;gap:.25rem;}
+.ml{padding:.75rem 1rem;border-radius:var(--r);font-size:.875rem;font-weight:500;color:#374151;display:block;background:none;border:none;cursor:pointer;text-align:left;width:100%;}
+.ml.on{background:var(--bg2);color:var(--sea);}
+.mob-cta{margin-top:.5rem;background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.75rem;font-size:.875rem;font-weight:500;width:100%;cursor:pointer;}
+/* ROUTING */
+.page{display:none;} .page.act{display:block;} .pt{padding-top:64px;}
+/* PAGE HEADER */
+.ph{background:var(--sea);padding:2.5rem 0;}
+.ph h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:.25rem;}
+.ph p{color:rgba(255,255,255,.7);font-size:.95rem;}
+/* HERO */
+.hero{position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden;padding-top:64px;}
+.hbg{position:absolute;inset:0;z-index:0;}
+.hbg img{width:100%;height:100%;object-fit:cover;}
+.hgr{position:absolute;inset:0;background:linear-gradient(to right,rgba(12,28,55,.85) 0%,rgba(18,36,65,.65) 50%,transparent 100%);}
+.hcon{position:relative;z-index:1;max-width:560px;}
+.hloc{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;}
+.hloc svg{width:16px;height:16px;stroke:var(--turq);stroke-width:2;fill:none;}
+.hloc span{color:var(--turq);font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:1rem;}
+.hero h1 em{font-style:normal;color:#a8d8f0;}
+.hero p{color:rgba(255,255,255,.82);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;font-weight:300;}
+.hsbar{display:flex;gap:.5rem;margin-bottom:1.5rem;}
+.hswrap{position:relative;flex:1;}
+.hswrap svg{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#6b7f9e;stroke-width:2;fill:none;}
+.hswrap input{width:100%;padding:.85rem 1rem .85rem 2.5rem;border:none;border-radius:var(--r);font-size:.92rem;color:var(--text);background:rgba(255,255,255,.96);box-shadow:0 4px 20px rgba(0,0,0,.18);outline:none;}
+.hsbar button{background:var(--turq);color:#fff;border:none;border-radius:var(--r);padding:.85rem 1.5rem;font-size:.92rem;font-weight:600;white-space:nowrap;cursor:pointer;}
+.hsbar button:hover{background:var(--turq-dk);}
+.htags{display:flex;flex-wrap:wrap;gap:.5rem;}
+.htag{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:.3rem .9rem;font-size:.78rem;cursor:pointer;transition:background .15s;}
+.htag:hover{background:rgba(255,255,255,.28);}
+.hwave{position:absolute;bottom:0;left:0;right:0;z-index:2;}
+.hwave svg{width:100%;display:block;}
+/* STATS */
+.stats-s{background:var(--cream);padding:2rem 0;}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.sc{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1rem 1.25rem;display:flex;align-items:center;gap:.85rem;box-shadow:var(--sh);}
+.si{width:40px;height:40px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.si svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+.sn{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--text);line-height:1;}
+.sl{font-size:.75rem;color:var(--muted);margin-top:.15rem;}
+/* SECTIONS */
+.sec{padding:3rem 0;} .sec.bw{background:#fff;} .sec.bc2{background:var(--cream);}
+.sh2{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;}
+.sh2 h2{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--text);}
+.sh2 p{font-size:.9rem;color:var(--muted);margin-top:.25rem;}
+.slink{font-size:.85rem;color:var(--sea);font-weight:500;display:flex;align-items:center;gap:.3rem;border:none;background:none;cursor:pointer;white-space:nowrap;}
+.slink svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;}
+/* CATEGORY GRID */
+.cg{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;}
+.cb{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem .75rem;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:.5rem;box-shadow:var(--sh);border:none;}
+.cb:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.cbi{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.cb:hover .cbi{transform:scale(1.1);}
+.cbi svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;}
+.cbn{font-size:.8rem;font-weight:600;color:#374151;}
+/* PLAN CARDS */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.pc{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;height:100%;box-shadow:var(--sh);}
+.pc:hover{box-shadow:var(--sh-md);transform:translateY(-3px);}
+.piw{position:relative;overflow:hidden;flex-shrink:0;}
+.piw img{width:100%;height:100%;object-fit:cover;transition:transform .3s;display:block;}
+.pc:hover .piw img{transform:scale(1.04);}
+.pip{width:100%;height:100%;background:var(--bg2);display:flex;align-items:center;justify-content:center;}
+.pip svg{width:32px;height:32px;stroke:var(--turq);stroke-width:2;fill:none;}
+.ptl{position:absolute;top:.75rem;left:.75rem;}
+.ptr{position:absolute;top:.75rem;right:.75rem;}
+.pb{padding:1rem;display:flex;flex-direction:column;flex:1;}
+.pt2{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.35rem;line-height:1.3;}
+.pd{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pf{display:flex;align-items:center;justify-content:space-between;padding-top:.6rem;border-top:1px solid var(--border);margin-top:auto;}
+.pr{display:flex;align-items:center;gap:.35rem;}
+.prn{font-size:.85rem;font-weight:700;color:#374151;}
+.prc{font-size:.72rem;color:var(--muted);}
+.ploc{display:flex;align-items:center;gap:.25rem;font-size:.72rem;color:var(--muted);}
+.ploc svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0;}
+/* PUB */
+.pub{background:var(--bg2);padding:.75rem 0;}
+.pubi{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#fff;border:1px solid rgba(41,168,216,.25);border-radius:var(--r-lg);padding:.85rem 1.25rem;}
+.pub-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:.15rem;}
+.pub-t{font-size:.9rem;color:var(--text);font-weight:500;}
+.pub-btn{background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.45rem 1rem;font-size:.82rem;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0;}
+/* CTA */
+.cta-s{position:relative;overflow:hidden;}
+.ctabg{position:absolute;inset:0;}
+.ctabg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;}
+.ctaov{position:absolute;inset:0;background:rgba(12,28,55,.75);}
+.ctacon{position:relative;z-index:1;text-align:center;padding:5rem 1.5rem;}
+.ctacon h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:.75rem;}
+.ctacon p{color:rgba(255,255,255,.8);font-size:1rem;max-width:480px;margin:0 auto 2rem;line-height:1.7;}
+.ctabtns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;}
+.bt{background:var(--turq);color:#fff;border:none;border-radius:var(--r);padding:.7rem 1.8rem;font-size:.9rem;font-weight:600;cursor:pointer;}
+.bt:hover{background:var(--turq-dk);}
+.bow{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6);border-radius:var(--r);padding:.7rem 1.8rem;font-size:.9rem;font-weight:600;cursor:pointer;}
+.bow:hover{background:rgba(255,255,255,.12);}
+.bsea{background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.65rem 1.8rem;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;}
+.bsea:hover{background:var(--sea-dk);}
+.bsea svg{width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;}
+.bseaol{background:transparent;color:var(--sea);border:1.5px solid var(--sea);border-radius:var(--r);padding:.6rem 1.5rem;font-size:.88rem;font-weight:500;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;}
+.bseaol:hover{background:var(--bg2);}
+/* FILTER BAR */
+.fbar{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:40;box-shadow:var(--sh);}
+.fbi{padding:.75rem 0;}
+.frow{display:flex;gap:.75rem;margin-bottom:.75rem;}
+.fwrap{position:relative;flex:1;}
+.fwrap svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#6b7f9e;stroke-width:2;fill:none;}
+.fwrap input{width:100%;padding:.55rem 2rem .55rem 2.2rem;border:1px solid var(--border);border-radius:var(--r);font-size:.875rem;color:var(--text);outline:none;background:#fff;}
+.fwrap input:focus{border-color:var(--sea);}
+.fclr{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);padding:.25rem;display:none;cursor:pointer;}
+.fclr.show{display:block;}
+.fclr svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;}
+.ssel{border:1px solid var(--border);border-radius:var(--r);padding:.55rem .8rem;font-size:.85rem;color:var(--text);background:#fff;outline:none;cursor:pointer;}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem;}
+.pill{padding:.3rem .9rem;border-radius:50px;font-size:.8rem;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;}
+.pill.on,.pill:hover{background:var(--sea);color:#fff;border-color:var(--sea);}
+/* ANNUAIRE */
+.ag{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.ac{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem;display:flex;gap:1rem;cursor:pointer;transition:all .2s;box-shadow:var(--sh);}
+.ac:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.ath{width:80px;height:80px;border-radius:var(--r);overflow:hidden;flex-shrink:0;background:var(--bg2);}
+.ath img{width:100%;height:100%;object-fit:cover;}
+.ain{flex:1;min-width:0;}
+.atop{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.3rem;}
+.aname{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--text);}
+.asr{display:flex;align-items:center;gap:.3rem;margin-bottom:.2rem;}
+.arn{font-size:.78rem;font-weight:700;color:#374151;}
+.arc{font-size:.7rem;color:var(--muted);}
+.aloc,.aph{display:flex;align-items:center;gap:.25rem;font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.aloc svg,.aph svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0;}
+/* FICHE */
+.fhi{position:relative;height:250px;overflow:hidden;}
+@media(min-width:768px){.fhi{height:380px;}}
+.fhi img{width:100%;height:100%;object-fit:cover;display:block;}
+.fhov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,28,55,.7) 0%,transparent 55%);}
+.fhb{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;}
+.backbtn{display:inline-flex;align-items:center;gap:.35rem;color:rgba(255,255,255,.8);font-size:.85rem;margin-bottom:.75rem;cursor:pointer;background:none;border:none;}
+.backbtn:hover{color:#fff;}
+.backbtn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;}
+.fl{display:grid;grid-template-columns:1fr 300px;gap:2rem;padding:2rem 0;}
+.fm{display:flex;flex-direction:column;gap:1.25rem;}
+.fcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--sh);}
+.fcard h2{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:.85rem;}
+.fdesc{font-size:.9rem;color:#4b5563;line-height:1.75;}
+.ftr{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+.ftag{background:var(--bg2);color:var(--sea);border-radius:50px;padding:.2rem .7rem;font-size:.75rem;font-weight:500;}
+.rvh{display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem;}
+.rvh svg{width:20px;height:20px;stroke:var(--sea);stroke-width:2;fill:none;}
+.rvi{padding-bottom:1rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+.rvi:last-child{border:none;margin:0;padding:0;}
+.rvtop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.4rem;}
+.rva{font-weight:600;font-size:.88rem;color:#374151;}
+.rvd{font-size:.72rem;color:var(--muted);margin-top:.1rem;}
+.rvt{font-size:.84rem;color:#4b5563;line-height:1.6;}
+.rvh2{display:inline-flex;align-items:center;gap:.25rem;font-size:.75rem;color:var(--muted);margin-top:.5rem;cursor:pointer;background:none;border:none;}
+.rvh2 svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;}
+.art{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:1rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+.spr{display:flex;gap:.25rem;margin-bottom:.85rem;}
+.spb{background:none;border:none;padding:0;cursor:pointer;line-height:1;}
+.spb:hover{transform:scale(1.15);}
+.spb svg{width:24px;height:24px;}
+.finput,.ftarea{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;font-size:.875rem;color:var(--text);outline:none;margin-bottom:.65rem;background:#fff;}
+.finput:focus,.ftarea:focus{border-color:var(--sea);}
+.ftarea{resize:none;}
+.brev{background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.55rem 1.2rem;font-size:.875rem;font-weight:600;cursor:pointer;}
+.brev:hover{background:var(--sea-dk);}
+/* SIDEBAR */
+.fsb{display:flex;flex-direction:column;gap:1rem;}
+.sbc{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.25rem;box-shadow:var(--sh);}
+.sbc h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.85rem;}
+.rbig{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--sea);line-height:1;}
+.rbar{height:6px;background:var(--bg2);border-radius:50px;overflow:hidden;margin-top:.6rem;}
+.rbarf{height:100%;background:var(--turq);border-radius:50px;}
+.inforow{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:#4b5563;margin-bottom:.65rem;}
+.inforow:last-child{margin:0;}
+.inforow svg{width:16px;height:16px;stroke:var(--sea);stroke-width:2;fill:none;flex-shrink:0;margin-top:.15rem;}
+.inforow a{color:var(--sea);}
+.inforow a:hover{text-decoration:underline;}
+.pubsb{background:var(--bg2);border:1px solid rgba(41,168,216,.2);border-radius:var(--r-lg);padding:1rem;text-align:center;}
+.pubsb .pub-l{display:block;margin-bottom:.3rem;}
+.pubsb p{font-size:.84rem;color:#4b5563;margin-bottom:.3rem;}
+.pubsb a{font-size:.78rem;color:var(--sea);cursor:pointer;}
+/* EVENTS */
+.evl{display:grid;grid-template-columns:260px 1fr;gap:2rem;}
+.calw{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);position:sticky;top:84px;}
+.calh{background:var(--sea);color:#fff;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;}
+.calm{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;text-transform:capitalize;}
+.calnb{background:none;border:none;color:#fff;padding:.3rem;border-radius:var(--r);cursor:pointer;opacity:.8;display:flex;}
+.calnb:hover{background:rgba(255,255,255,.15);opacity:1;}
+.calnb svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+.calwr{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
+.calwd{text-align:center;font-size:.68rem;font-weight:600;color:var(--muted);padding:.45rem 0;background:#faf9f7;}
+.caldg{display:grid;grid-template-columns:repeat(7,1fr);}
+.cald{aspect-ratio:1;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:.2rem;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;cursor:pointer;transition:background .1s;}
+.cald:hover:not(.ce){background:var(--bg2);}
+.cald.ce{background:#faf9f7;cursor:default;}
+.cald.ct .cdn{background:var(--sea);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;line-height:1;}
+.cdn{font-size:.74rem;font-weight:600;color:#374151;margin-top:.1rem;}
+.cdots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;margin-top:.1rem;}
+.cdot{width:5px;height:5px;border-radius:50%;background:var(--sea);display:block;}
+.callg{padding:.6rem 1rem;background:#faf9f7;border-top:1px solid var(--border);font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;}
+.caldot{width:8px;height:8px;border-radius:50%;background:var(--sea);display:inline-block;}
+.evm{display:flex;flex-direction:column;gap:1.5rem;}
+.evfr{display:flex;align-items:center;gap:.75rem;}
+.evfr svg{width:16px;height:16px;stroke:var(--muted);stroke-width:2;fill:none;}
+.evg{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+.evcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;height:100%;box-shadow:var(--sh);}
+.evcard:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.evimg{position:relative;overflow:hidden;height:180px;flex-shrink:0;}
+.evimg img{width:100%;height:100%;object-fit:cover;transition:transform .3s;display:block;}
+.evcard:hover .evimg img{transform:scale(1.04);}
+.eviph{width:100%;height:100%;background:var(--bg2);display:flex;align-items:center;justify-content:center;}
+.eviph svg{width:32px;height:32px;stroke:var(--turq);stroke-width:2;fill:none;}
+.evcb{position:absolute;top:.75rem;left:.75rem;background:#fff;color:var(--sea);border:1px solid var(--sea);border-radius:50px;padding:.2rem .65rem;font-size:.7rem;font-weight:600;}
+.evpov{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;}
+.evpov span{color:#fff;font-weight:600;font-size:.875rem;}
+.evbody{padding:1rem;flex:1;display:flex;flex-direction:column;}
+.evt{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.3;}
+.evd{font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.evmeta{padding-top:.6rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.35rem;}
+.evmr{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:#4b5563;}
+.evmr svg{width:14px;height:14px;stroke:var(--sea);stroke-width:2;fill:none;flex-shrink:0;}
+.rdb{width:100%;background:transparent;border:1.5px solid var(--sea);color:var(--sea);border-radius:var(--r);padding:.55rem;font-size:.85rem;font-weight:500;display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:1rem;cursor:pointer;}
+.rdb svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;}
+.rdb:hover{background:var(--bg2);}
+/* FORM */
+.fwrap{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--sh);max-width:680px;margin:0 auto;}
+.finfo{background:var(--bg2);border:1px solid rgba(41,168,216,.25);border-radius:var(--r);padding:.85rem 1rem;display:flex;gap:.65rem;margin-bottom:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;}
+.finfo svg{width:20px;height:20px;stroke:var(--sea);stroke-width:2;fill:none;flex-shrink:0;margin-top:.15rem;}
+.finfo p{font-size:.84rem;color:#374151;line-height:1.6;}
+.ftr2{display:flex;gap:.75rem;margin-bottom:1.5rem;}
+.ftbtn{flex:1;border:1.5px solid var(--border);border-radius:var(--r);padding:.85rem;text-align:center;font-size:.875rem;font-weight:500;color:var(--muted);background:#fff;transition:all .15s;cursor:pointer;}
+.ftbtn.on{background:var(--sea);color:#fff;border-color:var(--sea);}
+.ff{margin-bottom:1.1rem;}
+.fl2{display:block;font-size:.82rem;font-weight:600;color:#374151;margin-bottom:.4rem;}
+.req{color:#ef4444;}
+.fi{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.65rem .9rem;font-size:.875rem;color:var(--text);outline:none;background:#fff;}
+.fi:focus{border-color:var(--sea);}
+.fiw{position:relative;}
+.fiw svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);stroke-width:2;fill:none;}
+.fiw .fi{padding-left:2.25rem;}
+.fta{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.65rem .9rem;font-size:.875rem;color:var(--text);outline:none;resize:none;background:#fff;}
+.fta:focus{border-color:var(--sea);}
+.fsel{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.65rem .9rem;font-size:.875rem;color:var(--text);background:#fff;outline:none;cursor:pointer;}
+.f2c{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fdiv{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
+.fnote{font-size:.83rem;color:var(--muted);margin-bottom:.85rem;}
+.fsub{width:100%;background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.85rem;font-size:.95rem;font-weight:600;cursor:pointer;}
+.fsub:hover{background:var(--sea-dk);}
+.sucbox{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:3rem 2rem;text-align:center;max-width:480px;margin:2rem auto;box-shadow:var(--sh);}
+.sucbox svg{width:64px;height:64px;stroke:#16a34a;stroke-width:1.5;fill:none;margin:0 auto 1.25rem;display:block;}
+.sucbox h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:.5rem;}
+.sucbox p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
+.sucbtns{display:flex;flex-direction:column;gap:.5rem;}
+/* CONTACT */
+.contl{display:grid;grid-template-columns:1fr 2fr;gap:2rem;}
+/* FOOTER */
+footer{background:#0f1f2e;color:#e5e7eb;}
+.fpub{border-bottom:1px solid rgba(255,255,255,.08);padding:.85rem 0;}
+.fpubbox{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:.85rem 1.25rem;text-align:center;}
+.fpubbox p:first-child{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.35);margin-bottom:.2rem;}
+.fpubbox a{color:var(--turq);cursor:pointer;}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:2rem;padding:3rem 0;}
+.fbl{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;}
+.fbli{width:32px;height:32px;border-radius:50%;background:var(--turq);display:flex;align-items:center;justify-content:center;}
+.fbli svg{width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;}
+.fbln{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;}
+.fbd{font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:1rem;}
+.fsoc{display:flex;gap:.5rem;}
+.fsocb{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.fsocb:hover{background:var(--turq);}
+.fsocb svg{width:15px;height:15px;stroke:#fff;stroke-width:2;fill:none;}
+.fcol h4{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:#fff;margin-bottom:1rem;}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.fcol ul li a,.fcol ul li button{font-size:.83rem;color:rgba(255,255,255,.55);transition:color .15s;background:none;border:none;cursor:pointer;text-align:left;padding:0;}
+.fcol ul li a:hover,.fcol ul li button:hover{color:var(--turq);}
+.fci{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.65rem;}
+.fci svg{width:16px;height:16px;stroke:var(--turq);stroke-width:2;fill:none;flex-shrink:0;margin-top:.15rem;}
+.fci span,.fci a{font-size:.83rem;color:rgba(255,255,255,.55);}
+.fci a:hover{color:var(--turq);}
+.fbot{border-top:1px solid rgba(255,255,255,.08);padding:1rem 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+.fbot p{font-size:.75rem;color:rgba(255,255,255,.3);}
+.fleg{display:flex;gap:1rem;}
+.fleg a{font-size:.75rem;color:rgba(255,255,255,.3);}
+.fleg a:hover{color:rgba(255,255,255,.55);}
+/* EMPTY */
+.empty{text-align:center;padding:4rem 1rem;}
+.empty svg{width:48px;height:48px;stroke:var(--turq);stroke-width:1.5;fill:none;opacity:.4;margin:0 auto 1rem;display:block;}
+.empty h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--muted);margin-bottom:.5rem;}
+.empty p{font-size:.9rem;color:var(--muted);}
+/* STARS INLINE */
+.strs{display:inline-flex;gap:2px;align-items:center;vertical-align:middle;}
+.strs svg{width:12px;height:12px;}
+.strs.md svg{width:16px;height:16px;}
+ 
+/* ══ IMMO ══ */
+.immo-hero{background:linear-gradient(135deg,#0c1c37 0%,#1e4d8c 60%,#29a8d8 100%);padding:4rem 0 2.5rem;}
+.immo-hero-inner{text-align:center;}
+.immo-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:#fff;margin-bottom:.5rem;}
+.immo-hero h1 em{font-style:italic;color:#a8d8f0;}
+.immo-hero p{color:rgba(255,255,255,.8);font-size:.95rem;max-width:520px;margin:0 auto 1.75rem;}
+.isbox{background:#fff;border-radius:var(--r-lg);padding:1.25rem 1.5rem;box-shadow:0 8px 40px rgba(0,0,0,.2);max-width:820px;margin:0 auto;}
+.isrow{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.75rem;align-items:end;}
+.isf{display:flex;flex-direction:column;gap:.3rem;}
+.isf label{font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.isf select,.isf input{border:1px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;font-size:.875rem;color:var(--text);outline:none;background:#fff;width:100%;}
+.isf select:focus,.isf input:focus{border-color:var(--sea);}
+.isbtn{background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.72rem 1.4rem;font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:.4rem;white-space:nowrap;height:42px;align-self:flex-end;}
+.isbtn:hover{background:#163d70;}
+.isbtn svg{width:15px;height:15px;stroke:#fff;stroke-width:2;fill:none;}
+.immo-stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;padding:1.5rem 0 .5rem;}
+.ist{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:.85rem 1rem;text-align:center;box-shadow:var(--sh);}
+.ist-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--sea);line-height:1;}
+.ist-lbl{font-size:.72rem;color:var(--muted);margin-top:.15rem;}
+.itabs{display:flex;gap:.5rem;margin:1.25rem 0;}
+.itab{padding:.45rem 1.1rem;border-radius:50px;font-size:.82rem;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);}
+.itab.on{background:var(--sea);color:#fff;border-color:var(--sea);}
+.immo-layout{display:grid;grid-template-columns:250px 1fr;gap:1.5rem;padding-bottom:3rem;}
+.immo-sb{position:sticky;top:84px;align-self:start;}
+.immo-sb-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem;box-shadow:var(--sh);margin-bottom:.85rem;}
+.immo-sb-card h3{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.85rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);}
+.ifg{margin-bottom:.85rem;}
+.ifg label{display:block;font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
+.ifg select,.ifg input{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.5rem .75rem;font-size:.82rem;color:var(--text);outline:none;background:#fff;}
+.ifg select:focus,.ifg input:focus{border-color:var(--sea);}
+.range2{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.ireset{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:var(--r);padding:.5rem;font-size:.78rem;margin-top:.5rem;}
+.ireset:hover{border-color:var(--sea);color:var(--sea);}
+.ann-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;}
+.ann-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;box-shadow:var(--sh);}
+.ann-card:hover{box-shadow:var(--sh-md);transform:translateY(-3px);}
+.aimg{position:relative;height:190px;overflow:hidden;flex-shrink:0;}
+.aimg img{width:100%;height:100%;object-fit:cover;transition:transform .3s;display:block;}
+.ann-card:hover .aimg img{transform:scale(1.04);}
+.aimg-ph{width:100%;height:100%;background:var(--bg2);display:flex;align-items:center;justify-content:center;}
+.aimg-ph svg{width:40px;height:40px;stroke:var(--turq);stroke-width:1.5;fill:none;}
+.bv{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;}
+.bl{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;}
+.bva{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;}
+.atype{position:absolute;top:.65rem;left:.65rem;padding:.2rem .65rem;border-radius:50px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.apro{position:absolute;top:.65rem;right:.65rem;background:var(--sea);color:#fff;padding:.2rem .6rem;border-radius:50px;font-size:.65rem;font-weight:700;}
+.afav{position:absolute;bottom:.65rem;right:.65rem;width:30px;height:30px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;}
+.afav svg{width:15px;height:15px;stroke:#374151;stroke-width:2;fill:none;}
+.afav.on svg{stroke:#ef4444;fill:#ef4444;}
+.ann-body{padding:.9rem 1rem;flex:1;display:flex;flex-direction:column;}
+.ann-price{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--sea);margin-bottom:.2rem;}
+.ann-price sub{font-size:.72rem;font-weight:400;color:var(--muted);}
+.ann-title2{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.25rem;line-height:1.3;}
+.ann-aloc{display:flex;align-items:center;gap:.2rem;font-size:.74rem;color:var(--muted);margin-bottom:.65rem;}
+.ann-aloc svg{width:11px;height:11px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0;}
+.ann-specs2{display:flex;gap:.85rem;padding-top:.6rem;border-top:1px solid var(--border);}
+.ann-spec2{display:flex;align-items:center;gap:.25rem;font-size:.72rem;color:#4b5563;}
+.ann-spec2 svg{width:13px;height:13px;stroke:var(--sea);stroke-width:2;fill:none;}
+.ann-spec2 b{font-weight:600;}
+/* FICHE IMMO */
+.fhi2{position:relative;height:340px;overflow:hidden;}
+.fhi2 img{width:100%;height:100%;object-fit:cover;display:block;}
+.fhi2-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,28,55,.65) 0%,transparent 55%);}
+.fhi2-bot{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;}
+.fhi2-layout{display:grid;grid-template-columns:1fr 300px;gap:2rem;padding:2rem 0 3rem;}
+.fcard2{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem;box-shadow:var(--sh);margin-bottom:1.1rem;}
+.fcard2 h2{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.85rem;}
+.specs-g2{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;}
+.spec2-it{background:var(--cream);border-radius:var(--r);padding:.75rem;text-align:center;}
+.spec2-it svg{width:18px;height:18px;stroke:var(--sea);stroke-width:2;fill:none;margin:0 auto .3rem;display:block;}
+.spec2-lbl{font-size:.68rem;color:var(--muted);display:block;}
+.spec2-val{font-size:.88rem;font-weight:700;color:var(--text);}
+.equip-g2{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.equip2-it{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:#374151;}
+.equip2-it svg{width:14px;height:14px;stroke:#16a34a;stroke-width:2;fill:none;flex-shrink:0;}
+.fdesc2{font-size:.88rem;color:#4b5563;line-height:1.8;}
+.price-card2{background:var(--sea);color:#fff;border-radius:var(--r-lg);padding:1.4rem;box-shadow:var(--sh-md);margin-bottom:1rem;}
+.price-big2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:.2rem;}
+.price-sub2{font-size:.78rem;opacity:.75;margin-bottom:1.1rem;}
+.contact-btn2{width:100%;background:#fff;color:var(--sea);border:none;border-radius:var(--r);padding:.7rem;font-size:.88rem;font-weight:700;margin-bottom:.5rem;}
+.wa-btn2{width:100%;background:#25d366;color:#fff;border:none;border-radius:var(--r);padding:.65rem;font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.agent-sb2{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem;box-shadow:var(--sh);margin-bottom:1rem;}
+.agent-sb2 h3{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.75rem;}
+.agent-row2{display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem;}
+.agent-av2{width:44px;height:44px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--sea);font-size:.85rem;flex-shrink:0;}
+.agent-name2{font-weight:600;font-size:.88rem;color:var(--text);}
+.agent-agency2{font-size:.75rem;color:var(--muted);}
+.agent-ph2{display:flex;align-items:center;gap:.4rem;font-size:.83rem;color:var(--sea);font-weight:500;}
+.agent-ph2 svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;}
+/* DEPOT */
+.depot-steps{display:flex;gap:0;border-radius:50px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.75rem;}
+.dstep{flex:1;padding:.45rem;text-align:center;font-size:.7rem;font-weight:500;color:var(--muted);background:#faf9f7;}
+.dstep.done{background:#dcfce7;color:#166534;}
+.dstep.act{background:var(--sea);color:#fff;}
+.type-btns2{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.type-btn3{border:1.5px solid var(--border);border-radius:var(--r);padding:.6rem 1rem;font-size:.85rem;font-weight:500;color:var(--muted);background:#fff;flex:1;text-align:center;}
+.type-btn3.on{background:var(--sea);color:#fff;border-color:var(--sea);}
+.equip-checks{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;}
+.echk{display:flex;align-items:center;gap:.35rem;font-size:.8rem;color:#374151;cursor:pointer;}
+.echk input{accent-color:var(--sea);width:14px;height:14px;}
+.upload-drop{border:2px dashed var(--border);border-radius:var(--r-lg);padding:1.75rem 1rem;text-align:center;cursor:pointer;color:var(--muted);}
+.upload-drop:hover{border-color:var(--sea);background:var(--bg2);}
+.upload-drop svg{width:30px;height:30px;stroke:var(--sea);stroke-width:1.5;fill:none;margin:0 auto .65rem;opacity:.7;display:block;}
+.upload-drop p{font-size:.84rem;}
+.upload-drop small{font-size:.72rem;color:var(--muted);}
+.suc-box2{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:2.5rem 2rem;text-align:center;max-width:480px;margin:2rem auto;box-shadow:var(--sh);}
+.suc-icon2{width:64px;height:64px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;}
+.suc-icon2 svg{width:32px;height:32px;stroke:#16a34a;stroke-width:2;fill:none;}
+.suc-box2 h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.suc-box2 p{font-size:.87rem;color:var(--muted);line-height:1.7;margin-bottom:1.25rem;}
+.suc-btns2{display:flex;flex-direction:column;gap:.5rem;max-width:260px;margin:0 auto;}
+/* ADMIN LOGIN */
+.adm-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0c1c37,#1e4d8c);}
+.adm-login-card{background:#fff;border-radius:var(--r-lg);padding:2.25rem;width:100%;max-width:370px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.adm-login-logo{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.5rem;}
+.adm-login-logo-ic{width:38px;height:38px;border-radius:50%;background:var(--sea);display:flex;align-items:center;justify-content:center;}
+.adm-login-logo-ic svg{width:18px;height:18px;stroke:#fff;stroke-width:2;fill:none;}
+.adm-login-logo span{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--sea);}
+.adm-lf{margin-bottom:.9rem;}
+.adm-ll{display:block;font-size:.78rem;font-weight:600;color:#374151;margin-bottom:.35rem;}
+.adm-li{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.65rem .85rem;font-size:.88rem;color:var(--text);outline:none;}
+.adm-li:focus{border-color:var(--sea);}
+.adm-login-btn{width:100%;background:var(--sea);color:#fff;border:none;border-radius:var(--r);padding:.75rem;font-size:.92rem;font-weight:600;margin-top:.35rem;}
+.adm-login-btn:hover{background:#163d70;}
+.adm-err{background:#fee2e2;color:#991b1b;border-radius:var(--r);padding:.6rem .85rem;font-size:.8rem;margin-bottom:.85rem;display:none;}
+.adm-err.show{display:block;}
+/* ADMIN PANEL */
+.adm-wrap{display:grid;grid-template-columns:210px 1fr;min-height:100vh;}
+.adm-sb{background:#0f1f2e;color:#e5e7eb;padding:1.25rem 0;display:flex;flex-direction:column;}
+.adm-sb-logo{padding:.5rem 1.25rem 1.25rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.adm-nav-section{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.75rem 1.25rem .25rem;}
+.adm-sb-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:#fff;}
+.adm-sb-logo svg{width:18px;height:18px;stroke:var(--turq);stroke-width:2;fill:none;}
+.adm-sb-logo span{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:#fff;}
+.adm-badge{background:var(--turq);color:#fff;font-size:.58rem;padding:.1rem .4rem;border-radius:4px;font-weight:700;}
+.adm-nav{padding:.85rem 0;flex:1;}
+.adm-ni{display:flex;align-items:center;gap:.55rem;padding:.6rem 1.25rem;font-size:.82rem;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;}
+.adm-ni:hover{background:rgba(255,255,255,.06);color:#fff;}
+.adm-ni.on{background:rgba(41,168,216,.15);color:var(--turq);border-right:3px solid var(--turq);}
+.adm-ni svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;}
+.adm-lo{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.08);}
+.adm-lo button{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;}
+.adm-main{background:var(--cream);overflow-y:auto;}
+.adm-topbar{background:#fff;border-bottom:1px solid var(--border);padding:.8rem 1.4rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--sh);}
+.adm-topbar h1{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--text);}
+.adm-content{padding:1.4rem;}
+.dash-g{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-bottom:1.4rem;}
+.dash-c{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem;box-shadow:var(--sh);}
+.dash-c-ico{width:38px;height:38px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:.75rem;}
+.dash-c-ico svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;}
+.dash-c-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--text);line-height:1;}
+.dash-c-lbl{font-size:.72rem;color:var(--muted);margin-top:.15rem;}
+.adm-tc{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;margin-bottom:1.25rem;}
+.adm-tc-h{padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.adm-tc-h h2{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--text);}
+.adm-tbl{width:100%;border-collapse:collapse;}
+.adm-tbl th{background:#faf9f7;padding:.65rem .9rem;text-align:left;font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);}
+.adm-tbl td{padding:.75rem .9rem;font-size:.82rem;color:#374151;border-bottom:1px solid var(--border);}
+.adm-tbl tr:last-child td{border-bottom:none;}
+.adm-tbl tr:hover td{background:#faf9f7;}
+.sbadge{padding:.18rem .55rem;border-radius:50px;font-size:.68rem;font-weight:600;}
+.sp2{background:#fef3c7;color:#92400e;}
+.sa2{background:#dcfce7;color:#166534;}
+.sr2{background:#fee2e2;color:#991b1b;}
+.spro2{background:#eff6ff;color:#1e40af;}
+.abtns2{display:flex;gap:.3rem;}
+.abtn2{border:none;border-radius:6px;padding:.28rem .6rem;font-size:.7rem;font-weight:600;display:flex;align-items:center;gap:.2rem;}
+.abtn2 svg{width:11px;height:11px;stroke:currentColor;stroke-width:2;fill:none;}
+.abtn2-ok{background:#dcfce7;color:#166534;}
+.abtn2-no{background:#fee2e2;color:#991b1b;}
+.abtn2-ed{background:var(--bg2);color:var(--sea);}
+.adm-search{border:1px solid var(--border);border-radius:var(--r);padding:.42rem .75rem;font-size:.8rem;outline:none;width:180px;}
+.adm-search:focus{border-color:var(--sea);}
+.img-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;padding:1.1rem;}
+.img-item2{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+.img-item2-prev{height:130px;overflow:hidden;background:var(--bg2);}
+.img-item2-prev img{width:100%;height:100%;object-fit:cover;}
+.img-item2-body{padding:.75rem;}
+.img-item2-body h4{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.img-replace-btn{width:100%;background:var(--bg2);color:var(--sea);border:1px solid var(--border);border-radius:var(--r);padding:.45rem;font-size:.76rem;font-weight:500;display:flex;align-items:center;justify-content:center;gap:.3rem;}
+.img-replace-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;}
+.set-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;padding:1.1rem;}
+.set-field2{margin-bottom:.75rem;}
+.set-field2 label{display:block;font-size:.76rem;font-weight:600;color:#374151;margin-bottom:.3rem;}
+.set-field2 input{width:100%;border:1px solid var(--border);border-radius:var(--r);padding:.55rem .8rem;font-size:.84rem;color:var(--text);outline:none;}
+.set-field2 input:focus{border-color:var(--sea);}
+@media(max-width:1024px){.fhi2-layout{grid-template-columns:1fr;}.immo-layout{grid-template-columns:1fr;}.immo-sb{display:none;}}
+@media(max-width:768px){.ann-grid{grid-template-columns:1fr;}.isrow{grid-template-columns:1fr 1fr;}.dash-g{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.isrow{grid-template-columns:1fr;}.fhi2{height:220px;}}
+/* ══ /IMMO ══ */
+/* RESPONSIVE */
+@media(max-width:1024px){.evl{grid-template-columns:1fr;}.calw{position:static;}.fl{grid-template-columns:1fr;}.fgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.pg{grid-template-columns:1fr 1fr;}.cg{grid-template-columns:repeat(3,1fr);}.sg{grid-template-columns:1fr 1fr;}.nav-links,.nav-cta{display:none;}.burger{display:flex;}.ag{grid-template-columns:1fr;}.evg{grid-template-columns:1fr;}.f2c{grid-template-columns:1fr;}.contl{grid-template-columns:1fr;}.fgrid{grid-template-columns:1fr;}}
+@media(max-width:480px){.pg{grid-template-columns:1fr;}.cg{grid-template-columns:repeat(2,1fr);}.hero h1{font-size:2rem;}.fhi{height:200px;}}
+</style>
+</head>
+<body>
+ 
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container nav-in">
+    <button class="nav-logo" onclick="go('home')">
+      <div class="nli"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+      <div class="nlt"><span class="nln">Kélibia</span><span class="nls">.info</span></div>
+    </button>
+    <nav class="nav-links">
+      <button class="nl on" id="nl-home" onclick="go('home')">Accueil</button>
+      <button class="nl" id="nl-plans" onclick="go('plans')">Bons Plans</button>
+      <button class="nl" id="nl-events" onclick="go('events')">Événements</button>
+      <button class="nl" id="nl-annuaire" onclick="go('annuaire')">Annuaire</button>
+      <button class="nl" id="nl-immo" onclick="go('immo')" style="color:var(--sea);font-weight:600;border:1px solid var(--sea);border-radius:var(--r);">Immobilier</button>
+      <button class="nl" id="nl-ajouter" onclick="go('ajouter')">Ajouter</button>
+      <button class="nav-cta" onclick="go('ajouter')">+ Proposer un bon plan</button>
+      <button class="nl" onclick="goAdmin()" style="color:var(--muted);font-size:.78rem;border:1px dashed var(--border);border-radius:var(--r);padding:.4rem .7rem;margin-left:.25rem;">⚙ Admin</button>
+    </nav>
+    <button class="burger" onclick="toggleMob()" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mob-menu" id="mob">
+    <div class="mob-links">
+      <button class="ml on" onclick="go('home');toggleMob()">Accueil</button>
+      <button class="ml" onclick="go('plans');toggleMob()">Bons Plans</button>
+      <button class="ml" onclick="go('events');toggleMob()">Événements</button>
+      <button class="ml" onclick="go('annuaire');toggleMob()">Annuaire</button>
+      <button class="ml" onclick="go('immo');toggleMob()">Immobilier</button>
+      <button class="ml" onclick="goAdmin();toggleMob()" style="color:var(--muted);border-top:1px solid var(--border);margin-top:.5rem;">⚙ Administration</button>
+      <button class="ml" onclick="go('ajouter');toggleMob()">Ajouter</button>
+      <button class="mob-cta" onclick="go('ajouter');toggleMob()">+ Proposer un bon plan</button>
+    </div>
+  </div>
+</header>
+ 
+<!-- ══ PAGE ACCUEIL ══ -->
+<div class="page act" id="page-home">
+  <section class="hero">
+    <div class="hbg">
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/hero-kelibia-b4XwMAwNAhc2z7ETEdiWkF.webp" alt="Kélibia vue aérienne" onerror="this.parentElement.style.background='linear-gradient(160deg,#0c1c37,#1e4d8c)'"/>
+      <div class="hgr"></div>
+    </div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="hcon">
+        <div class="hloc"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Cap Bon, Tunisie</span></div>
+        <h1>Découvrez<br><em>Kélibia</em></h1>
+        <p>La plateforme communautaire de Kélibia. Bons plans, restaurants, plages, services — partagés par les habitants et les visiteurs.</p>
+        <form class="hsbar" onsubmit="heroSearch(event)">
+          <div class="hswrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="hq" type="text" placeholder="Rechercher un bon plan, un service…"/></div>
+          <button type="submit">Chercher</button>
+        </form>
+        <div class="htags">
+          <button class="htag" onclick="tagS('Plages')">Plages</button>
+          <button class="htag" onclick="tagS('Restaurants')">Restaurants</button>
+          <button class="htag" onclick="tagS('Fort de Kélibia')">Fort de Kélibia</button>
+          <button class="htag" onclick="tagS('Activités')">Activités</button>
+        </div>
+      </div>
+    </div>
+    <div class="hwave"><svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L60 50C120 40 240 20 360 15C480 10 600 20 720 25C840 30 960 30 1080 25C1200 20 1320 10 1380 5L1440 0V60H0Z" fill="#faf9f7"/></svg></div>
+  </section>
+  <section class="stats-s"><div class="container"><div class="sg">
+    <div class="sc"><div class="si" style="background:rgba(30,77,140,.08);color:#1e4d8c;"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div><div class="sn">47+</div><div class="sl">Bons plans</div></div></div>
+    <div class="sc"><div class="si" style="background:rgba(41,168,216,.08);color:#29a8d8;"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div class="sn">312+</div><div class="sl">Avis</div></div></div>
+    <div class="sc"><div class="si" style="background:rgba(234,88,12,.08);color:#ea580c;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="sn">1 240+</div><div class="sl">Membres</div></div></div>
+    <div class="sc"><div class="si" style="background:rgba(22,163,74,.08);color:#16a34a;"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div><div><div class="sn">6+</div><div class="sl">Catégories</div></div></div>
+  </div></div></section>
+  <section class="sec bc2" style="padding-top:1.5rem;"><div class="container">
+    <div class="sh2"><div><h2>Explorer par catégorie</h2><p>Trouvez ce que vous cherchez à Kélibia</p></div></div>
+    <div class="cg">
+      <button class="cb" onclick="catGo('plage')"><div class="cbi" style="background:rgba(14,165,233,.1);color:#0ea5e9;"><svg viewBox="0 0 24 24"><path d="M2 6c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/><path d="M2 12c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/><path d="M2 18c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/></svg></div><span class="cbn">Plages</span></button>
+      <button class="cb" onclick="catGo('restaurant')"><div class="cbi" style="background:rgba(234,88,12,.1);color:#ea580c;"><svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div><span class="cbn">Restaurants</span></button>
+      <button class="cb" onclick="catGo('activite')"><div class="cbi" style="background:rgba(22,163,74,.1);color:#16a34a;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><span class="cbn">Activités</span></button>
+      <button class="cb" onclick="catGo('commerce')"><div class="cbi" style="background:rgba(202,138,4,.1);color:#ca8a04;"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><span class="cbn">Commerces</span></button>
+      <button class="cb" onclick="catGo('service')"><div class="cbi" style="background:rgba(124,58,237,.1);color:#7c3aed;"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><span class="cbn">Services</span></button>
+      <button class="cb" onclick="catGo('hebergement')"><div class="cbi" style="background:rgba(29,78,216,.1);color:#1d4ed8;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="cbn">Hébergements</span></button>
+    </div>
+  </div></section>
+  <section class="sec bw"><div class="container">
+    <div class="sh2"><div><h2>Coups de cœur</h2><p>Les incontournables de Kélibia</p></div><button class="slink" onclick="go('plans')">Voir tout <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+    <div class="pg" id="home-feat"></div>
+  </div></section>
+  <section class="pub"><div class="container"><div class="pubi">
+    <div><p class="pub-l">Espace publicitaire</p><p class="pub-t">Votre commerce ou service sur Kélibia.info — Touchez les habitants et les touristes</p></div>
+    <button class="pub-btn" onclick="go('contact')">Nous contacter</button>
+  </div></div></section>
+  <section class="sec bc2"><div class="container">
+    <div class="sh2"><div><h2>Tous les bons plans</h2><p>Partagés par la communauté de Kélibia</p></div></div>
+    <div class="pg" id="home-all"></div>
+    <div style="text-align:center;margin-top:2rem;"><button class="bsea" onclick="go('plans')">Voir tous les bons plans <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+  </div></section>
+  <section class="cta-s" style="min-height:300px;">
+    <div class="ctabg"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp" alt="Plage" onerror="this.parentElement.style.background='#1e4d8c'"/><div class="ctaov"></div></div>
+    <div class="ctacon"><h2>Vous connaissez un bon plan ?</h2><p>Partagez vos adresses préférées avec la communauté de Kélibia. Habitants, commerçants, visiteurs — tout le monde peut contribuer.</p><div class="ctabtns"><button class="bt" onclick="go('ajouter')">Proposer un bon plan</button><button class="bow" onclick="go('annuaire')">Voir l'annuaire</button></div></div>
+  </section>
+  <div id="ft-home"></div>
+</div>
+ 
+<!-- ══ PAGE BONS PLANS ══ -->
+<div class="page pt" id="page-plans">
+  <div class="ph"><div class="container"><h1>Bons Plans à Kélibia</h1><p id="plans-hc">47 bons plans partagés par la communauté</p></div></div>
+  <div class="fbar"><div class="container fbi">
+    <div class="frow">
+      <div class="fwrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="pq" type="text" placeholder="Rechercher…" oninput="renderP()"/><button class="fclr" id="pclr" onclick="clearPQ()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <select class="ssel" id="psort" onchange="renderP()"><option value="rating">Mieux notés</option><option value="recent">Plus récents</option></select>
+    </div>
+    <div class="pills" id="cat-pills"></div>
+  </div></div>
+  <main style="padding:2.5rem 0;min-height:400px;"><div class="container">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;" id="prlbl"></p>
+    <div class="pg" id="pgrid"></div>
+    <div class="empty" id="pempty" style="display:none;"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><h3>Aucun résultat</h3><p>Essayez une autre recherche ou une autre catégorie.</p><button class="bsea" style="margin-top:1rem;" onclick="resetP()">Réinitialiser</button></div>
+  </div></main>
+  <div id="ft-plans"></div>
+</div>
+ 
+<!-- ══ PAGE FICHE ══ -->
+<div class="page pt" id="page-fiche">
+  <div class="fhi"><img id="fi-img" src="" alt=""/><div class="fhov"></div><div class="fhb"><div class="container"><button class="backbtn" onclick="go('plans')"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Retour aux bons plans</button><div id="fi-badge" style="margin-bottom:.5rem;"></div><h1 id="fi-h1" style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;line-height:1.2;"></h1></div></div></div>
+  <div class="container"><div class="fl">
+    <div class="fm">
+      <div class="fcard"><h2>À propos</h2><p class="fdesc" id="fi-desc"></p><div class="ftr" id="fi-tags"></div></div>
+      <div class="fcard">
+        <div class="rvh"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h2 style="margin:0;" id="rv-h">Avis</h2></div>
+        <div id="rv-list"></div>
+        <h3 class="art">Laisser un avis</h3>
+        <div class="spr" id="spr"></div>
+        <input class="finput" id="rv-name" placeholder="Votre prénom"/>
+        <textarea class="ftarea" id="rv-cmt" rows="3" placeholder="Votre commentaire…"></textarea>
+        <button class="brev" onclick="submitRv()">Publier mon avis</button>
+      </div>
+    </div>
+    <div class="fsb">
+      <div class="sbc"><div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;"><span class="rbig" id="sb-r"></span><div><div id="sb-stars"></div><p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;" id="sb-ct"></p></div></div><div class="rbar"><div class="rbarf" id="sb-bar" style="width:0;"></div></div></div>
+      <div class="sbc"><h3>Informations</h3><div id="sb-info"></div></div>
+      <div class="pubsb"><span class="pub-l">Publicité</span><p>Votre annonce ici</p><a onclick="go('contact')">Nous contacter</a></div>
+    </div>
+  </div><div id="fi-related" style="padding-bottom:3rem;"></div></div>
+  <div id="ft-fiche"></div>
+</div>
+ 
+<!-- ══ PAGE ANNUAIRE ══ -->
+<div class="page pt" id="page-annuaire">
+  <div class="ph"><div class="container"><h1>Annuaire de Kélibia</h1><p>Commerces, restaurants, hébergements et services locaux</p></div></div>
+  <div class="fbar"><div class="container fbi">
+    <div class="frow"><div class="fwrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="aq" type="text" placeholder="Rechercher un commerce, service…" oninput="renderA()"/></div></div>
+    <div class="pills" id="ann-pills"></div>
+  </div></div>
+  <main style="padding:2.5rem 0;min-height:400px;"><div class="container"><div class="ag" id="agrid"></div><div class="empty" id="aempty" style="display:none;"><h3>Aucun résultat</h3></div></div></main>
+  <div id="ft-ann"></div>
+</div>
+ 
+<!-- ══ PAGE ÉVÉNEMENTS ══ -->
+<div class="page pt" id="page-events">
+  <div class="ph"><div class="container"><h1>Événements à Kélibia</h1><p>Découvrez les festivals, marchés, activités et événements culturels</p></div></div>
+  <main style="padding:2.5rem 0;"><div class="container"><div class="evl">
+    <div>
+      <div class="calw">
+        <div class="calh"><button class="calnb" onclick="calP()" aria-label="Mois précédent"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button><h3 class="calm" id="cal-mon"></h3><button class="calnb" onclick="calN()" aria-label="Mois suivant"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+        <div class="calwr"><div class="calwd">Lun</div><div class="calwd">Mar</div><div class="calwd">Mer</div><div class="calwd">Jeu</div><div class="calwd">Ven</div><div class="calwd">Sam</div><div class="calwd">Dim</div></div>
+        <div class="caldg" id="cal-grid"></div>
+        <div class="callg"><span class="caldot"></span> Événement</div>
+      </div>
+      <button class="rdb" id="cal-reset" style="display:none;" onclick="resetCal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Réinitialiser</button>
+    </div>
+    <div class="evm">
+      <div class="evfr"><svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><select class="ssel" id="evsort" onchange="renderEv()"><option value="date">Prochainement</option><option value="attendees">Plus populaires</option></select><span style="font-size:.85rem;color:var(--muted);" id="cal-lbl"></span></div>
+      <p style="font-size:.85rem;color:var(--muted);" id="ev-ct"></p>
+      <div class="evg" id="evgrid"></div>
+      <div class="empty" id="evempty" style="display:none;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h3>Aucun événement</h3><p>Revenez bientôt !</p></div>
+      <div id="past-sec" style="padding-top:2rem;border-top:1px solid var(--border);display:none;"><h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:1.25rem;">Événements passés</h2><div class="evg" id="past-grid"></div></div>
+    </div>
+  </div></div></main>
+  <div id="ft-events"></div>
+</div>
+ 
+<!-- ══ PAGE AJOUTER ══ -->
+<div class="page pt" id="page-ajouter">
+  <div class="ph"><div class="container"><h1>Proposer un bon plan</h1><p>Partagez votre adresse préférée avec la communauté de Kélibia</p></div></div>
+  <main style="padding:2.5rem 1.5rem;">
+    <div id="form-sec">
+      <div class="finfo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>Votre proposition sera examinée avant publication. Les champs marqués d'un <span class="req">*</span> sont obligatoires.</p></div>
+      <div class="fwrap">
+        <div class="ff"><label class="fl2">Type de proposition</label><div class="ftr2"><button class="ftbtn on" id="ft-bp" onclick="setFT('bp')">Bon plan</button><button class="ftbtn" id="ft-co" onclick="setFT('co')">Commerce / Service</button></div></div>
+        <div class="ff"><label class="fl2">Nom <span class="req">*</span></label><input class="fi" id="f-title" placeholder="Ex : Restaurant El Mansourah, Plage de Mansourah…"/></div>
+        <div class="ff"><label class="fl2">Catégorie <span class="req">*</span></label><select class="fsel" id="f-cat"><option value="">Choisir une catégorie…</option><option value="plage">Plages</option><option value="restaurant">Restaurants</option><option value="activite">Activités</option><option value="commerce">Commerces</option><option value="service">Services</option><option value="hebergement">Hébergements</option></select></div>
+        <div class="ff"><label class="fl2">Description <span class="req">*</span></label><textarea class="fta" id="f-desc" rows="4" placeholder="Décrivez ce bon plan en quelques phrases…"></textarea></div>
+        <div class="ff"><label class="fl2">Adresse <span class="req">*</span></label><div class="fiw"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><input class="fi" id="f-addr" placeholder="Adresse ou quartier à Kélibia"/></div></div>
+        <div class="f2c"><div class="ff" style="margin:0;"><label class="fl2">Téléphone</label><input class="fi" id="f-tel" placeholder="+216 XX XXX XXX"/></div><div class="ff" style="margin:0;"><label class="fl2">Site web</label><input class="fi" id="f-web" placeholder="https://…"/></div></div>
+        <hr class="fdiv"/>
+        <p class="fnote">Vos coordonnées (non publiées, pour validation uniquement)</p>
+        <div class="f2c"><div class="ff" style="margin:0;"><label class="fl2">Votre prénom <span class="req">*</span></label><input class="fi" id="f-name" placeholder="Prénom"/></div><div class="ff" style="margin:0;"><label class="fl2">Email <span class="req">*</span></label><input class="fi" type="email" id="f-email" placeholder="votre@email.com"/></div></div>
+        <div style="margin-top:1.5rem;"><button class="fsub" onclick="submitF()">Envoyer ma proposition</button></div>
+      </div>
+    </div>
+    <div id="form-suc" style="display:none;"><div class="sucbox"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h2>Merci pour votre contribution !</h2><p>Votre bon plan a bien été reçu. Il sera examiné par notre équipe et publié sous 48h si validé.</p><div class="sucbtns"><button class="bsea" onclick="resetF()">Proposer un autre bon plan</button><button class="bseaol" onclick="go('plans')">Voir les bons plans</button></div></div></div>
+  </main>
+  <div id="ft-ajouter"></div>
+</div>
+ 
+<!-- ══ PAGE CONTACT ══ -->
+<div class="page pt" id="page-contact">
+  <div class="ph"><div class="container"><h1>Contact & Publicité</h1><p>Partenariats, publicité, signalement ou question</p></div></div>
+  <main style="padding:2.5rem 0;"><div class="container contl">
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="sbc"><h3>Publicité</h3><p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Touchez les habitants de Kélibia et les touristes du cap Bon. Espaces publicitaires discrets et efficaces.</p></div>
+      <div class="sbc"><h3>Coordonnées</h3><div class="fci"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:contact@kelibia.info" style="color:var(--sea);">contact@kelibia.info</a></div><div class="fci"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Kélibia, Cap Bon, Tunisie</span></div></div>
+    </div>
+    <div id="c-form">
+      <div class="fwrap" style="max-width:100%;">
+        <div class="f2c"><div class="ff" style="margin:0;"><label class="fl2">Nom *</label><input class="fi" id="c-name" placeholder="Votre nom"/></div><div class="ff" style="margin:0;"><label class="fl2">Email *</label><input class="fi" type="email" id="c-email" placeholder="votre@email.com"/></div></div>
+        <div class="ff" style="margin-top:1rem;"><label class="fl2">Sujet</label><select class="fsel" id="c-subj"><option value="publicite">Demande de publicité</option><option value="partenariat">Partenariat</option><option value="signalement">Signalement</option><option value="autre">Autre</option></select></div>
+        <div class="ff" style="margin-top:1rem;"><label class="fl2">Message *</label><textarea class="fta" id="c-msg" rows="5" placeholder="Votre message…"></textarea></div>
+        <div style="margin-top:1.25rem;"><button class="fsub" onclick="submitC()">Envoyer le message</button></div>
+      </div>
+    </div>
+    <div id="c-suc" style="display:none;"><div class="sucbox" style="max-width:100%;"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h2>Message envoyé !</h2><p>Nous vous répondrons dans les meilleurs délais.</p></div></div>
+  </div></main>
+  <div id="ft-contact"></div>
+</div>
+ 
+ 
+<!-- ══ PAGE IMMOBILIER ══ -->
+<div class="page pt" id="page-immo">
+  <div class="immo-hero"><div class="container immo-hero-inner">
+    <h1>Immobilier à <em>Kélibia</em></h1>
+    <p>Achat, location et vacances — toutes les annonces du Cap Bon</p>
+    <div class="isbox"><div class="isrow">
+      <div class="isf"><label>Type</label><select id="is-type" onchange="renderImmo()"><option value="">Tout</option><option value="vente">Vente</option><option value="location">Location</option><option value="vacances">Vacances</option></select></div>
+      <div class="isf"><label>Catégorie</label><select id="is-cat" onchange="renderImmo()"><option value="">Tout</option><option value="villa">Villa</option><option value="appartement">Appartement</option><option value="terrain">Terrain</option><option value="local">Local commercial</option><option value="ferme">Ferme</option></select></div>
+      <div class="isf"><label>Budget max (DT)</label><select id="is-budget" onchange="renderImmo()"><option value="">Sans limite</option><option value="100000">100 000</option><option value="250000">250 000</option><option value="500000">500 000</option><option value="1000000">1 000 000</option></select></div>
+      <button class="isbtn" onclick="renderImmo()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Chercher</button>
+    </div></div>
+  </div></div>
+  <div class="container">
+    <div class="immo-stats-bar">
+      <div class="ist"><div class="ist-num">124</div><div class="ist-lbl">Annonces actives</div></div>
+      <div class="ist"><div class="ist-num">38</div><div class="ist-lbl">Ventes</div></div>
+      <div class="ist"><div class="ist-num">56</div><div class="ist-lbl">Locations</div></div>
+      <div class="ist"><div class="ist-num">30</div><div class="ist-lbl">Vacances</div></div>
+    </div>
+    <div class="itabs">
+      <button class="itab on" id="itab-all" onclick="setItab('all',this)">Toutes</button>
+      <button class="itab" id="itab-vente" onclick="setItab('vente',this)">Vente</button>
+      <button class="itab" id="itab-location" onclick="setItab('location',this)">Location</button>
+      <button class="itab" id="itab-vacances" onclick="setItab('vacances',this)">Vacances</button>
+    </div>
+    <div class="immo-layout">
+      <aside class="immo-sb">
+        <div class="immo-sb-card"><h3>Filtres</h3>
+          <div class="ifg"><label>Type de bien</label><select id="if-bien" onchange="renderImmo()"><option value="">Tous</option><option value="villa">Villa</option><option value="appartement">Appartement</option><option value="terrain">Terrain</option><option value="local">Local commercial</option><option value="ferme">Ferme</option></select></div>
+          <div class="ifg"><label>Chambres min</label><select id="if-rooms" onchange="renderImmo()"><option value="0">Toutes</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></div>
+          <div class="ifg"><label>Surface (m²)</label><div class="range2"><input type="number" id="if-sm" placeholder="Min" oninput="renderImmo()"/><input type="number" id="if-sx" placeholder="Max" oninput="renderImmo()"/></div></div>
+          <div class="ifg"><label>Prix (DT)</label><div class="range2"><input type="number" id="if-pm" placeholder="Min" oninput="renderImmo()"/><input type="number" id="if-px" placeholder="Max" oninput="renderImmo()"/></div></div>
+          <div class="ifg"><label>Vue mer</label><select id="if-mer" onchange="renderImmo()"><option value="">Toutes</option><option value="1">Avec vue mer</option></select></div>
+          <button class="ireset" onclick="resetImmo()">Réinitialiser les filtres</button>
+        </div>
+        <div class="immo-sb-card" style="background:linear-gradient(135deg,#0c1c37,#1e4d8c);border:none;">
+          <h3 style="color:#fff;border-color:rgba(255,255,255,.15);">Vous êtes pro ?</h3>
+          <p style="font-size:.82rem;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:.85rem;">Agences et promoteurs — déposez gratuitement, validation sous 24h.</p>
+          <button onclick="go('depot')" style="width:100%;background:#fff;color:var(--sea);border:none;border-radius:var(--r);padding:.6rem;font-size:.84rem;font-weight:700;cursor:pointer;">Déposer une annonce</button>
+        </div>
+      </aside>
+      <div>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;" id="immo-count"></p>
+        <div class="ann-grid" id="immo-grid"></div>
+        <div id="immo-empty" style="display:none;text-align:center;padding:3rem;"><p style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--muted);">Aucune annonce trouvée</p></div>
+      </div>
+    </div>
+  </div>
+  <div id="ft-immo"></div>
+</div>
+ 
+<!-- ══ PAGE FICHE IMMO ══ -->
+<div class="page pt" id="page-fiche-immo">
+  <div class="fhi2"><img id="fim-img" src="" alt=""/><div class="fhi2-ov"></div>
+    <div class="fhi2-bot"><div class="container">
+      <button onclick="go('immo')" style="display:inline-flex;align-items:center;gap:.35rem;color:rgba(255,255,255,.8);font-size:.85rem;background:none;border:none;margin-bottom:.6rem;cursor:pointer;"><svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Retour aux annonces</button>
+      <div id="fim-badge" style="margin-bottom:.4rem;"></div>
+      <h1 id="fim-title" style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1.2;"></h1>
+    </div></div>
+  </div>
+  <div class="container"><div class="fhi2-layout">
+    <div>
+      <div class="fcard2"><h2>Caractéristiques</h2><div class="specs-g2" id="fim-specs"></div></div>
+      <div class="fcard2"><h2>Description</h2><p class="fdesc2" id="fim-desc"></p></div>
+      <div class="fcard2" id="fim-equip-wrap"><h2>Équipements</h2><div class="equip-g2" id="fim-equip"></div></div>
+    </div>
+    <div>
+      <div class="price-card2"><div class="price-big2" id="fim-price"></div><div class="price-sub2" id="fim-price-sub"></div>
+        <button class="contact-btn2" onclick="alert('Tél : '+document.getElementById('fim-phone').textContent)">Contacter l'agence</button>
+        <button class="wa-btn2" onclick="window.open('https://wa.me/'+document.getElementById('fim-phone').textContent.replace(/\D/g,''),'_blank')">
+          <svg viewBox="0 0 24 24" style="width:17px;height:17px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp
+        </button>
+      </div>
+      <div class="agent-sb2"><h3>Contact</h3>
+        <div class="agent-row2"><div class="agent-av2" id="fim-av"></div><div><div class="agent-name2" id="fim-agent"></div><div class="agent-agency2" id="fim-agency">Kélibia.info Immo</div></div></div>
+        <div class="agent-ph2"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.22 6.22l.95-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="fim-phone"></span></div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid rgba(41,168,216,.2);border-radius:var(--r-lg);padding:1rem;text-align:center;"><p style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.3rem;">Publicité</p><p style="font-size:.82rem;color:#4b5563;margin-bottom:.3rem;">Votre annonce ici</p><button onclick="go('contact')" style="font-size:.74rem;color:var(--sea);background:none;border:none;cursor:pointer;">Nous contacter</button></div>
+    </div>
+  </div></div>
+  <div id="ft-fiche-immo"></div>
+</div>
+ 
+<!-- ══ PAGE DEPOT ══ -->
+<div class="page pt" id="page-depot">
+  <div class="ph"><div class="container"><h1>Déposer une annonce</h1><p>Agences, promoteurs et particuliers — publiez gratuitement, validation sous 24h</p></div></div>
+  <main style="padding:2rem 0;"><div class="container" style="max-width:760px;">
+    <div id="depot-sec">
+      <div style="background:var(--bg2);border:1px solid rgba(41,168,216,.25);border-radius:var(--r);padding:.85rem 1rem;display:flex;gap:.6rem;margin-bottom:1.5rem;"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--sea);stroke-width:2;fill:none;flex-shrink:0;margin-top:.15rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="font-size:.83rem;color:#374151;line-height:1.6;">Votre annonce sera soumise à <strong>validation manuelle sous 24h</strong>. Vous serez notifié par email.</p></div>
+      <div class="fcard2">
+        <div class="depot-steps"><div class="dstep done" id="dst1">1. Profil</div><div class="dstep act" id="dst2">2. Bien</div><div class="dstep" id="dst3">3. Détails</div><div class="dstep" id="dst4">4. Photos</div><div class="dstep" id="dst5">5. Envoi</div></div>
+        <div id="ds1">
+          <div class="ff" style="margin-bottom:1.1rem;"><label class="fl2">Vous êtes</label><div class="type-btns2"><button class="type-btn3 on" id="dp-part" onclick="setDP('part')">Particulier</button><button class="type-btn3" id="dp-age" onclick="setDP('age')">Agence</button><button class="type-btn3" id="dp-pro" onclick="setDP('pro')">Promoteur</button></div></div>
+          <div class="f2c"><div class="ff" style="margin:0;"><label class="fl2">Nom / Raison sociale <span class="req">*</span></label><input class="fi" id="dp-name" placeholder="Votre nom ou agence"/></div><div class="ff" style="margin:0;"><label class="fl2">Email <span class="req">*</span></label><input class="fi" type="email" id="dp-email" placeholder="contact@agence.tn"/></div></div>
+          <div class="f2c" style="margin-top:.85rem;"><div class="ff" style="margin:0;"><label class="fl2">Téléphone <span class="req">*</span></label><input class="fi" type="tel" id="dp-tel" placeholder="+216 XX XXX XXX"/></div><div class="ff" style="margin:0;"><label class="fl2">WhatsApp</label><input class="fi" type="tel" id="dp-wa" placeholder="+216 XX XXX XXX"/></div></div>
+        </div>
+        <div id="ds2" style="display:none;">
+          <div class="ff" style="margin-bottom:1.1rem;"><label class="fl2">Type d'annonce <span class="req">*</span></label><div class="type-btns2"><button class="type-btn3 on" id="dt-v" onclick="setDT('vente')">Vente</button><button class="type-btn3" id="dt-l" onclick="setDT('location')">Location</button><button class="type-btn3" id="dt-va" onclick="setDT('vacances')">Vacances</button></div></div>
+          <div class="ff"><label class="fl2">Catégorie <span class="req">*</span></label><select class="fsel2" id="dp-cat"><option value="">Choisir…</option><option>Villa</option><option>Appartement</option><option>Terrain</option><option>Local commercial</option><option>Ferme</option><option>Studio</option></select></div>
+          <div class="ff"><label class="fl2">Titre <span class="req">*</span></label><input class="fi" id="dp-title" placeholder="Ex : Villa avec piscine vue mer, Kélibia"/></div>
+          <div class="f2c"><div class="ff" style="margin:0;"><label class="fl2">Prix (DT) <span class="req">*</span></label><input class="fi" type="number" id="dp-prix" placeholder="350000"/></div><div class="ff" style="margin:0;"><label class="fl2">Négociable</label><select class="fsel2" id="dp-nego"><option value="non">Non</option><option value="oui">Oui</option></select></div></div>
+        </div>
+        <div id="ds3" style="display:none;">
+          <div class="f3c"><div class="ff" style="margin:0;"><label class="fl2">Surface (m²)</label><input class="fi" type="number" id="dp-surf" placeholder="180"/></div><div class="ff" style="margin:0;"><label class="fl2">Chambres</label><input class="fi" type="number" id="dp-rooms" placeholder="4"/></div><div class="ff" style="margin:0;"><label class="fl2">SdB</label><input class="fi" type="number" id="dp-sdb" placeholder="2"/></div></div>
+          <div class="ff" style="margin-top:.85rem;"><label class="fl2">Équipements</label><div class="equip-checks"><label class="echk"><input type="checkbox"/> Piscine</label><label class="echk"><input type="checkbox"/> Vue mer</label><label class="echk"><input type="checkbox"/> Jardin</label><label class="echk"><input type="checkbox"/> Climatisation</label><label class="echk"><input type="checkbox"/> Meublé</label><label class="echk"><input type="checkbox"/> Sécurité</label><label class="echk"><input type="checkbox"/> Terrasse</label><label class="echk"><input type="checkbox"/> Garage</label><label class="echk"><input type="checkbox"/> Internet</label></div></div>
+          <div class="ff"><label class="fl2">Description <span class="req">*</span></label><textarea class="fta" id="dp-desc" rows="4" placeholder="Décrivez le bien en détail…"></textarea></div>
+          <div class="ff"><label class="fl2">Adresse <span class="req">*</span></label><input class="fi" id="dp-addr" placeholder="Ex : Route de Mansourah, Kélibia"/></div>
+        </div>
+        <div id="ds4" style="display:none;">
+          <div class="upload-drop" onclick="alert('Upload disponible en version connectée à Supabase.')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Glissez vos photos ici ou cliquez pour parcourir</p><small>JPEG, PNG — max 5 Mo par photo, 10 photos max</small></div>
+        </div>
+        <div id="ds5" style="display:none;">
+          <div style="background:var(--bg2);border:1px solid rgba(41,168,216,.2);border-radius:var(--r);padding:1rem;margin-bottom:1rem;font-size:.84rem;color:#374151;line-height:1.6;">Votre annonce sera examinée sous <strong>24h</strong>. Vous serez notifié par email à l'adresse indiquée.</div>
+          <div class="ff"><label class="fl2">Message pour la modération (optionnel)</label><textarea class="fta" id="dp-msg" rows="3" placeholder="Informations complémentaires…"></textarea></div>
+          <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.82rem;color:#374151;line-height:1.5;cursor:pointer;"><input type="checkbox" id="dp-cgu" style="margin-top:.2rem;accent-color:var(--sea);"/> J'accepte les conditions d'utilisation et certifie être propriétaire ou mandaté.</label>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <button class="btn-back" id="dp-back" onclick="dPrev()" style="visibility:hidden;">Retour</button>
+          <button class="btn-next" id="dp-next" onclick="dNext()">Continuer <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;stroke-width:2;fill:none;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div id="depot-suc" style="display:none;"><div class="suc-box2"><div class="suc-icon2"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2>Annonce soumise !</h2><p>Votre annonce est en attente de validation. Vous recevrez un email de confirmation sous 24h.</p><div class="suc-btns2"><button class="bsea" style="justify-content:center;" onclick="resetDepot()">Nouvelle annonce</button><button class="bseaol" onclick="go('immo')">Voir les annonces</button></div></div></div>
+  </div></main>
+  <div id="ft-depot"></div>
+</div>
+ 
+<!-- ══ PAGE ADMIN LOGIN ══ -->
+<div class="page" id="page-admin-login" style="padding:0;">
+  <div class="adm-login"><div class="adm-login-card">
+    <div class="adm-login-logo"><div class="adm-login-logo-ic"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div><span>Kélibia.info — Admin</span></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:.3rem;">Connexion administration</h2>
+    <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:1.25rem;">Gérez l'ensemble du site Kélibia.info</p>
+    <div class="adm-err" id="adm-err">Email ou mot de passe incorrect.</div>
+    <div class="adm-lf"><label class="adm-ll">Email</label><input class="adm-li" type="email" id="al-email" placeholder="admin@kelibia.info"/></div>
+    <div class="adm-lf"><label class="adm-ll">Mot de passe</label><input class="adm-li" type="password" id="al-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryLogin()"/></div>
+    <button class="adm-login-btn" onclick="tryLogin()">Se connecter</button>
+    <p style="font-size:.7rem;color:var(--muted);text-align:center;margin-top:.85rem;">Démo : admin@kelibia.info / kelibia2025</p>
+  </div></div>
+</div>
+ 
+<!-- ══ PAGE ADMIN DASHBOARD ══ -->
+<div class="page" id="page-admin" style="padding:0;">
+  <div class="adm-wrap">
+    <!-- SIDEBAR -->
+    <aside class="adm-sb">
+      <div class="adm-sb-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <div><span class="adm-sb-name">Kélibia.info</span><span class="adm-badge">ADMIN</span></div>
+      </div>
+      <nav class="adm-nav">
+        <div class="adm-nav-section">Général</div>
+        <button class="adm-ni on" id="an-dash" onclick="admSec('dash')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Tableau de bord</button>
+        <div class="adm-nav-section">Contenu</div>
+        <button class="adm-ni" id="an-bons" onclick="admSec('bons')"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Bons plans</button>
+        <button class="adm-ni" id="an-events" onclick="admSec('events')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Événements</button>
+        <button class="adm-ni" id="an-annuaire" onclick="admSec('annuaire')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Annuaire</button>
+        <button class="adm-ni" id="an-immo" onclick="admSec('immo')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Immobilier</button>
+        <div class="adm-nav-section">Communauté</div>
+        <button class="adm-ni" id="an-users" onclick="admSec('users')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Utilisateurs</button>
+        <button class="adm-ni" id="an-pub" onclick="admSec('pub')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Publicités</button>
+        <div class="adm-nav-section">Paramètres</div>
+        <button class="adm-ni" id="an-imgs" onclick="admSec('imgs')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Images du site</button>
+        <button class="adm-ni" id="an-settings" onclick="admSec('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Paramètres</button>
+      </nav>
+      <div class="adm-lo">
+        <button onclick="go('home')" style="display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;margin-bottom:.5rem;"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Voir le site</button>
+        <button onclick="admLogout()" style="display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Déconnexion</button>
+      </div>
+    </aside>
+ 
+    <!-- MAIN -->
+    <div class="adm-main">
+      <div class="adm-topbar">
+        <h1 id="adm-title">Tableau de bord</h1>
+        <div style="display:flex;align-items:center;gap:.75rem;">
+          <span style="font-size:.8rem;color:var(--muted);">Bonjour, <strong>Admin</strong></span>
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--sea);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.78rem;font-weight:700;">A</div>
+        </div>
+      </div>
+      <div class="adm-content">
+ 
+        <!-- ── DASHBOARD ── -->
+        <div id="as-dash">
+          <div class="dash-g" style="grid-template-columns:repeat(4,1fr);">
+            <div class="dash-c"><div class="dash-c-ico" style="background:#eff6ff;color:#1e40af;"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div><div class="dash-c-num">47</div><div class="dash-c-lbl">Bons plans publiés</div></div>
+            <div class="dash-c"><div class="dash-c-ico" style="background:#f0fdf4;color:#166534;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="dash-c-num">6</div><div class="dash-c-lbl">Événements à venir</div></div>
+            <div class="dash-c"><div class="dash-c-ico" style="background:#fff7ed;color:#9a3412;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div class="dash-c-num">124</div><div class="dash-c-lbl">Annonces immo</div></div>
+            <div class="dash-c"><div class="dash-c-ico" style="background:#faf5ff;color:#6b21a8;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="dash-c-num">1 240</div><div class="dash-c-lbl">Membres</div></div>
+          </div>
+          <!-- En attente -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+            <div class="dash-c" style="flex-direction:column;align-items:flex-start;gap:.5rem;border-left:3px solid #ea580c;">
+              <div style="font-size:.78rem;font-weight:600;color:#ea580c;">En attente de validation</div>
+              <div style="display:flex;flex-direction:column;gap:.35rem;width:100%;">
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Bons plans</span><strong>2</strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Annonces immo</span><strong>7</strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Comptes pro</span><strong>1</strong></div>
+              </div>
+              <button class="abtn2 abtn2-ok" style="margin-top:.25rem;" onclick="admSec('bons')">Traiter maintenant</button>
+            </div>
+            <div class="dash-c" style="flex-direction:column;align-items:flex-start;gap:.5rem;border-left:3px solid var(--turq);">
+              <div style="font-size:.78rem;font-weight:600;color:var(--sea);">Statistiques du mois</div>
+              <div style="display:flex;flex-direction:column;gap:.35rem;width:100%;">
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Nouveaux membres</span><strong>+43</strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Avis publiés</span><strong>+28</strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>Annonces déposées</span><strong>+12</strong></div>
+              </div>
+            </div>
+          </div>
+          <!-- Dernières soumissions -->
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Dernières soumissions</h2></div>
+            <table class="adm-tbl"><thead><tr><th>Contenu</th><th>Type</th><th>Auteur</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Villa avec piscine vue mer</strong></td><td>Annonce immo</td><td>Kélibia Immo (Pro)</td><td>12/05/2025</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Rejeter</button></div></td></tr>
+              <tr><td><strong>Restaurant El Mansourah</strong></td><td>Bon plan</td><td>Karim T.</td><td>11/05/2025</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Rejeter</button></div></td></tr>
+              <tr><td><strong>Festival de la Mer 2025</strong></td><td>Événement</td><td>Mairie Kélibia</td><td>10/05/2025</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button></div></td></tr>
+              <tr><td><strong>Pharmacie Centrale</strong></td><td>Annuaire</td><td>Dr. Ben Amor</td><td>09/05/2025</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button></div></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+ 
+        <!-- ── BONS PLANS ── -->
+        <div id="as-bons" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Gestion des bons plans</h2><div style="display:flex;gap:.5rem;"><input class="adm-search" placeholder="Rechercher…" oninput="filterAdmTbl(this.value,'tb-bons')"/><button class="abtn2 abtn2-ok" onclick="go('ajouter')">+ Ajouter</button></div></div>
+            <table class="adm-tbl"><thead><tr><th>Nom</th><th>Catégorie</th><th>Note</th><th>Auteur</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="tb-bons">
+              <tr><td><strong>Fort de Kélibia</strong></td><td>Activités</td><td>★ 4.7</td><td>Sophie M.</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Plage de Kélibia</strong></td><td>Plages</td><td>★ 4.8</td><td>Marie L.</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Restaurant El Mansourah</strong></td><td>Restaurants</td><td>★ 4.5</td><td>Karim T.</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Rejeter</button></div></td></tr>
+              <tr><td><strong>Marché de Kélibia</strong></td><td>Commerces</td><td>★ 4.3</td><td>Admin</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Café Sidi Bou</strong></td><td>Restaurants</td><td>★ 4.4</td><td>Ahmed B.</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Rejeter</button></div></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+ 
+        <!-- ── ÉVÉNEMENTS ── -->
+        <div id="as-events" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Gestion des événements</h2><button class="abtn2 abtn2-ok" onclick="admAddEvent()">+ Ajouter un événement</button></div>
+            <table class="adm-tbl"><thead><tr><th>Titre</th><th>Catégorie</th><th>Date</th><th>Lieu</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Festival de la Mer de Kélibia</strong></td><td>Festival</td><td>15/06/2025</td><td>Plage principale</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Marché nocturne artisanal</strong></td><td>Marché</td><td>24/05/2025</td><td>Centre-ville</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Tournoi de pêche sportive</strong></td><td>Sport</td><td>10/05/2025</td><td>Port de pêche</td><td><span class="sbadge sr2">Passé</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Nuit du cinéma en plein air</strong></td><td>Culture</td><td>01/06/2025</td><td>Plage Mansourah</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Rejeter</button></div></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+ 
+        <!-- ── ANNUAIRE ── -->
+        <div id="as-annuaire" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Gestion de l'annuaire</h2><input class="adm-search" placeholder="Rechercher…" oninput="filterAdmTbl(this.value,'tb-annuaire')"/></div>
+            <table class="adm-tbl"><thead><tr><th>Nom</th><th>Catégorie</th><th>Téléphone</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="tb-annuaire">
+              <tr><td><strong>Pharmacie Centrale</strong></td><td>Services</td><td>+216 72 333 444</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Hôtel Mamounia Beach</strong></td><td>Hébergements</td><td>+216 72 222 333</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+              <tr><td><strong>Location de kayaks</strong></td><td>Activités</td><td>+216 72 111 222</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+ 
+        <!-- ── IMMOBILIER ── -->
+        <div id="as-immo" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Annonces immobilières</h2><input class="adm-search" placeholder="Rechercher…" oninput="filterAdmTbl(this.value,'tb-immo')"/></div>
+            <table class="adm-tbl"><thead><tr><th>Titre</th><th>Type</th><th>Prix</th><th>Agent</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="tb-immo"></tbody>
+          </div>
+        </div>
+ 
+        <!-- ── UTILISATEURS ── -->
+        <div id="as-users" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Utilisateurs & Comptes pro</h2><input class="adm-search" placeholder="Rechercher…" oninput="filterAdmTbl(this.value,'tb-users')"/></div>
+            <table class="adm-tbl"><thead><tr><th>Nom</th><th>Email</th><th>Type</th><th>Contributions</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="tb-users">
+              <tr><td><strong>Kélibia Immo</strong></td><td>contact@kelibia-immo.tn</td><td><span class="sbadge spro2">Agence Pro</span></td><td>14 annonces</td><td><span class="sbadge sa2">Validé</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Gérer</button></div></td></tr>
+              <tr><td><strong>CapBon Vacances</strong></td><td>info@capbon-vac.tn</td><td><span class="sbadge spro2">Pro</span></td><td>6 annonces</td><td><span class="sbadge sa2">Validé</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Gérer</button></div></td></tr>
+              <tr><td><strong>Promoteur Cap Bon</strong></td><td>info@capbon-promo.tn</td><td><span class="sbadge spro2">Promoteur</span></td><td>3 annonces</td><td><span class="sbadge sp2">En attente</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ok" onclick="approveTd(this)">Valider</button><button class="abtn2 abtn2-no" onclick="rejectTd(this)">Refuser</button></div></td></tr>
+              <tr><td><strong>Mohamed Ben Ali</strong></td><td>m.benali@gmail.com</td><td>Membre</td><td>2 avis</td><td><span class="sbadge sa2">Actif</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Gérer</button></div></td></tr>
+              <tr><td><strong>Sophie M.</strong></td><td>sophie@email.fr</td><td>Membre</td><td>5 avis</td><td><span class="sbadge sa2">Actif</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Gérer</button></div></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+ 
+        <!-- ── PUBLICITÉS ── -->
+        <div id="as-pub" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Espaces publicitaires</h2><button class="abtn2 abtn2-ok">+ Nouvelle pub</button></div>
+            <table class="adm-tbl"><thead><tr><th>Annonceur</th><th>Emplacement</th><th>Période</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Restaurant Le Phare</strong></td><td>Bande pub accueil</td><td>01/05 – 30/06/2025</td><td><span class="sbadge sa2">Actif</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Désactiver</button></div></td></tr>
+              <tr><td><strong>Kélibia Immo</strong></td><td>Sidebar fiche bon plan</td><td>01/05 – 31/05/2025</td><td><span class="sbadge sr2">Expiré</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Renouveler</button></div></td></tr>
+            </tbody></table>
+          </div>
+          <div class="adm-tc" style="margin-top:1rem;"><div class="adm-tc-h"><h2>Emplacements disponibles</h2></div>
+            <div style="padding:1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;">
+              <div style="background:var(--bg2);border:1px dashed var(--border);border-radius:var(--r);padding:.85rem;text-align:center;"><p style="font-size:.78rem;font-weight:600;color:var(--sea);margin-bottom:.3rem;">Accueil — bande pub</p><p style="font-size:.72rem;color:var(--muted);">Disponible</p></div>
+              <div style="background:var(--bg2);border:1px dashed var(--border);border-radius:var(--r);padding:.85rem;text-align:center;"><p style="font-size:.78rem;font-weight:600;color:var(--sea);margin-bottom:.3rem;">Fiche bon plan — sidebar</p><p style="font-size:.72rem;color:var(--muted);">Disponible</p></div>
+              <div style="background:var(--bg2);border:1px dashed var(--border);border-radius:var(--r);padding:.85rem;text-align:center;"><p style="font-size:.78rem;font-weight:600;color:var(--sea);margin-bottom:.3rem;">Page immobilier</p><p style="font-size:.72rem;color:var(--muted);">Disponible</p></div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- ── IMAGES ── -->
+        <div id="as-imgs" style="display:none;">
+          <div class="adm-tc"><div class="adm-tc-h"><h2>Images du site</h2><span style="font-size:.78rem;color:var(--muted);">Cliquez sur Remplacer pour changer une image</span></div>
+            <div class="img-grid2">
+              <div class="img-item2"><div class="img-item2-prev"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/hero-kelibia-b4XwMAwNAhc2z7ETEdiWkF.webp" alt="" onerror="this.parentElement.style.background='var(--bg2)'"/></div><div class="img-item2-body"><h4>Photo hero — Page d'accueil</h4><button class="img-replace-btn" onclick="admReplaceImg('hero-accueil')"><svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>Remplacer</button></div></div>
+              <div class="img-item2"><div class="img-item2-prev"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp" alt="" onerror="this.parentElement.style.background='var(--bg2)'"/></div><div class="img-item2-body"><h4>Photo CTA — Section plage</h4><button class="img-replace-btn" onclick="admReplaceImg('cta-plage')"><svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>Remplacer</button></div></div>
+              <div class="img-item2"><div class="img-item2-prev"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-fort-9qNGjKHZBqromt4JugQjkM.webp" alt="" onerror="this.parentElement.style.background='var(--bg2)'"/></div><div class="img-item2-body"><h4>Photo Fort de Kélibia</h4><button class="img-replace-btn" onclick="admReplaceImg('fort')"><svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>Remplacer</button></div></div>
+              <div class="img-item2"><div class="img-item2-prev" style="background:linear-gradient(135deg,#0c1c37,#1e4d8c);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;">Kélibia.info</span></div><div class="img-item2-body"><h4>Logo du site</h4><button class="img-replace-btn" onclick="admReplaceImg('logo')"><svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>Modifier</button></div></div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- ── PARAMÈTRES ── -->
+        <div id="as-settings" style="display:none;">
+          <div class="adm-tc" style="margin-bottom:1rem;">
+            <div class="adm-tc-h"><h2>Informations générales</h2><button class="abtn2 abtn2-ok" onclick="alert('Paramètres sauvegardés !')">Sauvegarder</button></div>
+            <div class="set-grid2">
+              <div class="set-field2"><label>Nom du site</label><input value="Kélibia.info"/></div>
+              <div class="set-field2"><label>Slogan</label><input value="La plateforme communautaire de Kélibia"/></div>
+              <div class="set-field2"><label>Email de contact</label><input value="contact@kelibia.info"/></div>
+              <div class="set-field2"><label>Téléphone</label><input value="+216 72 000 000"/></div>
+              <div class="set-field2"><label>Adresse</label><input value="Kélibia, Cap Bon, 8090 Tunisie"/></div>
+              <div class="set-field2"><label>Facebook</label><input value="https://facebook.com/kelibia.info"/></div>
+              <div class="set-field2"><label>Instagram</label><input value="https://instagram.com/kelibia.info"/></div>
+              <div class="set-field2"><label>WhatsApp contact</label><input value="+216 72 000 000"/></div>
+            </div>
+          </div>
+          <div class="adm-tc">
+            <div class="adm-tc-h"><h2>Sécurité — Accès admin</h2><button class="abtn2 abtn2-ok" onclick="alert('Mot de passe modifié !')">Enregistrer</button></div>
+            <div class="set-grid2" style="padding:1rem;">
+              <div class="set-field2"><label>Email admin</label><input type="email" value="admin@kelibia.info"/></div>
+              <div class="set-field2"><label>Nouveau mot de passe</label><input type="password" placeholder="Nouveau mot de passe…"/></div>
+              <div class="set-field2"><label>Confirmer le mot de passe</label><input type="password" placeholder="Confirmer…"/></div>
+            </div>
+          </div>
+        </div>
+ 
+      </div><!-- /adm-content -->
+    </div><!-- /adm-main -->
+  </div><!-- /adm-wrap -->
+</div>
+ 
+<!-- ══ FOOTER TEMPLATE ══ -->
+<template id="ft-tpl">
+<footer>
+  <div class="fpub"><div class="container"><div class="fpubbox"><p>Espace publicitaire</p><p>Votre publicité ici — <a onclick="go('contact')">Contactez-nous</a></p></div></div></div>
+  <div class="container"><div class="fgrid">
+    <div><div class="fbl"><div class="fbli"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div><span class="fbln">Kélibia.info</span></div><p class="fbd">La plateforme communautaire de Kélibia. Découvrez les meilleurs bons plans, restaurants, plages et services de la région.</p><div class="fsoc"><a href="https://facebook.com" class="fsocb" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://instagram.com" class="fsocb" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+    <div class="fcol"><h4>Catégories</h4><ul><li><button onclick="catGo('plage')">Plages</button></li><li><button onclick="catGo('restaurant')">Restaurants</button></li><li><button onclick="catGo('activite')">Activités</button></li><li><button onclick="catGo('commerce')">Commerces</button></li><li><button onclick="catGo('service')">Services</button></li><li><button onclick="catGo('hebergement')">Hébergements</button></li></ul></div>
+    <div class="fcol"><h4>Liens utiles</h4><ul><li><button onclick="go('home')">Accueil</button></li><li><button onclick="go('plans')">Tous les bons plans</button></li><li><button onclick="go('annuaire')">Annuaire des services</button></li><li><button onclick="go('ajouter')">Proposer un bon plan</button></li><li><button onclick="go('contact')">Contact & Publicité</button></li></ul></div>
+    <div class="fcol"><h4>Contact</h4><div class="fci"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Kélibia, Cap Bon<br>8090 Tunisie</span></div><div class="fci"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:contact@kelibia.info">contact@kelibia.info</a></div></div>
+  </div></div>
+  <div class="container fbot"><p>© 2025 Kélibia.info — Tous droits réservés</p><div class="fleg"><a href="#">Mentions légales</a><a href="#">Confidentialité</a></div></div>
+</footer>
+</template>
+<script>
+/* ══ DATA ══ */
+const CATS=[{id:'plage',label:'Plages',bc:'bp'},{id:'restaurant',label:'Restaurants',bc:'br'},{id:'activite',label:'Activités',bc:'ba'},{id:'commerce',label:'Commerces',bc:'bc'},{id:'service',label:'Services',bc:'bs'},{id:'hebergement',label:'Hébergements',bc:'bh'}];
+const PLANS=[
+  {id:1,title:'Fort de Kélibia',cat:'activite',desc:"Forteresse byzantine du VIe siècle dominant la mer Méditerranée. Vue panoramique exceptionnelle sur la côte, le cap Bon et par temps clair jusqu'à la Sicile. Site historique incontournable de Kélibia.",addr:'Colline de Kélibia, 8090 Kélibia',rating:4.7,rc:142,tags:['Histoire','Vue panoramique','Patrimoine'],featured:true,img:'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-fort-9qNGjKHZBqromt4JugQjkM.webp',map:'https://maps.google.com/?q=Fort+de+Kelibia+Tunisie'},
+  {id:2,title:'Plage de Kélibia',cat:'plage',desc:"Longue plage de sable fin avec des eaux turquoise cristallines. Idéale pour la baignade, le snorkeling et la détente. L'une des plus belles plages du cap Bon.",addr:'Plage principale, Kélibia',rating:4.8,rc:215,tags:['Baignade','Sable fin','Eau claire'],featured:true,img:'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp',map:'https://maps.google.com/?q=Plage+Kelibia+Tunisie'},
+  {id:3,title:'Restaurant El Mansourah',cat:'restaurant',desc:"Poissons et fruits de mer ultra-frais pêchés le matin même. Terrasse avec vue sur la mer. Spécialités : loup grillé, crevettes à l'ail, salade méchouia maison.",addr:'Port de pêche, Kélibia',phone:'+216 72 000 000',rating:4.5,rc:89,tags:['Poissons','Fruits de mer','Vue mer'],featured:true,img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',map:'https://maps.google.com/?q=Port+Kelibia+Tunisie'},
+  {id:4,title:'Marché de Kélibia',cat:'commerce',desc:"Marché hebdomadaire animé avec produits frais locaux, épices, artisanat et vêtements. Ambiance authentique tunisienne. Tous les mercredis et samedis matin.",addr:'Centre-ville, Kélibia',rating:4.3,rc:67,tags:['Marché','Produits locaux','Artisanat'],img:'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-market-Z3qpB7LumgYnpkqbgjGFeS.webp',map:'https://maps.google.com/?q=Marche+Kelibia+Tunisie'},
+  {id:5,title:'Location de kayaks',cat:'activite',desc:"Explorez la côte de Kélibia en kayak. Location à l'heure ou à la journée. Parcours guidés vers les grottes marines et les criques secrètes. Idéal pour tous niveaux.",addr:'Plage principale, Kélibia',phone:'+216 72 111 222',rating:4.6,rc:54,tags:['Kayak','Mer','Sport nautique'],img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',map:'https://maps.google.com/?q=Plage+Kelibia+Tunisie'},
+  {id:6,title:'Hôtel Mamounia Beach',cat:'hebergement',desc:"Hôtel 3 étoiles en bord de mer avec piscine, restaurant et accès direct à la plage. Chambres climatisées avec vue sur la Méditerranée. Petit-déjeuner inclus.",addr:'Route de la plage, Kélibia',phone:'+216 72 222 333',rating:4.2,rc:103,tags:['Hôtel','Piscine','Vue mer'],img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',map:'https://maps.google.com/?q=Hotel+Kelibia+Tunisie'},
+  {id:7,title:'Café Sidi Bou',cat:'restaurant',desc:"Café traditionnel tunisien avec thé à la menthe, café turc et pâtisseries orientales. Terrasse ombragée, ambiance décontractée. Point de rencontre des habitants.",addr:'Rue Habib Bourguiba, Kélibia',rating:4.4,rc:78,tags:['Café','Thé','Pâtisseries'],img:'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&q=80',map:'https://maps.google.com/?q=Centre+Kelibia+Tunisie'},
+  {id:8,title:'Pharmacie Centrale',cat:'service',desc:"Pharmacie ouverte 7j/7 avec service de garde la nuit. Personnel francophone et arabophone. Produits solaires, médicaments courants et parapharmacie.",addr:'Avenue Principale, Kélibia',phone:'+216 72 333 444',rating:4.1,rc:32,tags:['Santé','Garde','Parapharmacie'],img:'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80',map:'https://maps.google.com/?q=Pharmacie+Kelibia+Tunisie'},
+  {id:9,title:'Plage Mansourah',cat:'plage',desc:"Plage sauvage et préservée à 3 km au nord de Kélibia. Eaux peu profondes idéales pour les familles. Moins fréquentée, cadre naturel exceptionnel.",addr:'Route de Mansourah, Kélibia',rating:4.6,rc:91,tags:['Plage sauvage','Famille','Nature'],img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',map:'https://maps.google.com/?q=Plage+Mansourah+Kelibia'},
+];
+const REVIEWS=[
+  {id:1,planId:1,author:'Sophie M.',rating:5,comment:"Vue imprenable sur la mer ! Le fort est bien conservé et l'histoire est fascinante. À faire absolument lors d'un séjour à Kélibia.",date:'2024-08-15'},
+  {id:2,planId:1,author:'Ahmed B.',rating:4,comment:"Magnifique site historique. Prévoir de bonnes chaussures pour monter. Coucher de soleil depuis les remparts : inoubliable.",date:'2024-07-22'},
+  {id:3,planId:2,author:'Marie L.',rating:5,comment:"Eau cristalline, sable blanc, peu de monde en dehors du mois d'août. La plus belle plage du cap Bon sans hésitation !",date:'2024-09-03'},
+  {id:4,planId:3,author:'Karim T.',rating:5,comment:"Le meilleur poisson de Kélibia ! Le loup grillé était parfait, la vue sur le port magnifique. Prix raisonnables.",date:'2024-08-28'},
+];
+const EVENTS=[
+  {id:1,title:'Festival de la Mer de Kélibia',desc:"Célébration annuelle de la culture maritime de Kélibia avec musique, danse, gastronomie et exposition d'art local. Événement incontournable du calendrier touristique du cap Bon.",date:'2025-06-15',time:'18:00',loc:'Plage principale de Kélibia',cat:'Festival',img:'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80',attendees:2500,featured:true},
+  {id:2,title:"Marché nocturne de l'artisanat",desc:"Marché artisanal nocturne avec produits locaux, souvenirs, bijoux et objets d'art. Ambiance festive avec musique traditionnelle et restauration.",date:'2025-05-24',time:'19:00',loc:'Centre-ville, Kélibia',cat:'Marché',img:'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=800&q=80',attendees:800},
+  {id:3,title:'Tournoi de pêche sportive',desc:"Compétition de pêche en mer ouverte aux amateurs et professionnels. Départ du port de Kélibia, prix et trophées à la clé.",date:'2025-05-10',time:'06:00',loc:'Port de pêche, Kélibia',cat:'Sport',img:'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',attendees:120},
+  {id:4,title:'Visite guidée du Fort de Kélibia',desc:"Visite historique guidée du fort byzantin avec explications sur son architecture et son rôle stratégique. Départ toutes les heures.",date:'2025-05-17',time:'10:00',loc:'Fort de Kélibia',cat:'Visite guidée',img:'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-fort-9qNGjKHZBqromt4JugQjkM.webp',attendees:45},
+  {id:5,title:'Cours de cuisine méditerranéenne',desc:"Atelier culinaire pour apprendre à préparer les plats traditionnels tunisiens avec un chef local. Dégustation incluse.",date:'2025-05-20',time:'15:00',loc:'Centre culturel, Kélibia',cat:'Atelier',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',attendees:30},
+  {id:6,title:'Nuit du cinéma en plein air',desc:"Projection de films tunisiens et méditerranéens sous les étoiles. Ambiance festive, restauration et boissons disponibles.",date:'2025-06-01',time:'20:00',loc:'Plage de Mansourah',cat:'Culture',img:'https://images.unsplash.com/photo-1489599849228-ed4dc59b2e9b?w=800&q=80',attendees:500},
+];
+ 
+/* ══ HELPERS ══ */
+function stH(r,sz){const s=sz==='md'?16:12;return Array.from({length:5},(_,i)=>`<svg class="${i<Math.round(r)?'sf':'se'}" style="width:${s}px;height:${s}px;fill:currentColor;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`).join('');}
+function getC(id){return CATS.find(c=>c.id===id)||{label:id,bc:''};}
+function fmtD(d){return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
+function isUp(d){return new Date(d)>=new Date(new Date().toDateString());}
+function foot(id){const t=document.getElementById('ft-tpl'),c=document.getElementById(id);if(t&&c)c.innerHTML=t.innerHTML;}
+ 
+/* ══ PLAN CARD ══ */
+function pCard(p,compact){
+  const c=getC(p.cat),h=compact?'160px':'200px';
+  return `<article class="pc" onclick="showP(${p.id})">
+    <div class="piw" style="height:${h};">
+      ${p.img?`<img src="${p.img}" alt="${p.title}" loading="lazy"/>`:`<div class="pip"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>`}
+      <div class="ptl"><span class="badge ${c.bc}">${c.label}</span></div>
+      ${p.featured?`<div class="ptr"><span class="bf">★ Coup de cœur</span></div>`:''}
+    </div>
+    <div class="pb">
+      <h3 class="pt2">${p.title}</h3>
+      ${!compact?`<p class="pd">${p.desc}</p>`:''}
+      <div class="pf">
+        <div class="pr"><div class="strs">${stH(p.rating)}</div><span class="prn">${p.rating.toFixed(1)}</span><span class="prc">(${p.rc})</span></div>
+        <div class="ploc"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>${p.addr.split(',')[0]}</div>
+      </div>
+    </div>
+  </article>`;
+}
+ 
+/* ══ EVENT CARD ══ */
+function eCard(ev){
+  const up=isUp(ev.date),d=new Date(ev.date),ds=d.toLocaleDateString('fr-FR',{day:'numeric',month:'long'});
+  return `<article class="evcard" onclick="showEv(${ev.id})">
+    <div class="evimg">
+      ${ev.img?`<img src="${ev.img}" alt="${ev.title}" loading="lazy"/>`:`<div class="eviph"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>`}
+      <span class="evcb">${ev.cat}</span>
+      ${ev.featured?`<div style="position:absolute;top:.75rem;right:.75rem;"><span class="bf">À ne pas manquer</span></div>`:''}
+      ${!up?`<div class="evpov"><span>Passé</span></div>`:''}
+    </div>
+    <div class="evbody">
+      <h3 class="evt">${ev.title}</h3>
+      <p class="evd">${ev.desc}</p>
+      <div class="evmeta">
+        <div class="evmr"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${ds}<svg viewBox="0 0 24 24" style="margin-left:.25rem;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev.time}</div>
+        <div class="evmr"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>${ev.loc}</div>
+        ${ev.attendees?`<div class="evmr"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>${ev.attendees} personnes attendues</div>`:''}
+      </div>
+    </div>
+  </article>`;
+}
+ 
+/* ══ NAVIGATION ══ */
+function go(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('act'));
+  document.getElementById('page-'+p).classList.add('act');
+  document.querySelectorAll('.nl').forEach(el=>el.classList.remove('on'));
+  const nl=document.getElementById('nl-'+p);if(nl)nl.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='home')initHome();
+  if(p==='immo'){renderImmo();foot('ft-immo');}
+  if(p==='fiche-immo')foot('ft-fiche-immo');
+  if(p==='depot')foot('ft-depot');
+  if(p==='admin-login'||p==='admin'){document.getElementById('main-nav')&&(document.getElementById('main-nav').style.display=(p==='admin-login'||p==='admin')?'none':'block');}
+  if(p==='plans')initPlans();
+  if(p==='annuaire')initAnn();
+  if(p==='events')initEv();
+  foot('ft-'+p);
+}
+function toggleMob(){document.getElementById('mob').classList.toggle('open');}
+ 
+/* ══ HOME ══ */
+function initHome(){
+  const fg=document.getElementById('home-feat');
+  if(fg)fg.innerHTML=PLANS.filter(p=>p.featured).slice(0,3).map(p=>pCard(p,false)).join('');
+  const ag=document.getElementById('home-all');
+  if(ag)ag.innerHTML=PLANS.slice(0,6).map(p=>pCard(p,true)).join('');
+  foot('ft-home');
+}
+function heroSearch(e){e.preventDefault();const q=document.getElementById('hq').value.trim();if(q){window._hq=q;go('plans');}}
+function tagS(t){window._hq=t;go('plans');}
+ 
+/* ══ BONS PLANS ══ */
+let aCat=null;
+function initPlans(){
+  const pp=document.getElementById('cat-pills');
+  if(pp)pp.innerHTML=`<button class="pill ${!aCat?'on':''}" onclick="setCat(null,this)">Tout</button>`+CATS.map(c=>`<button class="pill ${aCat===c.id?'on':''}" onclick="setCat('${c.id}',this)">${c.label}</button>`).join('');
+  if(window._hq){const el=document.getElementById('pq');if(el)el.value=window._hq;window._hq=null;}
+  renderP();foot('ft-plans');
+}
+function setCat(id,btn){aCat=id;document.querySelectorAll('#cat-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');renderP();}
+function catGo(id){aCat=id;go('plans');}
+function renderP(){
+  const q=(document.getElementById('pq')||{value:''}).value.toLowerCase();
+  const sort=(document.getElementById('psort')||{value:'rating'}).value;
+  const clr=document.getElementById('pclr');if(clr)clr.classList.toggle('show',q.length>0);
+  let res=[...PLANS];
+  if(aCat)res=res.filter(p=>p.cat===aCat);
+  if(q)res=res.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||(p.tags||[]).some(t=>t.toLowerCase().includes(q)));
+  if(sort==='rating')res.sort((a,b)=>b.rating-a.rating);
+  const grid=document.getElementById('pgrid'),empty=document.getElementById('pempty'),lbl=document.getElementById('prlbl');
+  if(!grid)return;
+  if(!res.length){grid.innerHTML='';if(empty)empty.style.display='block';if(lbl)lbl.textContent='';}
+  else{if(empty)empty.style.display='none';grid.innerHTML=res.map(p=>pCard(p,false)).join('');
+    if(lbl){let t=`${res.length} résultat${res.length>1?'s':''}`;if(aCat)t+=` dans "${CATS.find(c=>c.id===aCat)?.label}"`;if(q)t+=` pour "${q}"`;lbl.textContent=t;}}
+}
+function clearPQ(){const el=document.getElementById('pq');if(el)el.value='';renderP();}
+function resetP(){aCat=null;clearPQ();document.querySelectorAll('#cat-pills .pill').forEach((p,i)=>{p.classList.toggle('on',i===0);});}
+ 
+/* ══ FICHE ══ */
+let rvR=5;
+function showP(id){
+  const p=PLANS.find(x=>x.id===id);if(!p)return;
+  const c=getC(p.cat);
+  // Hero
+  const img=document.getElementById('fi-img');
+  if(img){img.src=p.img||'';img.style.display=p.img?'block':'none';}
+  const bd=document.getElementById('fi-badge');if(bd)bd.innerHTML=`<span class="badge ${c.bc}">${c.label}</span>`;
+  const h1=document.getElementById('fi-h1');if(h1)h1.textContent=p.title;
+  // Body
+  const d=document.getElementById('fi-desc');if(d)d.textContent=p.desc;
+  const tr=document.getElementById('fi-tags');if(tr)tr.innerHTML=(p.tags||[]).map(t=>`<span class="ftag">${t}</span>`).join('');
+  // Reviews
+  const revs=REVIEWS.filter(r=>r.planId===p.id);
+  const rh=document.getElementById('rv-h');if(rh)rh.textContent=`Avis (${revs.length})`;
+  const rl=document.getElementById('rv-list');
+  if(rl)rl.innerHTML=revs.length===0?`<p style="font-size:.85rem;color:var(--muted);">Aucun avis pour l'instant. Soyez le premier !</p>`:revs.map(r=>`<div class="rvi"><div class="rvtop"><div><span class="rva">${r.author}</span><br><span class="rvd">${fmtD(r.date)}</span></div><div class="strs">${stH(r.rating)}</div></div><p class="rvt">${r.comment}</p><button class="rvh2"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> Utile</button></div>`).join('');
+  // Stars
+  rvR=5;
+  const sp=document.getElementById('spr');
+  if(sp)sp.innerHTML=Array.from({length:5},(_,i)=>`<button class="spb" onclick="pickR(${i+1})"><svg id="rs-${i+1}" style="width:24px;height:24px;fill:${i<5?'#f59e0b':'#e5e7eb'};" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>`).join('');
+  // Sidebar
+  const sr=document.getElementById('sb-r');if(sr)sr.textContent=p.rating.toFixed(1);
+  const ss=document.getElementById('sb-stars');if(ss)ss.innerHTML=`<div class="strs md">${stH(p.rating,'md')}</div>`;
+  const sc=document.getElementById('sb-ct');if(sc)sc.textContent=`${p.rc} avis`;
+  const sb=document.getElementById('sb-bar');if(sb)sb.style.width=`${(p.rating/5)*100}%`;
+  const si=document.getElementById('sb-info');
+  if(si)si.innerHTML=`<div class="inforow"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>${p.addr}</span></div>${p.phone?`<div class="inforow"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.22 6.22l.95-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:${p.phone}">${p.phone}</a></div>`:''}${p.map?`<div class="inforow"><svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><a href="${p.map}" target="_blank" rel="noopener">Voir sur la carte</a></div>`:''}`;
+  // Related
+  const rel=PLANS.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,3);
+  const reld=document.getElementById('fi-related');
+  if(reld)reld.innerHTML=rel.length?`<h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:1.25rem;">Dans la même catégorie</h2><div class="pg">${rel.map(x=>pCard(x,true)).join('')}</div>`:'';
+  go('fiche');
+}
+function pickR(n){rvR=n;for(let i=1;i<=5;i++){const el=document.getElementById('rs-'+i);if(el)el.style.fill=i<=n?'#f59e0b':'#e5e7eb';}}
+function submitRv(){
+  const n=(document.getElementById('rv-name')||{value:''}).value.trim();
+  const c=(document.getElementById('rv-cmt')||{value:''}).value.trim();
+  if(!n||!c){alert('Veuillez remplir tous les champs.');return;}
+  const el1=document.getElementById('rv-name'),el2=document.getElementById('rv-cmt');
+  if(el1)el1.value='';if(el2)el2.value='';
+  alert('Merci pour votre avis ! Il sera publié après modération.');
+}
+ 
+/* ══ ANNUAIRE ══ */
+const ACATS=['commerce','service','restaurant','hebergement'];
+let annC=null;
+function initAnn(){
+  const pp=document.getElementById('ann-pills');
+  if(pp)pp.innerHTML=`<button class="pill ${!annC?'on':''}" onclick="setAC(null,this)">Tout</button>`+CATS.filter(c=>ACATS.includes(c.id)).map(c=>`<button class="pill ${annC===c.id?'on':''}" onclick="setAC('${c.id}',this)">${c.label}</button>`).join('');
+  renderA();foot('ft-ann');
+}
+function setAC(id,btn){annC=id;document.querySelectorAll('#ann-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');renderA();}
+function renderA(){
+  const q=(document.getElementById('aq')||{value:''}).value.toLowerCase();
+  let res=PLANS.filter(p=>ACATS.includes(p.cat));
+  if(annC)res=res.filter(p=>p.cat===annC);
+  if(q)res=res.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||p.addr.toLowerCase().includes(q));
+  const g=document.getElementById('agrid'),e=document.getElementById('aempty');
+  if(!g)return;
+  if(!res.length){g.innerHTML='';if(e)e.style.display='block';return;}
+  if(e)e.style.display='none';
+  g.innerHTML=res.map(en=>{const c=getC(en.cat);return`<div class="ac" onclick="showP(${en.id})">
+    <div class="ath">${en.img?`<img src="${en.img}" alt="${en.title}" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--bg2);"></div>'}</div>
+    <div class="ain">
+      <div class="atop"><h3 class="aname">${en.title}</h3><span class="badge ${c.bc}">${c.label}</span></div>
+      <div class="asr"><div class="strs">${stH(en.rating)}</div><span class="arn">${en.rating.toFixed(1)}</span><span class="arc">(${en.rc} avis)</span></div>
+      <div class="aloc"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>${en.addr}</div>
+      ${en.phone?`<div class="aph"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.22 6.22l.95-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${en.phone}</div>`:''}
+    </div>
+  </div>`;}).join('');
+}
+ 
+/* ══ ÉVÉNEMENTS ══ */
+let calD=new Date(2025,4,1),calF=null;
+function initEv(){renderCal();renderEv();foot('ft-events');}
+function calP(){calD=new Date(calD.getFullYear(),calD.getMonth()-1,1);renderCal();}
+function calN(){calD=new Date(calD.getFullYear(),calD.getMonth()+1,1);renderCal();}
+function renderCal(){
+  const mn=document.getElementById('cal-mon');
+  if(mn)mn.textContent=calD.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const g=document.getElementById('cal-grid');if(!g)return;
+  const first=new Date(calD.getFullYear(),calD.getMonth(),1);
+  const last=new Date(calD.getFullYear(),calD.getMonth()+1,0);
+  const sw=(first.getDay()+6)%7;
+  const em={};EVENTS.forEach(ev=>{const d=new Date(ev.date);if(d.getMonth()===calD.getMonth()&&d.getFullYear()===calD.getFullYear()){const k=ev.date;if(!em[k])em[k]=[];em[k].push(ev);}});
+  let h='';
+  for(let i=0;i<sw;i++)h+=`<div class="cald ce"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const ds=`${calD.getFullYear()}-${String(calD.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const evs=em[ds]||[];
+    const today=new Date().toDateString()===new Date(calD.getFullYear(),calD.getMonth(),d).toDateString();
+    h+=`<div class="cald${today?' ct':''}" onclick="selCal('${ds}')">
+      <span class="cdn">${d}</span>
+      ${evs.length?`<div class="cdots">${evs.slice(0,2).map(()=>`<span class="cdot"></span>`).join('')}${evs.length>2?`<span style="font-size:9px;color:var(--muted);">+${evs.length-2}</span>`:''}</div>`:''}
+    </div>`;
+  }
+  g.innerHTML=h;
+}
+function selCal(d){calF=d;const rb=document.getElementById('cal-reset');if(rb)rb.style.display='flex';const lb=document.getElementById('cal-lbl');if(lb)lb.textContent=new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long'});renderEv();}
+function resetCal(){calF=null;const rb=document.getElementById('cal-reset');if(rb)rb.style.display='none';const lb=document.getElementById('cal-lbl');if(lb)lb.textContent='';renderEv();}
+function renderEv(){
+  const sort=(document.getElementById('evsort')||{value:'date'}).value;
+  const today=new Date(new Date().toDateString());
+  let up=EVENTS.filter(e=>new Date(e.date)>=today);
+  let past=EVENTS.filter(e=>new Date(e.date)<today);
+  if(calF){up=up.filter(e=>e.date===calF);past=[];}
+  if(sort==='date')up.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  else up.sort((a,b)=>(b.attendees||0)-(a.attendees||0));
+  past.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const g=document.getElementById('evgrid'),em=document.getElementById('evempty'),ct=document.getElementById('ev-ct'),ps=document.getElementById('past-sec'),pg=document.getElementById('past-grid');
+  if(!g)return;
+  if(!up.length){g.innerHTML='';if(em)em.style.display='block';}
+  else{if(em)em.style.display='none';g.innerHTML=up.map(e=>eCard(e)).join('');}
+  if(ct)ct.textContent=`${up.length} événement${up.length>1?'s':''}`;
+  if(!calF&&past.length){if(ps)ps.style.display='block';if(pg)pg.innerHTML=past.slice(0,4).map(e=>eCard(e)).join('');}
+  else{if(ps)ps.style.display='none';}
+}
+function showEv(id){const ev=EVENTS.find(e=>e.id===id);if(!ev)return;const d=new Date(ev.date);alert(`${ev.title}\n\n${ev.desc}\n\nDate : ${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}\nHeure : ${ev.time}\nLieu : ${ev.loc}${ev.attendees?'\nParticipants attendus : ~'+ev.attendees:''}`);}
+ 
+/* ══ AJOUTER ══ */
+let fType='bp';
+function setFT(t){fType=t;document.getElementById('ft-bp').className='ftbtn'+(t==='bp'?' on':'');document.getElementById('ft-co').className='ftbtn'+(t==='co'?' on':'');}
+function submitF(){
+  const ids=['f-title','f-cat','f-desc','f-addr','f-name','f-email'];
+  for(const id of ids){const el=document.getElementById(id);if(!el||!el.value.trim()){alert('Veuillez remplir tous les champs obligatoires.');return;}}
+  document.getElementById('form-sec').style.display='none';
+  document.getElementById('form-suc').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetF(){
+  ['f-title','f-cat','f-desc','f-addr','f-tel','f-web','f-name','f-email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('form-suc').style.display='none';
+  document.getElementById('form-sec').style.display='block';
+  setFT('bp');
+}
+ 
+/* ══ CONTACT ══ */
+function submitC(){
+  const n=(document.getElementById('c-name')||{value:''}).value.trim();
+  const e=(document.getElementById('c-email')||{value:''}).value.trim();
+  const m=(document.getElementById('c-msg')||{value:''}).value.trim();
+  if(!n||!e||!m){alert('Veuillez remplir tous les champs.');return;}
+  document.getElementById('c-form').style.display='none';
+  document.getElementById('c-suc').style.display='block';
+}
+ 
+ 
+/* ══ IMMO JS ══ */
+const ANNONCES=[
+  {id:1,type:"vente",cat:"villa",title:"Villa avec piscine vue mer",prix:850000,surface:280,rooms:5,sdb:3,desc:"Magnifique villa contemporaine avec vue panoramique sur la Méditerranée. Piscine chauffée, jardin paysager, terrasse de 60m². Matériaux haut de gamme. À 5 minutes de la plage.",addr:"Route de Mansourah, Kélibia",agent:"Kélibia Immo",phone:"+216 72 100 200",equip:["Piscine","Vue mer","Jardin","Climatisation","Terrasse","Sécurité"],img:"https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=800&q=80",pro:true},
+  {id:2,type:"vente",cat:"terrain",title:"Terrain constructible bord de mer",prix:320000,surface:800,rooms:0,sdb:0,desc:"Terrain de 800m² avec façade mer, viabilisé, permis de construire accordé. Situation exceptionnelle à 50m de la plage. Idéal pour villa ou résidence.",addr:"Bord de mer, Kélibia",agent:"Ben Salem Immobilier",phone:"+216 72 200 300",equip:["Vue mer"],img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80",pro:false},
+  {id:3,type:"location",cat:"appartement",title:"Appartement meublé centre-ville",prix:800,surface:90,rooms:3,sdb:1,desc:"Appartement entièrement meublé au 3ème étage avec ascenseur. Cuisine équipée, salon lumineux, balcon vue sur la ville. Charges comprises.",addr:"Centre-ville, Kélibia",agent:"Mohamed Trabelsi",phone:"+216 55 300 400",equip:["Meublé","Climatisation","Internet"],img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",pro:false},
+  {id:4,type:"vacances",cat:"villa",title:"Villa de vacances avec piscine",prix:350,surface:200,rooms:4,sdb:2,desc:"Villa idéale pour les familles, disponible juillet-août. Piscine privée, jardin, 4 chambres, climatisation. À 10 min des plages.",addr:"Résidence Les Palmiers, Kélibia",agent:"CapBon Vacances",phone:"+216 72 400 500",equip:["Piscine","Jardin","Climatisation","Meublé","Internet"],img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80",pro:true},
+  {id:5,type:"vente",cat:"appartement",title:"Appartement F3 résidence sécurisée",prix:195000,surface:95,rooms:3,sdb:1,desc:"Appartement dans résidence fermée avec gardiennage 24h/24. Parking sous-terrain, piscine commune. Vue mer depuis les chambres.",addr:"Résidence La Méditerranée, Kélibia",agent:"Kélibia Immo",phone:"+216 72 100 200",equip:["Sécurité","Piscine","Vue mer"],img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",pro:true},
+  {id:6,type:"location",cat:"villa",title:"Villa à louer saison estivale",prix:1200,surface:160,rooms:4,sdb:2,desc:"Grande villa pour la saison été avec jardin et barbecue. 4 chambres, grande terrasse, parking privé. Calme et verdure.",addr:"Route de Kerkouane, Kélibia",agent:"Agence Soleil",phone:"+216 98 500 600",equip:["Jardin","Terrasse","Meublé"],img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",pro:false},
+  {id:7,type:"vente",cat:"ferme",title:"Ferme agricole avec oliviers",prix:280000,surface:5000,rooms:2,sdb:1,desc:"Ferme de 5000m² avec 200 oliviers centenaires, maison de gardien, puits artésien. Idéale pour investissement ou eco-tourisme.",addr:"Ain Tkhima, Kélibia",agent:"Mohamed Khelifi",phone:"+216 72 600 700",equip:[],img:"https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800&q=80",pro:false},
+  {id:8,type:"vacances",cat:"appartement",title:"Studio vue mer tout confort",prix:120,surface:45,rooms:1,sdb:1,desc:"Studio entièrement rénové avec vue mer directe depuis la terrasse. Cuisine équipée, lit double, WiFi. Disponible à la semaine.",addr:"Front de mer, Kélibia",agent:"CapBon Vacances",phone:"+216 72 400 500",equip:["Vue mer","Meublé","Climatisation","Internet"],img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",pro:true},
+];
+const ADM_PENDING=[
+  {id:101,title:"Maison centre Kélibia",type:"vente",author:"Ali Ben Salah",date:"12/05/2025"},
+  {id:102,title:"Local commercial à louer",type:"location",author:"Agence Prima",date:"11/05/2025"},
+  {id:103,title:"Villa neuve lotissement El Amel",type:"vente",author:"Promoteur Cap",date:"10/05/2025"},
+];
+function fmtP(p,t){
+  const sub=t==="location"?"/mois":t==="vacances"?"/nuit":"";
+  return p.toLocaleString("fr-FR")+" DT"+(sub?'<sub style="font-size:.72rem;font-weight:400;color:var(--muted);">'+sub+'</sub>':"");
+}
+function bCls(t){return t==="vente"?"bv":t==="location"?"bl":"bva";}
+function bLbl(t){return t==="vente"?"Vente":t==="location"?"Location":"Vacances";}
+let iTab="all";
+function setItab(t,btn){
+  iTab=t;
+  document.querySelectorAll(".itab").forEach(b=>b.classList.remove("on"));
+  const el=btn||document.getElementById("itab-"+t);if(el)el.classList.add("on");
+  renderImmo();
+}
+function renderImmo(){
+  const st=(document.getElementById("is-type")||{value:""}).value;
+  const sc=(document.getElementById("is-cat")||{value:""}).value;
+  const sb=parseInt((document.getElementById("is-budget")||{value:""}).value)||0;
+  const fb=(document.getElementById("if-bien")||{value:""}).value;
+  const fr=parseInt((document.getElementById("if-rooms")||{value:"0"}).value)||0;
+  const fsm=parseInt((document.getElementById("if-sm")||{value:""}).value)||0;
+  const fsx=parseInt((document.getElementById("if-sx")||{value:""}).value)||999999;
+  const fpm=parseInt((document.getElementById("if-pm")||{value:""}).value)||0;
+  const fpx=parseInt((document.getElementById("if-px")||{value:""}).value)||99999999;
+  const fm=(document.getElementById("if-mer")||{value:""}).value;
+  let res=[...ANNONCES];
+  const tf=st||iTab;
+  if(tf&&tf!=="all")res=res.filter(a=>a.type===tf);
+  const cf=sc||fb;
+  if(cf)res=res.filter(a=>a.cat===cf.toLowerCase());
+  if(sb)res=res.filter(a=>a.prix<=sb);
+  if(fr>0)res=res.filter(a=>a.rooms>=fr);
+  if(fsm>0)res=res.filter(a=>a.surface>=fsm);
+  if(fsx<999999)res=res.filter(a=>a.surface<=fsx);
+  if(fpm>0)res=res.filter(a=>a.prix>=fpm);
+  if(fpx<99999999)res=res.filter(a=>a.prix<=fpx);
+  if(fm)res=res.filter(a=>a.equip&&a.equip.includes("Vue mer"));
+  const g=document.getElementById("immo-grid"),e=document.getElementById("immo-empty"),ct=document.getElementById("immo-count");
+  if(!g)return;
+  if(!res.length){g.innerHTML="";if(e)e.style.display="block";}
+  else{
+    if(e)e.style.display="none";
+    g.innerHTML=res.map(a=>`<div class="ann-card" onclick="showImmo(${a.id})">
+      <div class="aimg">
+        ${a.img?`<img src="${a.img}" alt="${a.title}" loading="lazy"/>`:'<div class="aimg-ph"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>'}
+        <span class="atype ${bCls(a.type)}">${bLbl(a.type)}</span>
+        ${a.pro?'<span class="apro">PRO</span>':""}
+        <button class="afav" onclick="event.stopPropagation();this.classList.toggle('on')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="ann-body">
+        <div class="ann-price">${fmtP(a.prix,a.type)}</div>
+        <div class="ann-title2">${a.title}</div>
+        <div class="ann-aloc"><svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>${a.addr}</div>
+        <div class="ann-specs2">
+          ${a.surface?`<div class="ann-spec2"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><b>${a.surface}</b>&nbsp;m²</div>`:""}
+          ${a.rooms?`<div class="ann-spec2"><svg viewBox="0 0 24 24"><path d="M3 22V12h18v10M9 22v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg><b>${a.rooms}</b>&nbsp;ch.</div>`:""}
+          ${a.sdb?`<div class="ann-spec2"><svg viewBox="0 0 24 24"><path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-3z"/><line x1="2" y1="12" x2="22" y2="12"/></svg><b>${a.sdb}</b>&nbsp;SdB</div>`:""}
+        </div>
+      </div>
+    </div>`).join("");
+  }
+  if(ct)ct.textContent=`${res.length} annonce${res.length>1?"s":""} trouvée${res.length>1?"s":""}`;
+}
+function resetImmo(){
+  ["is-type","is-cat","is-budget","if-bien","if-rooms","if-sm","if-sx","if-pm","if-px","if-mer"].forEach(id=>{const el=document.getElementById(id);if(el)el.value=el.tagName==="SELECT"?"":"";});
+  setItab("all",document.getElementById("itab-all"));
+}
+function showImmo(id){
+  const a=ANNONCES.find(x=>x.id===id);if(!a)return;
+  const img=document.getElementById("fim-img");if(img)img.src=a.img||"";
+  const bd=document.getElementById("fim-badge");if(bd)bd.innerHTML=`<span class="atype ${bCls(a.type)}">${bLbl(a.type)}</span>`;
+  const h1=document.getElementById("fim-title");if(h1)h1.textContent=a.title;
+  const pr=document.getElementById("fim-price");if(pr)pr.innerHTML=fmtP(a.prix,a.type);
+  const ps=document.getElementById("fim-price-sub");if(ps)ps.textContent="Prix "+(a.nego?"négociable":"ferme");
+  const dc=document.getElementById("fim-desc");if(dc)dc.textContent=a.desc;
+  const ag=document.getElementById("fim-agent");if(ag)ag.textContent=a.agent;
+  const ph=document.getElementById("fim-phone");if(ph)ph.textContent=a.phone;
+  const av=document.getElementById("fim-av");if(av)av.textContent=a.agent.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  const sp=document.getElementById("fim-specs");
+  if(sp)sp.innerHTML=[
+    a.surface?{ic:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',lb:"Surface",v:a.surface+" m²"}:null,
+    a.rooms?{ic:'<path d="M3 22V12h18v10M9 22v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/>',lb:"Chambres",v:a.rooms}:null,
+    a.sdb?{ic:'<path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-3z"/><line x1="2" y1="12" x2="22" y2="12"/>',lb:"Salles de bain",v:a.sdb}:null,
+  ].filter(Boolean).map(s=>`<div class="spec2-it"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--sea);stroke-width:2;fill:none;">${s.ic}</svg><span class="spec2-lbl">${s.lb}</span><span class="spec2-val">${s.v}</span></div>`).join("");
+  const eq=document.getElementById("fim-equip");
+  if(eq)eq.innerHTML=(a.equip||[]).map(e=>`<div class="equip2-it"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>${e}</div>`).join("");
+  const ew=document.getElementById("fim-equip-wrap");if(ew)ew.style.display=(a.equip&&a.equip.length)?"block":"none";
+  go("fiche-immo");foot("ft-fiche-immo");
+}
+/* DEPOT */
+let dStep=1,dType="vente",dProfil="part";
+function setDP(p){dProfil=p;["part","age","pro"].forEach(x=>{const el=document.getElementById("dp-"+x);if(el)el.className="type-btn3"+(p===x?" on":"");});}
+function setDT(t){dType=t;[["v","vente"],["l","location"],["va","vacances"]].forEach(([x,v])=>{const el=document.getElementById("dt-"+x);if(el)el.className="type-btn3"+(t===v?" on":"");});}
+function dNext(){
+  if(dStep>=5){submitDepot();return;}
+  document.getElementById("ds"+dStep).style.display="none";
+  document.getElementById("dst"+dStep).className="dstep done";
+  dStep++;
+  document.getElementById("ds"+dStep).style.display="block";
+  document.getElementById("dst"+dStep).className="dstep act";
+  document.getElementById("dp-back").style.visibility="visible";
+  if(dStep===5)document.getElementById("dp-next").textContent="Soumettre";
+}
+function dPrev(){
+  if(dStep<=1)return;
+  document.getElementById("ds"+dStep).style.display="none";
+  document.getElementById("dst"+dStep).className="dstep";
+  dStep--;
+  document.getElementById("ds"+dStep).style.display="block";
+  document.getElementById("dst"+dStep).className="dstep act";
+  if(dStep===1)document.getElementById("dp-back").style.visibility="hidden";
+  document.getElementById("dp-next").textContent="Continuer";
+}
+function submitDepot(){
+  const cgu=document.getElementById("dp-cgu");
+  if(cgu&&!cgu.checked){alert("Veuillez accepter les conditions d'utilisation.");return;}
+  document.getElementById("depot-sec").style.display="none";
+  document.getElementById("depot-suc").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function resetDepot(){
+  dStep=1;
+  for(let i=1;i<=5;i++){const s=document.getElementById("ds"+i);if(s)s.style.display=i===1?"block":"none";const d=document.getElementById("dst"+i);if(d)d.className="dstep"+(i===1?" act":"");}
+  document.getElementById("dp-back").style.visibility="hidden";
+  document.getElementById("dp-next").textContent="Continuer";
+  document.getElementById("depot-sec").style.display="block";
+  document.getElementById("depot-suc").style.display="none";
+}
+/* ADMIN */
+const ADM_EMAIL="admin@kelibia.info",ADM_PWD="kelibia2025";
+let admLogged=false;
+function tryLogin(){
+  const e=(document.getElementById("al-email")||{value:""}).value.trim();
+  const p=(document.getElementById("al-pwd")||{value:""}).value;
+  const err=document.getElementById("adm-err");
+  if(e===ADM_EMAIL&&p===ADM_PWD){admLogged=true;if(err)err.classList.remove("show");go("admin");initAdmin();}
+  else{if(err)err.classList.add("show");}
+}
+function admLogout(){admLogged=false;go("admin-login");}
+function goAdmin(){if(admLogged){go("admin");initAdmin();}else{go("admin-login");}}
+function admSec(s){
+  ["dash","bons","events","annuaire","immo","users","pub","imgs","settings"].forEach(x=>{
+    const c=document.getElementById("as-"+x);if(c)c.style.display=x===s?"block":"none";
+    const n=document.getElementById("an-"+x);if(n)n.classList.toggle("on",x===s);
+  });
+  const titles={dash:"Tableau de bord",bons:"Bons plans",events:"Événements",annuaire:"Annuaire",immo:"Immobilier",users:"Utilisateurs & Pros",pub:"Publicités",imgs:"Images du site",settings:"Paramètres"};
+  const t=document.getElementById("adm-title");if(t)t.textContent=titles[s]||"";
+}
+function initAdmin(){
+  admSec("dash");
+  const at=document.getElementById("tb-immo");
+  if(at)at.innerHTML=ANNONCES.map(a=>`<tr><td><strong>${a.title}</strong></td><td><span class="atype ${bCls(a.type)}" style="font-size:.68rem;">${bLbl(a.type)}</span></td><td>${a.prix.toLocaleString("fr-FR")} DT</td><td>${a.agent}</td><td><span class="sbadge sa2">Publié</span></td><td><div class="abtns2"><button class="abtn2 abtn2-ed">Modifier</button><button class="abtn2 abtn2-no">Suppr.</button></div></td></tr>`).join("");
+}
+function admAddEvent(){alert("Formulaire d'ajout d'événement — disponible en version connectée à Supabase.");}
+function approveTd(btn){const row=btn.closest("tr");if(row){const s=row.querySelector(".sbadge");if(s){s.className="sbadge sa2";s.textContent="Publié";}btn.closest(".abtns2").innerHTML='<button class="abtn2 abtn2-ed">Modifier</button>';}}
+function rejectTd(btn){const row=btn.closest("tr");if(row){const s=row.querySelector(".sbadge");if(s){s.className="sbadge sr2";s.textContent="Rejeté";}btn.remove();}}
+function filterAdmTbl(q,tid){document.querySelectorAll("#"+tid+" tr").forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?"table-row":"none";});}
+function admReplaceImg(t){alert(`Dans la version Supabase, vous pourrez uploader une nouvelle image pour : "${t}".`);}
+/* ══ /IMMO JS ══ */
+ 
+/* ══ INIT ══ */
+initHome();
+</script>
+</body>
+</html>
+ 
