@@ -36,3 +36,28 @@ export const EVENTS: Event[] = [
   { id: 5, title: 'Cours de cuisine méditerranéenne', desc: "Atelier culinaire pour apprendre les plats tunisiens traditionnels.", date: '2026-06-28', time: '15:00', loc: 'Centre culturel, Kélibia', cat: 'Atelier', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80', attendees: 30, featured: false },
   { id: 6, title: 'Nuit du cinéma en plein air', desc: "Projection de films tunisiens sous les étoiles.", date: '2026-07-01', time: '20:00', loc: 'Plage de Mansourah', cat: 'Culture', img: 'https://images.unsplash.com/photo-1489599849228-ed4dc59b2e9b?w=800&q=80', attendees: 500, featured: false },
 ]
+
+export const ANNUAIRE_CATS = [
+  { id: 'all', label: 'Tous' },
+  { id: 'commerce', label: 'Commerces' },
+  { id: 'restaurant', label: 'Restaurants & Cafés' },
+  { id: 'sante', label: 'Santé' },
+  { id: 'service', label: 'Services' },
+  { id: 'artisan', label: 'Artisans' },
+  { id: 'administration', label: 'Administration' },
+]
+
+export const ANNUAIRE: AnnuaireItem[] = [
+  { id: 1, name: 'Pharmacie Centrale Kélibia', cat: 'sante', desc: 'Pharmacie ouverte 7j/7. Médicaments, parapharmacie, matériel médical.', addr: 'Avenue Habib Bourguiba, Kélibia', phone: '+216 72 296 100', rating: 4.6, rc: 38, img: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?w=800&q=80' },
+  { id: 2, name: 'Dr. Ben Ali — Médecin généraliste', cat: 'sante', desc: 'Consultation sur rendez-vous. Urgences acceptées en dehors des heures de permanence.', addr: 'Rue de la République, Kélibia', phone: '+216 72 296 215', rating: 4.8, rc: 52, img: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80' },
+  { id: 3, name: 'Café Sidi Mansour', cat: 'restaurant', desc: 'Café traditionnel tunisien avec terrasse, thé à la menthe et chicha.', addr: 'Corniche de Kélibia', phone: '+216 55 123 456', rating: 4.4, rc: 61, img: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80' },
+  { id: 4, name: 'Boulangerie El Amal', cat: 'commerce', desc: 'Pain frais, pâtisseries tunisiennes et viennoiseries. Ouvert dès 5h du matin.', addr: 'Marché central, Kélibia', phone: '+216 52 987 654', rating: 4.7, rc: 29, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=800&q=80' },
+  { id: 5, name: 'Garage Auto Mechta', cat: 'artisan', desc: 'Réparation toutes marques, vidange, climatisation. 20 ans d\'expérience.', addr: 'Zone industrielle, Kélibia', phone: '+216 98 765 432', rating: 4.3, rc: 44, img: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80' },
+  { id: 6, name: 'Municipalité de Kélibia', cat: 'administration', desc: 'Services administratifs, état civil, permis de construire et urbanisme.', addr: 'Place de la Municipalité, Kélibia', phone: '+216 72 296 001', email: 'mairie@kelibia.tn', rating: 3.9, rc: 18, img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80' },
+  { id: 7, name: 'Supermarché Maghreb', cat: 'commerce', desc: 'Grande surface avec rayons alimentaires, électroménager et textile.', addr: 'Route de Hammamet, Kélibia', phone: '+216 72 296 330', rating: 4.2, rc: 73, img: 'https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=800&q=80' },
+  { id: 8, name: 'Plombier Habib Trabelsi', cat: 'artisan', desc: 'Plomberie, installation sanitaire, dépannage urgent 24h/24.', addr: 'Kélibia', phone: '+216 95 111 222', rating: 4.5, rc: 31, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80' },
+  { id: 9, name: 'Agence de voyages Cap Bon', cat: 'service', desc: 'Billets d\'avion, séjours organisés, visa et assurance voyage.', addr: 'Avenue de la Liberté, Kélibia', phone: '+216 72 296 450', email: 'capbon.voyages@gmail.com', rating: 4.1, rc: 22, img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80' },
+  { id: 10, name: 'Restaurant La Médina', cat: 'restaurant', desc: 'Cuisine tunisienne authentique. Spécialités de poissons et couscous maison.', addr: 'Médina de Kélibia', phone: '+216 72 296 512', rating: 4.6, rc: 89, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80' },
+  { id: 11, name: 'Électricien Slim Ben Youssef', cat: 'artisan', desc: 'Installation électrique, dépannage, tableau électrique. Certifié STEG.', addr: 'Kélibia', phone: '+216 96 333 444', rating: 4.4, rc: 27, img: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=80' },
+  { id: 12, name: 'Délégation de Kélibia', cat: 'administration', desc: 'Services de la délégation : aide sociale, certificats, attestations.', addr: 'Centre-ville, Kélibia', phone: '+216 72 296 010', rating: 3.7, rc: 14, img: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=800&q=80' },
+]
