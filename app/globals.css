@@ -308,3 +308,10 @@ footer{background:#0f1f2e;color:#e5e7eb;}
 .sucbox h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:.75rem;}
 .sucbox p{font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;}
 .sucbtns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;}
+
+/* EventCard image placeholder */
+.eviph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg2);}
+.eviph svg{width:40px;height:40px;stroke:var(--muted);stroke-width:1.5;fill:none;opacity:.4;}
+
+/* Star rating button */
+.spb{background:none;border:none;padding:0;cursor:pointer;display:inline-flex;}
