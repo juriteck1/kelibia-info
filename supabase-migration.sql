@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS plans (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   title TEXT NOT NULL,
   cat TEXT NOT NULL,
-  desc TEXT,
+  description TEXT,
   addr TEXT,
   phone TEXT,
   rating NUMERIC(2,1) DEFAULT 0,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 CREATE TABLE IF NOT EXISTS events (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   title TEXT NOT NULL,
-  desc TEXT,
+  description TEXT,
   date DATE NOT NULL,
   time TEXT,
   loc TEXT,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS immo (
   rooms INTEGER,
   beds INTEGER,
   addr TEXT,
-  desc TEXT,
+  description TEXT,
   img TEXT,
   agent_name TEXT,
   agent_phone TEXT,
@@ -111,13 +111,13 @@ CREATE POLICY "Modifier son profil" ON profiles FOR UPDATE
 
 -- ── DONNÉES INITIALES ───────────────────────────
 
-INSERT INTO plans (title, cat, desc, addr, rating, rc, tags, featured, img, map, status) VALUES
+INSERT INTO plans (title, cat, description, addr, rating, rc, tags, featured, img, map, status) VALUES
 ('Fort de Kélibia', 'activite', 'Forteresse byzantine du VIe siècle dominant la mer Méditerranée. Vue panoramique exceptionnelle.', 'Colline de Kélibia, 8090 Kélibia', 4.7, 142, ARRAY['Histoire','Vue panoramique','Patrimoine'], true, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-fort-9qNGjKHZBqromt4JugQjkM.webp', 'https://maps.google.com/?q=Fort+de+Kelibia+Tunisie', 'published'),
 ('Plage de Kélibia', 'plage', 'Longue plage de sable fin avec des eaux turquoise cristallines. Idéale pour la baignade.', 'Plage principale, Kélibia', 4.8, 215, ARRAY['Baignade','Sable fin','Eau claire'], true, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp', 'https://maps.google.com/?q=Plage+Kelibia+Tunisie', 'published'),
 ('Restaurant El Mansourah', 'restaurant', 'Poissons et fruits de mer ultra-frais. Terrasse avec vue sur la mer.', 'Port de pêche, Kélibia', 4.5, 89, ARRAY['Poissons','Fruits de mer','Vue mer'], true, 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80', null, 'published'),
 ('Marché de Kélibia', 'commerce', 'Marché hebdomadaire animé avec produits frais locaux, épices et artisanat.', 'Centre-ville, Kélibia', 4.3, 67, ARRAY['Marché','Produits locaux','Artisanat'], false, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-market-Z3qpB7LumgYnpkqbgjGFeS.webp', null, 'published');
 
-INSERT INTO events (title, desc, date, time, loc, cat, img, attendees, featured, status) VALUES
+INSERT INTO events (title, description, date, time, loc, cat, img, attendees, featured, status) VALUES
 ('Festival de la Mer de Kélibia', 'Célébration annuelle de la culture maritime avec musique, danse et gastronomie.', '2025-06-15', '18:00', 'Plage principale de Kélibia', 'Festival', 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80', 2500, true, 'published'),
 ('Marché nocturne de l''artisanat', 'Marché artisanal nocturne avec produits locaux et musique traditionnelle.', '2025-05-24', '19:00', 'Centre-ville, Kélibia', 'Marché', 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=800&q=80', 800, false, 'published');
 
@@ -137,4 +137,4 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE OR REPLACE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+  FOR EACH ROW EXECUTE 
