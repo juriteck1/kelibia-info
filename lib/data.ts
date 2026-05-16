@@ -1,4 +1,4 @@
-import { Plan, Review, Event } from '@/types'
+import { Plan, Review, Event, AnnuaireItem } from '@/types'
 
 export const CATS = [
   { id: 'plage', label: 'Plages', bc: 'bp' },
