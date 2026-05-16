@@ -27,21 +27,23 @@ function Stars({ rating, interactive = false, onRate }: { rating: number; intera
 
 export default function PlanDetail({ params }: { params: { id: string } }) {
   const plan = PLANS.find(p => p.id === Number(params.id))
-  if (!plan) notFound()
 
-  const reviews = REVIEWS.filter(r => r.plan_id === plan.id)
-  const cat = CATS.find(c => c.id === plan.cat)
-
+  // All hooks must be called unconditionally — before any early return
   const [newRating, setNewRating] = useState(0)
   const [name, setName] = useState('')
   const [comment, setComment] = useState('')
-  const [localReviews, setLocalReviews] = useState(reviews)
+  const [localReviews, setLocalReviews] = useState(
+    plan ? REVIEWS.filter(r => r.plan_id === plan.id) : []
+  )
   const [submitted, setSubmitted] = useState(false)
 
+  if (!plan) notFound()
+
+  const cat = CATS.find(c => c.id === plan!.cat)
+
   function submitReview() {
-    if (!plan) return
     if (!newRating || !name.trim() || !comment.trim()) return alert('Merci de remplir tous les champs.')
-    const planId = plan.id
+    const planId = plan!.id
     setLocalReviews(prev => [{
       id: Date.now(), plan_id: planId, author: name,
       rating: newRating, comment, created_at: new Date().toISOString()
@@ -53,12 +55,12 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
 
   const avgRating = localReviews.length
     ? localReviews.reduce((s, r) => s + r.rating, 0) / localReviews.length
-    : plan.rating
+    : plan!.rating
 
   return (
     <div className="pt">
       <div className="fhi">
-        {plan.img && <Image src={plan.img} alt={plan.title} fill style={{objectFit:'cover'}} priority/>}
+        {plan!.img && <Image src={plan!.img} alt={plan!.title} fill style={{objectFit:'cover'}} priority/>}
         <div className="fhov"/>
         <div className="fhb">
           <div className="container">
@@ -67,7 +69,7 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
               Retour aux bons plans
             </Link>
             {cat && <div style={{marginBottom:'.5rem'}}><span className={`badge ${cat.bc}`}>{cat.label}</span></div>}
-            <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:'2rem',fontWeight:700,color:'#fff',lineHeight:1.2}}>{plan.title}</h1>
+            <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:'2rem',fontWeight:700,color:'#fff',lineHeight:1.2}}>{plan!.title}</h1>
           </div>
         </div>
       </div>
@@ -78,9 +80,9 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
             {/* À propos */}
             <div className="fcard">
               <h2>À propos</h2>
-              <p className="fdesc">{plan.desc}</p>
+              <p className="fdesc">{plan!.desc}</p>
               <div className="ftr">
-                {plan.tags.map(tag => <span key={tag} className="ftag">{tag}</span>)}
+                {plan!.tags.map(tag => <span key={tag} className="ftag">{tag}</span>)}
               </div>
             </div>
 
@@ -141,18 +143,18 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
               <h3>Informations</h3>
               <div className="inforow">
                 <svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                <span>{plan.addr}</span>
+                <span>{plan!.addr}</span>
               </div>
-              {plan.phone && (
+              {plan!.phone && (
                 <div className="inforow">
                   <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  <a href={`tel:${plan.phone}`}>{plan.phone}</a>
+                  <a href={`tel:${plan!.phone}`}>{plan!.phone}</a>
                 </div>
               )}
-              {plan.map && (
+              {plan!.map && (
                 <div className="inforow">
                   <svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-                  <a href={plan.map} target="_blank" rel="noopener noreferrer">Voir sur la carte</a>
+                  <a href={plan!.map} target="_blank" rel="noopener noreferrer">Voir sur la carte</a>
                 </div>
               )}
             </div>
@@ -162,4 +164,9 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
               <p>Votre annonce ici</p>
               <Link href="/contact" style={{fontSize:'.78rem',color:'var(--sea)'}}>Nous contacter</Link>
             </div>
-          </di
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
