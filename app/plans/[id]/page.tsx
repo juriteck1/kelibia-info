@@ -39,9 +39,11 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
   const [submitted, setSubmitted] = useState(false)
 
   function submitReview() {
+    if (!plan) return
     if (!newRating || !name.trim() || !comment.trim()) return alert('Merci de remplir tous les champs.')
+    const planId = plan.id
     setLocalReviews(prev => [{
-      id: Date.now(), plan_id: plan.id, author: name,
+      id: Date.now(), plan_id: planId, author: name,
       rating: newRating, comment, created_at: new Date().toISOString()
     }, ...prev])
     setName(''); setComment(''); setNewRating(0)
@@ -160,9 +162,4 @@ export default function PlanDetail({ params }: { params: { id: string } }) {
               <p>Votre annonce ici</p>
               <Link href="/contact" style={{fontSize:'.78rem',color:'var(--sea)'}}>Nous contacter</Link>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+          </di
