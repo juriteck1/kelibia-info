@@ -111,49 +111,6 @@ export default function HomePage() {
       </section>
 
 
-      {/* COUPS DE COEUR */}
-      <section className="sec bw">
-        <div className="container">
-          <div className="sh2">
-            <div><h2>Coups de cœur</h2><p>Les incontournables de Kélibia</p></div>
-            <Link href="/plans" className="slink">Voir tout <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></Link>
-          </div>
-          <div className="pg">
-            {featured.map(plan => <PlanCard key={plan.id} plan={plan}/>)}
-          </div>
-        </div>
-      </section>
-
-      {/* PUB */}
-      <section className="pub">
-        <div className="container">
-          <div className="pubi">
-            <div>
-              <p className="pub-l">Espace publicitaire</p>
-              <p className="pub-t">Votre commerce ou service sur Kélibia.info — Touchez les habitants et les touristes</p>
-            </div>
-            <Link href="/contact" className="pub-btn">Nous contacter</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* TOUS LES BONS PLANS */}
-      <section className="sec bc2">
-        <div className="container">
-          <div className="sh2"><div><h2>Tous les bons plans</h2><p>Partagés par la communauté de Kélibia</p></div></div>
-          <div className="pg">
-            {all.map(plan => <PlanCard key={plan.id} plan={plan}/>)}
-          </div>
-          <div style={{textAlign:'center',marginTop:'2rem'}}>
-            <Link href="/plans" className="bsea">
-              Voir tous les bons plans
-              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-
       {/* IMMOBILIER */}
       <section className="immo-home">
         <div className="container">
@@ -223,6 +180,49 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* COUPS DE COEUR */}
+      <section className="sec bw">
+        <div className="container">
+          <div className="sh2">
+            <div><h2>Coups de cœur</h2><p>Les incontournables de Kélibia</p></div>
+            <Link href="/plans" className="slink">Voir tout <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></Link>
+          </div>
+          <div className="pg">
+            {featured.map(plan => <PlanCard key={plan.id} plan={plan}/>)}
+          </div>
+        </div>
+      </section>
+
+      {/* PUB */}
+      <section className="pub">
+        <div className="container">
+          <div className="pubi">
+            <div>
+              <p className="pub-l">Espace publicitaire</p>
+              <p className="pub-t">Votre commerce ou service sur Kélibia.info — Touchez les habitants et les touristes</p>
+            </div>
+            <Link href="/contact" className="pub-btn">Nous contacter</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* TOUS LES BONS PLANS */}
+      <section className="sec bc2">
+        <div className="container">
+          <div className="sh2"><div><h2>Tous les bons plans</h2><p>Partagés par la communauté de Kélibia</p></div></div>
+          <div className="pg">
+            {all.map(plan => <PlanCard key={plan.id} plan={plan}/>)}
+          </div>
+          <div style={{textAlign:'center',marginTop:'2rem'}}>
+            <Link href="/plans" className="bsea">
+              Voir tous les bons plans
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
 
       {/* CTA */}
       <section className="cta-s" style={{minHeight:300}}>
