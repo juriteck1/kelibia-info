@@ -42,7 +42,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="hero">
         <div className="hbg">
-          <Image src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/hero-kelibia-b4XwMAwNAhc2z7ETEdiWkF.webp" alt="Kélibia vue aérienne" fill style={{objectFit:'cover'}} priority/>
+          <Image src="https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp" alt="Kélibia vue aérienne" fill style={{objectFit:'cover'}} priority/>
           <div className="hgr"/>
         </div>
         <div className="container" style={{position:'relative',zIndex:1}}>
