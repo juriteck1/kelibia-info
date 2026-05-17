@@ -413,3 +413,9 @@ footer{background:#0f1f2e;color:#e5e7eb;}
 @media(max-width:1100px){.ih-grid{grid-template-columns:repeat(2,1fr);}.tre-steps{grid-template-columns:repeat(3,1fr);}.tre-step-arrow{display:none;}.tre-av-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:768px){.ih-grid{grid-template-columns:1fr;}.tre-form-wrap{grid-template-columns:1fr;}.tre-h1{font-size:1.7rem;}.tre-banner{grid-template-columns:1fr;}.tre-steps{grid-template-columns:1fr 1fr;}}
 @media(max-width:480px){.tre-steps{grid-template-columns:1fr;}}
+
+/* Immobilier featured category */
+.cb-immo{background:#0c2044 !important;border-color:#0c2044 !important;}
+.cb-immo .cbi{background:rgba(41,168,216,.25) !important;color:#29a8d8 !important;}
+.cbn-immo{color:#fff !important;font-weight:700;}
+.cb-immo:hover{background:#1e3a6a !important;transform:translateY(-3px);}

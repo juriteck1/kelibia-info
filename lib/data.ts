@@ -1,6 +1,7 @@
 import { Plan, Review, Event, AnnuaireItem } from '@/types'
 
 export const CATS = [
+  { id: 'immobilier', label: 'Immobilier', bc: 'bi' },
   { id: 'plage', label: 'Plages', bc: 'bp' },
   { id: 'restaurant', label: 'Restaurants', bc: 'br' },
   { id: 'activite', label: 'Activités', bc: 'ba' },

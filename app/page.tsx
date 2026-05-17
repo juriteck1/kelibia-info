@@ -20,6 +20,7 @@ export default function HomePage() {
     commerce: <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
     service: <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
     hebergement: <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+    immobilier:  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
   }
 
   const catColors: Record<string, string> = {
@@ -29,6 +30,7 @@ export default function HomePage() {
     commerce: 'rgba(202,138,4,.1)',
     service: 'rgba(124,58,237,.1)',
     hebergement: 'rgba(29,78,216,.1)',
+    immobilier: '#0c2044',
   }
   const catTextColors: Record<string, string> = {
     plage: '#0ea5e9', restaurant: '#ea580c', activite: '#16a34a',
@@ -95,13 +97,41 @@ export default function HomePage() {
           <div className="sh2"><div><h2>Explorer par catégorie</h2><p>Trouvez ce que vous cherchez à Kélibia</p></div></div>
           <div className="cg">
             {CATS.map(cat => (
-              <Link key={cat.id} href={`/plans?cat=${cat.id}`} className="cb">
+              <Link key={cat.id}
+                href={cat.id === 'immobilier' ? '/immo' : `/plans?cat=${cat.id}`}
+                className={`cb${cat.id === 'immobilier' ? ' cb-immo' : ''}`}>
                 <div className="cbi" style={{background:catColors[cat.id],color:catTextColors[cat.id]}}>
                   {catIcons[cat.id]}
                 </div>
-                <span className="cbn">{cat.label}</span>
+                <span className={`cbn${cat.id === 'immobilier' ? ' cbn-immo' : ''}`}>{cat.label}</span>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* BANNIÈRE TRE */}
+      <section style={{padding:'0 0 2rem',background:'var(--bg2)'}}>
+        <div className="container">
+          <div className="tre-banner">
+            <div>
+              <div style={{fontSize:'.7rem',letterSpacing:'.15em',color:'#29a8d8',marginBottom:'.5rem'}}>SERVICE EXCLUSIF TRE</div>
+              <div style={{fontFamily:"'Playfair Display',serif",fontSize:'1.2rem',fontWeight:700,color:'#fff',marginBottom:'.4rem'}}>
+                Vous vivez à l&apos;étranger et souhaitez investir à Kélibia ?
+              </div>
+              <div style={{fontSize:'.87rem',color:'rgba(255,255,255,.6)',marginBottom:'.85rem',lineHeight:1.6}}>
+                Recherche personnalisée · Visites en vidéo live · Accompagnement notarial · Gestion à distance
+              </div>
+              <div className="tre-banner-tags">
+                {['🇫🇷 France','🇩🇪 Allemagne','🇮🇹 Italie','🇧🇪 Belgique','🇨🇭 Suisse','🇨🇦 Canada','🌍 +15 pays'].map(p => (
+                  <span key={p} className="tre-banner-tag">{p}</span>
+                ))}
+              </div>
+            </div>
+            <Link href="/tre" style={{background:'#29a8d8',color:'#fff',borderRadius:'var(--r)',padding:'.85rem 1.75rem',fontWeight:600,fontSize:'.9rem',textDecoration:'none',whiteSpace:'nowrap',flexShrink:0}}>
+              Demander un accompagnement →
+            </Link>
           </div>
         </div>
       </section>
