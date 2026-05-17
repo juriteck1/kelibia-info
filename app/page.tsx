@@ -1,3 +1,20 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Kélibia.info — La plateforme communautaire de Kélibia',
+  description: 'Découvrez Kélibia, Cap Bon, Tunisie : bons plans, restaurants, plages, activités, immobilier et service TRE. Partagés par les habitants et les visiteurs.',
+  openGraph: {
+    title: 'Kélibia.info — La plateforme communautaire de Kélibia',
+    description: 'Bons plans, restaurants, plages, immobilier et services à Kélibia, Cap Bon, Tunisie.',
+    url: 'https://www.kelibia.info',
+    images: [{ url: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp', width: 1200, height: 630, alt: 'Plage de Kélibia au coucher de soleil' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://d2xsxph8kpxj0f.cloudfront.net/310519663540319411/XQhkcmuSh54XAQGXS9GFbu/kelibia-beach-RhcPsV2379sgRnBZtSLJZ3.webp'],
+  },
+}
+
 import Link from 'next/link'
 import Image from 'next/image'
 import PlanCard from '@/components/PlanCard'
