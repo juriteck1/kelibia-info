@@ -346,3 +346,70 @@ footer{background:#0f1f2e;color:#e5e7eb;}
 .an-cta svg{width:13px;height:13px;stroke:#fff;stroke-width:2;fill:none;}
 @media(max-width:1024px){.an-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:600px){.an-grid{grid-template-columns:1fr;}}
+
+/* ── HOMEPAGE IMMO SECTION ── */
+.immo-home{padding:3rem 0;background:#0c2044;}
+.ih-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;}
+.ih-sup{font-size:.7rem;letter-spacing:.15em;color:rgba(41,168,216,.8);margin-bottom:.4rem;}
+.ih-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#fff;line-height:1.2;}
+.ih-title em{color:#29a8d8;font-style:italic;}
+.bsea-sm{background:transparent;border:1px solid rgba(41,168,216,.5);color:#29a8d8;border-radius:var(--r);padding:.55rem 1.25rem;font-size:.85rem;font-weight:500;text-decoration:none;transition:all .15s;white-space:nowrap;}
+.bsea-sm:hover{background:#29a8d8;color:#fff;border-color:#29a8d8;}
+.ih-grid{display:grid;grid-template-columns:repeat(3,1fr) 280px;gap:1rem;}
+.ih-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);overflow:hidden;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;}
+.ih-card:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
+.ih-img{position:relative;height:160px;overflow:hidden;flex-shrink:0;}
+.ih-type{position:absolute;top:.6rem;left:.6rem;padding:.25rem .7rem;border-radius:50px;font-size:.72rem;font-weight:600;}
+.ih-v{background:rgba(234,88,12,.9);color:#fff;}
+.ih-l{background:rgba(30,77,140,.9);color:#fff;}
+.ih-va{background:rgba(22,163,74,.9);color:#fff;}
+.ih-body{padding:.85rem;}
+.ih-price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#29a8d8;margin-bottom:.3rem;}
+.ih-ttl{font-size:.88rem;font-weight:600;color:#fff;margin-bottom:.4rem;line-height:1.3;}
+.ih-loc{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:.5rem;}
+.ih-loc svg{width:11px;height:11px;stroke:rgba(255,255,255,.4);stroke-width:2;fill:none;flex-shrink:0;}
+.ih-specs{display:flex;gap:.75rem;}
+.ih-specs span{display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:rgba(255,255,255,.5);}
+.ih-specs svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;}
+.ih-tre{background:rgba(41,168,216,.12);border:1.5px solid rgba(41,168,216,.4);border-radius:var(--r-lg);padding:1.5rem;display:flex;flex-direction:column;align-items:flex-start;gap:.75rem;text-decoration:none;transition:all .2s;}
+.ih-tre:hover{background:rgba(41,168,216,.2);}
+.ih-tre svg{width:28px;height:28px;stroke:#29a8d8;stroke-width:1.5;fill:none;}
+.ih-tre-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;line-height:1.3;}
+.ih-tre-sub{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;flex:1;}
+.ih-tre-btn{background:#29a8d8;color:#fff;border-radius:var(--r);padding:.5rem 1rem;font-size:.8rem;font-weight:600;margin-top:auto;}
+
+/* ── TRE PAGE ── */
+.tre-hero{background:#0c2044;padding:4rem 0 3rem;}
+.tre-hero-inner{max-width:700px;}
+.tre-sup{font-size:.7rem;letter-spacing:.15em;color:#29a8d8;margin-bottom:.75rem;}
+.tre-h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:1rem;}
+.tre-h1 em{color:#29a8d8;font-style:italic;}
+.tre-sub{font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:1.75rem;max-width:580px;}
+.tre-hbtns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.tre-pays{display:flex;gap:.5rem;flex-wrap:wrap;}
+.tre-pays-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border-radius:50px;padding:.3rem .75rem;font-size:.78rem;}
+.tre-av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.tre-av{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.25rem;box-shadow:var(--sh);}
+.tre-av-icon{width:44px;height:44px;border-radius:var(--r);background:rgba(41,168,216,.1);display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;}
+.tre-av-icon svg{width:22px;height:22px;stroke:#29a8d8;stroke-width:1.5;fill:none;}
+.tre-av-title{font-weight:600;font-size:.9rem;color:var(--text);margin-bottom:.35rem;}
+.tre-av-desc{font-size:.8rem;color:var(--muted);line-height:1.6;}
+.tre-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;position:relative;}
+.tre-step{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.25rem;text-align:center;position:relative;box-shadow:var(--sh);}
+.tre-step-n{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--sea);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;}
+.tre-step-icon{width:44px;height:44px;border-radius:50%;background:rgba(30,77,140,.08);display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;}
+.tre-step-icon svg{width:20px;height:20px;stroke:var(--sea);stroke-width:1.5;fill:none;}
+.tre-step-title{font-weight:600;font-size:.85rem;color:var(--text);margin-bottom:.4rem;}
+.tre-step-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.tre-step-arrow{position:absolute;right:-18px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1.1rem;z-index:1;}
+.tre-form-wrap{display:grid;grid-template-columns:1fr 1.6fr;gap:3rem;align-items:start;}
+.tre-contact-info{margin-top:1rem;}
+
+/* TRE banner in /immo */
+.tre-banner{background:linear-gradient(135deg,#0c2044,#1e4d8c);border-radius:var(--r-lg);padding:1.75rem 2rem;margin:2rem 0;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;}
+.tre-banner-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem;}
+.tre-banner-tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);border-radius:50px;padding:.25rem .65rem;font-size:.75rem;}
+
+@media(max-width:1100px){.ih-grid{grid-template-columns:repeat(2,1fr);}.tre-steps{grid-template-columns:repeat(3,1fr);}.tre-step-arrow{display:none;}.tre-av-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){.ih-grid{grid-template-columns:1fr;}.tre-form-wrap{grid-template-columns:1fr;}.tre-h1{font-size:1.7rem;}.tre-banner{grid-template-columns:1fr;}.tre-steps{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.tre-steps{grid-template-columns:1fr;}}

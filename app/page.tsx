@@ -3,6 +3,12 @@ import Image from 'next/image'
 import PlanCard from '@/components/PlanCard'
 import { PLANS, CATS } from '@/lib/data'
 
+const IMMO_FEATURED = [
+  { id: 1, type: 'vente', price: 350000, title: 'Villa avec piscine vue mer', addr: 'Route Touristique, Kélibia', surface: 280, rooms: 6, img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80' },
+  { id: 2, type: 'location', price: 1200, title: 'Appartement T3 front de mer', addr: 'Résidence Mansourah, Kélibia', surface: 85, rooms: 3, img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80' },
+  { id: 3, type: 'vacances', price: 150, title: 'Maison de vacances 5 pers.', addr: 'Plage Sud, Kélibia', surface: 120, rooms: 4, img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80' },
+]
+
 export default function HomePage() {
   const featured = PLANS.filter(p => p.featured)
   const all = PLANS.slice(0, 6)
@@ -137,6 +143,52 @@ export default function HomePage() {
             <Link href="/plans" className="bsea">
               Voir tous les bons plans
               <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+      {/* IMMOBILIER */}
+      <section className="immo-home">
+        <div className="container">
+          <div className="ih-head">
+            <div>
+              <div className="ih-sup">IMMOBILIER À KÉLIBIA</div>
+              <h2 className="ih-title">Trouvez votre bien au <em>Cap Bon</em></h2>
+            </div>
+            <Link href="/immo" className="bsea-sm">Voir toutes les annonces →</Link>
+          </div>
+          <div className="ih-grid">
+            {IMMO_FEATURED.map(item => (
+              <Link href="/immo" key={item.id} className="ih-card">
+                <div className="ih-img">
+                  <Image src={item.img} alt={item.title} fill style={{objectFit:'cover'}} sizes="33vw"/>
+                  <span className={`ih-type ${item.type === 'vente' ? 'ih-v' : item.type === 'location' ? 'ih-l' : 'ih-va'}`}>
+                    {item.type === 'vente' ? 'Vente' : item.type === 'location' ? 'Location' : 'Vacances'}
+                  </span>
+                </div>
+                <div className="ih-body">
+                  <div className="ih-price">
+                    {item.price.toLocaleString('fr-FR')} {item.type === 'vacances' ? 'DT/nuit' : item.type === 'location' ? 'DT/mois' : 'DT'}
+                  </div>
+                  <div className="ih-ttl">{item.title}</div>
+                  <div className="ih-loc">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    {item.addr}
+                  </div>
+                  <div className="ih-specs">
+                    <span><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>{item.surface} m²</span>
+                    <span><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>{item.rooms} pièces</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+            <Link href="/tre" className="ih-tre">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <div className="ih-tre-title">Vous êtes TRE ?</div>
+              <div className="ih-tre-sub">Accompagnement complet pour acquérir votre bien depuis l&apos;étranger</div>
+              <span className="ih-tre-btn">Découvrir le service →</span>
             </Link>
           </div>
         </div>
