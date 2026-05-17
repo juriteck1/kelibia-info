@@ -93,3 +93,33 @@ export async function getEvents(): Promise<Event[]> {
   if (error || !data) return []
   return data.map(mapEvent)
 }
+export async function getImmoListings(type?: string): Promise<ImmoListing[]> {
+  const sb = getSupabase()
+  let query = sb
+    .from('immo_listings')
+    .select('*')
+    .eq('status', 'published')
+    .order('featured', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  if (type && type !== 'all') query = query.eq('type', type)
+
+  const { data, error } = await query
+  if (error || !data) return []
+  return data.map(row => ({
+    id: row.id as number,
+    title: row.title as string,
+    type: row.type as 'vente' | 'location' | 'vacances',
+    price: row.price as number,
+    surface: row.surface as number,
+    rooms: row.rooms as number,
+    beds: row.beds as number,
+    addr: row.addr as string,
+    desc: (row.description ?? '') as string,
+    img: (row.img ?? '') as string,
+    agent_name: row.agent_name as string | undefined,
+    agent_phone: row.agent_phone as string | undefined,
+    featured: (row.featured ?? false) as boolean,
+    created_at: row.created_at as string | undefined,
+  }))
+}
