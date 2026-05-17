@@ -1,9 +1,11 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PLANS, REVIEWS, CATS } from '@/lib/data'
+import { CATS } from '@/lib/data'
+import { getPlan, getReviews, addReview } from '@/lib/db'
+import type { Plan, Review } from '@/types'
 
 function Stars({ rating, interactive = false, onRate }: { rating: number; interactive?: boolean; onRate?: (r: number) => void }) {
   const [hover, setHover] = useState(0)
@@ -26,24 +28,33 @@ function Stars({ rating, interactive = false, onRate }: { rating: number; intera
 }
 
 export default function PlanDetail({ params }: { params: { id: string } }) {
-  const plan = PLANS.find(p => p.id === Number(params.id))
-
-  // All hooks must be called unconditionally — before any early return
+  const [plan, setPlan] = useState<Plan | null>(null)
+  const [loading, setLoading] = useState(true)
   const [newRating, setNewRating] = useState(0)
   const [name, setName] = useState('')
   const [comment, setComment] = useState('')
-  const [localReviews, setLocalReviews] = useState(
-    plan ? REVIEWS.filter(r => r.plan_id === plan.id) : []
-  )
+  const [localReviews, setLocalReviews] = useState<Review[]>([])
   const [submitted, setSubmitted] = useState(false)
 
+  useEffect(() => {
+    const id = Number(params.id)
+    Promise.all([getPlan(id), getReviews(id)]).then(([p, r]) => {
+      setPlan(p)
+      setLocalReviews(r)
+      setLoading(false)
+    })
+  }, [params.id])
+
+  if (loading) return <div className="pt" style={{padding:'4rem',textAlign:'center',color:'var(--muted)'}}>Chargement…</div>
   if (!plan) notFound()
 
   const cat = CATS.find(c => c.id === plan!.cat)
 
-  function submitReview() {
+  async function submitReview() {
     if (!newRating || !name.trim() || !comment.trim()) return alert('Merci de remplir tous les champs.')
     const planId = plan!.id
+    const newReview = { plan_id: planId, author: name, rating: newRating, comment }
+    await addReview(newReview)
     setLocalReviews(prev => [{
       id: Date.now(), plan_id: planId, author: name,
       rating: newRating, comment, created_at: new Date().toISOString()

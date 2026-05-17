@@ -1,7 +1,9 @@
 'use client'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import PlanCard from '@/components/PlanCard'
-import { PLANS, CATS } from '@/lib/data'
+import { CATS } from '@/lib/data'
+import { getPlans } from '@/lib/db'
+import type { Plan } from '@/types'
 
 export default function PlansPage() {
   const [q, setQ] = useState('')
@@ -20,6 +22,13 @@ export default function PlansPage() {
     else list.sort((a, b) => b.id - a.id)
     return list
   }, [q, cat, sort])
+
+  if (loading) return (
+    <div className="pt">
+      <div className="ph"><div className="container"><h1>Bons Plans à Kélibia</h1></div></div>
+      <div className="container" style={{padding:'3rem 0',textAlign:'center',color:'var(--muted)'}}>Chargement…</div>
+    </div>
+  )
 
   return (
     <div className="pt">

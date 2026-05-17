@@ -1,9 +1,11 @@
 import EventCard from '@/components/EventCard'
-import { EVENTS } from '@/lib/data'
+import { getEvents } from '@/lib/db'
 
-export default function EventsPage() {
-  const upcoming = EVENTS.filter(e => new Date(e.date) >= new Date())
-  const past = EVENTS.filter(e => new Date(e.date) < new Date())
+export default async function EventsPage() {
+  const events = await getEvents()
+  const now = new Date()
+  const upcoming = events.filter(e => new Date(e.date) >= now)
+  const past = events.filter(e => new Date(e.date) < now)
 
   return (
     <div className="pt">
@@ -38,7 +40,7 @@ export default function EventsPage() {
             </>
           )}
 
-          {EVENTS.length === 0 && (
+          {events.length === 0 && (
             <div className="empty">
               <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               <h3>Aucun événement</h3>

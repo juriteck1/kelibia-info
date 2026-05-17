@@ -18,7 +18,8 @@ export const metadata: Metadata = {
 import Link from 'next/link'
 import Image from 'next/image'
 import PlanCard from '@/components/PlanCard'
-import { PLANS, CATS } from '@/lib/data'
+import { CATS } from '@/lib/data'
+import { getPlans } from '@/lib/db'
 
 const IMMO_FEATURED = [
   { id: 1, type: 'vente', price: 350000, title: 'Villa avec piscine vue mer', addr: 'Route Touristique, Kélibia', surface: 280, rooms: 6, img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80' },
@@ -26,9 +27,10 @@ const IMMO_FEATURED = [
   { id: 3, type: 'vacances', price: 150, title: 'Maison de vacances 5 pers.', addr: 'Plage Sud, Kélibia', surface: 120, rooms: 4, img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80' },
 ]
 
-export default function HomePage() {
-  const featured = PLANS.filter(p => p.featured)
-  const all = PLANS.slice(0, 6)
+export default async function HomePage() {
+  const allPlans = await getPlans()
+  const featured = allPlans.filter(p => p.featured)
+  const all = allPlans.slice(0, 6)
 
   const catIcons: Record<string, React.ReactNode> = {
     plage: <svg viewBox="0 0 24 24"><path d="M2 6c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/><path d="M2 12c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/><path d="M2 18c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0"/></svg>,
