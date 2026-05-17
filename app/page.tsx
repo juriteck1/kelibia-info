@@ -111,31 +111,6 @@ export default function HomePage() {
       </section>
 
 
-      {/* BANNIÈRE TRE */}
-      <section style={{padding:'0 0 2rem',background:'var(--bg2)'}}>
-        <div className="container">
-          <div className="tre-banner">
-            <div>
-              <div style={{fontSize:'.7rem',letterSpacing:'.15em',color:'#29a8d8',marginBottom:'.5rem'}}>SERVICE EXCLUSIF TRE</div>
-              <div style={{fontFamily:"'Playfair Display',serif",fontSize:'1.2rem',fontWeight:700,color:'#fff',marginBottom:'.4rem'}}>
-                Vous vivez à l&apos;étranger et souhaitez investir à Kélibia ?
-              </div>
-              <div style={{fontSize:'.87rem',color:'rgba(255,255,255,.6)',marginBottom:'.85rem',lineHeight:1.6}}>
-                Recherche personnalisée · Visites en vidéo live · Accompagnement notarial · Gestion à distance
-              </div>
-              <div className="tre-banner-tags">
-                {['🇫🇷 France','🇩🇪 Allemagne','🇮🇹 Italie','🇧🇪 Belgique','🇨🇭 Suisse','🇨🇦 Canada','🌍 +15 pays'].map(p => (
-                  <span key={p} className="tre-banner-tag">{p}</span>
-                ))}
-              </div>
-            </div>
-            <Link href="/tre" style={{background:'#29a8d8',color:'#fff',borderRadius:'var(--r)',padding:'.85rem 1.75rem',fontWeight:600,fontSize:'.9rem',textDecoration:'none',whiteSpace:'nowrap',flexShrink:0}}>
-              Demander un accompagnement →
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* COUPS DE COEUR */}
       <section className="sec bw">
         <div className="container">
@@ -219,6 +194,31 @@ export default function HomePage() {
               <div className="ih-tre-title">Vous êtes TRE ?</div>
               <div className="ih-tre-sub">Accompagnement complet pour acquérir votre bien depuis l&apos;étranger</div>
               <span className="ih-tre-btn">Découvrir le service →</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* BANNIÈRE TRE */}
+      <section style={{padding:'0 0 2rem',background:'var(--bg2)'}}>
+        <div className="container">
+          <div className="tre-banner">
+            <div>
+              <div style={{fontSize:'.7rem',letterSpacing:'.15em',color:'#29a8d8',marginBottom:'.5rem'}}>SERVICE EXCLUSIF TRE</div>
+              <div style={{fontFamily:"'Playfair Display',serif",fontSize:'1.2rem',fontWeight:700,color:'#fff',marginBottom:'.4rem'}}>
+                Vous vivez à l&apos;étranger et souhaitez investir à Kélibia ?
+              </div>
+              <div style={{fontSize:'.87rem',color:'rgba(255,255,255,.6)',marginBottom:'.85rem',lineHeight:1.6}}>
+                Recherche personnalisée · Visites en vidéo live · Accompagnement notarial · Gestion à distance
+              </div>
+              <div className="tre-banner-tags">
+                {['🇫🇷 France','🇩🇪 Allemagne','🇮🇹 Italie','🇧🇪 Belgique','🇨🇭 Suisse','🇨🇦 Canada','🌍 +15 pays'].map(p => (
+                  <span key={p} className="tre-banner-tag">{p}</span>
+                ))}
+              </div>
+            </div>
+            <Link href="/tre" style={{background:'#29a8d8',color:'#fff',borderRadius:'var(--r)',padding:'.85rem 1.75rem',fontWeight:600,fontSize:'.9rem',textDecoration:'none',whiteSpace:'nowrap',flexShrink:0}}>
+              Demander un accompagnement →
             </Link>
           </div>
         </div>
