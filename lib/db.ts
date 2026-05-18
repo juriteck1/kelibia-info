@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Plan, Review, Event } from '@/types'
+import type { Plan, Review, Event, ImmoListing } from '@/types'
 
 // Server-side client (works in both server and client components)
 export function getSupabase() {
