@@ -7,14 +7,14 @@ const STEPS = [
   { n: '02', icon: 'M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0', title: 'Recherche personnalisée', desc: 'Sélection des biens correspondant à vos critères parmi toutes les annonces disponibles.' },
   { n: '03', icon: 'M15 10l4.553-2.069A1 1 0 0 1 21 8.845v6.31a1 1 0 0 1-1.447.894L15 14M3 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z', title: 'Visite en vidéo live', desc: 'Visite virtuelle en direct avec notre agent sur place, depuis chez vous.' },
   { n: '04', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z', title: 'Accompagnement juridique', desc: 'Suivi notarial, vérification des titres de propriété, gestion administrative complète.' },
-  { n: '05', icon: 'M15 7a2 2 0 0 1 2 2m4 0a6 6 0 0 1-7.743 5.743L11 17H9v2H7v2H4a1 1 0 0 1-1-1v-2.586a1 1 0 0 1 .293-.707l5.964-5.964A6 6 0 1 1 21 9z', title: 'Remise des clés', desc: 'Finalisation de l\'acquisition et remise des clés lors de votre prochain séjour.' },
+  { n: '05', icon: 'M15 7a2 2 0 0 1 2 2m4 0a6 6 0 0 1-7.743 5.743L11 17H9v2H7v2H4a1 1 0 0 1-1-1v-2.586a1 1 0 0 1 .293-.707l5.964-5.964A6 6 0 1 1 21 9z', title: 'Remise des clés', desc: "Finalisation de l'acquisition et remise des clés lors de votre prochain séjour." },
 ]
 
 const AVANTAGES = [
   { icon: 'M3.055 11H5a2 2 0 0 1 2 2v1a2 2 0 0 0 2 2 2 2 0 0 1 2 2v2.945M8 3.935V5.5A2.5 2.5 0 0 0 10.5 8h.5a2 2 0 0 1 2 2 2 2 0 0 0 4 0 2 2 0 0 1 2-2h1.064M15 20.488V18a2 2 0 0 1 2-2h3.064', title: 'Couverture internationale', desc: '+20 pays, tous fuseaux horaires pris en charge' },
   { icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', title: 'Sécurisé & transparent', desc: 'Vérification juridique complète avant tout engagement' },
   { icon: 'M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z', title: 'Disponible 7j/7', desc: 'Réponse sous 24h, rendez-vous selon votre disponibilité' },
-  { icon: 'M17 9V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2m2 4h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm7-5a2 2 0 1 1-4 0 2 2 0 0 1 4 0z', title: 'Transfert facilité', desc: 'Accompagnement pour le transfert de fonds depuis l\'étranger' },
+  { icon: 'M17 9V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2m2 4h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm7-5a2 2 0 1 1-4 0 2 2 0 0 1 4 0z', title: 'Transfert facilité', desc: "Accompagnement pour le transfert de fonds depuis l'étranger" },
 ]
 
 const PAYS = ['France', 'Allemagne', 'Italie', 'Belgique', 'Suisse', 'Canada', 'Autre']
@@ -31,7 +31,6 @@ export default function TrePage() {
 
   return (
     <div className="pt">
-
       {/* HERO */}
       <div className="tre-hero">
         <div className="container tre-hero-inner">
@@ -111,7 +110,6 @@ export default function TrePage() {
                 </div>
               </div>
             </div>
-
             <div className="fwrap" style={{flex:'1',minWidth:0}}>
               {submitted ? (
                 <div className="sucbox">
@@ -139,35 +137,4 @@ export default function TrePage() {
                   <div className="f2c">
                     <div className="ff">
                       <label className="fl2">Type de bien</label>
-                      <select className="fi" style={{cursor:'pointer'}} value={form.type} onChange={e => setForm(f => ({...f, type: e.target.value}))}>
-                        <option value="">Tous types</option>
-                        <option>Villa / Maison</option>
-                        <option>Appartement</option>
-                        <option>Terrain</option>
-                        <option>Local commercial</option>
-                      </select>
-                    </div>
-                    <div className="ff">
-                      <label className="fl2">Budget indicatif</label>
-                      <select className="fi" style={{cursor:'pointer'}} value={form.budget} onChange={e => setForm(f => ({...f, budget: e.target.value}))}>
-                        <option value="">Choisir une fourchette</option>
-                        <option>Moins de 100 000 DT</option>
-                        <option>100 000 – 200 000 DT</option>
-                        <option>200 000 – 350 000 DT</option>
-                        <option>350 000 – 500 000 DT</option>
-                        <option>Plus de 500 000 DT</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="ff"><label className="fl2">Message (optionnel)</label><textarea className="fta" rows={3} value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder="Décrivez votre projet, vos critères, votre situation…"/></div>
-                  <button type="submit" className="fsub">Envoyer ma demande — consultation gratuite</button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  )
-}
+                      <select className="fi" style={{cursor:'pointer'}} value={form
