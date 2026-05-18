@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { addTreRequest } from '@/lib/db'
 
 const STEPS = [
   { n: '01', title: 'Consultation gratuite', desc: 'Échange avec notre expert pour définir votre projet, budget et critères.' },
@@ -9,32 +10,41 @@ const STEPS = [
   { n: '04', title: 'Accompagnement juridique', desc: 'Suivi notarial, vérification des titres de propriété, gestion administrative complète.' },
   { n: '05', title: 'Remise des clés', desc: "Finalisation de l'acquisition et remise des clés lors de votre prochain séjour." },
 ]
-
 const AVANTAGES = [
   { title: 'Couverture internationale', desc: '+20 pays, tous fuseaux horaires pris en charge' },
   { title: 'Sécurisé & transparent', desc: 'Vérification juridique complète avant tout engagement' },
   { title: 'Disponible 7j/7', desc: 'Réponse sous 24h, rendez-vous selon votre disponibilité' },
   { title: 'Transfert facilité', desc: "Accompagnement pour le transfert de fonds depuis l'étranger" },
 ]
-
 const PAYS = ['France', 'Allemagne', 'Italie', 'Belgique', 'Suisse', 'Canada', 'Autre']
 
 export default function TrePage() {
   const [form, setForm] = useState({ prenom: '', email: '', phone: '', pays: '', budget: '', type: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.prenom || !form.email || !form.pays) {
       alert('Merci de remplir les champs obligatoires.')
       return
     }
+    setSubmitting(true)
+    await addTreRequest({
+      prenom: form.prenom,
+      email: form.email,
+      phone: form.phone || undefined,
+      pays: form.pays,
+      budget: form.budget || undefined,
+      type_bien: form.type || undefined,
+      message: form.message || undefined,
+    })
+    setSubmitting(false)
     setSubmitted(true)
   }
 
   return (
     <div className="pt">
-
       {/* HERO */}
       <div className="tre-hero">
         <div className="container tre-hero-inner">
@@ -96,7 +106,6 @@ export default function TrePage() {
       <section id="formulaire" style={{padding:'3.5rem 0',background:'var(--bg2)'}}>
         <div className="container">
           <div className="tre-form-wrap">
-
             <div className="tre-form-left">
               <div className="tre-sup" style={{color:'var(--turq)'}}>CONSULTATION GRATUITE</div>
               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:'1.6rem',fontWeight:700,margin:'.5rem 0 1rem'}}>
@@ -116,7 +125,6 @@ export default function TrePage() {
                 </div>
               </div>
             </div>
-
             <div style={{flex:'1',minWidth:0}}>
               {submitted ? (
                 <div className="sucbox">
@@ -177,15 +185,15 @@ export default function TrePage() {
                     <label className="fl2">Message (optionnel)</label>
                     <textarea className="fta" rows={3} value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder="Décrivez votre projet, vos critères, votre situation…"/>
                   </div>
-                  <button type="submit" className="fsub">Envoyer ma demande — consultation gratuite</button>
+                  <button type="submit" className="fsub" disabled={submitting}>
+                    {submitting ? 'Envoi en cours…' : 'Envoyer ma demande — consultation gratuite'}
+                  </button>
                 </form>
               )}
             </div>
-
           </div>
         </div>
       </section>
-
     </div>
   )
 }
