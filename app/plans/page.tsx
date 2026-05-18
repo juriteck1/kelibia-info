@@ -9,6 +9,15 @@ export default function PlansPage() {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('all')
   const [sort, setSort] = useState('rating')
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getPlans().then(data => {
+      setPlans(data)
+      setLoading(false)
+    })
+  }, [])
 
   const filtered = useMemo(() => {
     let list = [...plans]
@@ -21,7 +30,7 @@ export default function PlansPage() {
     if (sort === 'rating') list.sort((a, b) => b.rating - a.rating)
     else list.sort((a, b) => b.id - a.id)
     return list
-  }, [q, cat, sort])
+  }, [q, cat, sort, plans])
 
   if (loading) return (
     <div className="pt">
@@ -38,7 +47,6 @@ export default function PlansPage() {
           <p>{filtered.length} bons plans partagés par la communauté</p>
         </div>
       </div>
-
       <div className="fbar">
         <div className="container fbi">
           <div className="frow">
@@ -66,7 +74,6 @@ export default function PlansPage() {
           </div>
         </div>
       </div>
-
       <main style={{padding:'2.5rem 0',minHeight:400}}>
         <div className="container">
           <p style={{fontSize:'.85rem',color:'var(--muted)',marginBottom:'1.5rem'}}>
