@@ -11,7 +11,7 @@ export default function PlansPage() {
   const [sort, setSort] = useState('rating')
 
   const filtered = useMemo(() => {
-    let list = [...PLANS]
+    let list = [...plans]
     if (cat !== 'all') list = list.filter(p => p.cat === cat)
     if (q.trim()) list = list.filter(p =>
       p.title.toLowerCase().includes(q.toLowerCase()) ||
