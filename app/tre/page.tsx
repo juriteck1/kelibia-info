@@ -23,11 +23,14 @@ export default function TrePage() {
   const [form, setForm] = useState({ prenom: '', email: '', phone: '', pays: '', budget: '', type: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!form.prenom || !form.email || !form.pays) return alert('Merci de remplir les champs obligatoires.')
-    setSubmitted(true)
+function handleSubmit(e: React.FormEvent) {
+  e.preventDefault()
+  if (!form.prenom || !form.email || !form.pays) {
+    alert('Merci de remplir les champs obligatoires.')
+    return
   }
+  setSubmitted(true)
+}
 
   return (
     <div className="pt">
