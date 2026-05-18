@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getPlan, getReviews } from '@/lib/db'
+import { getPlan, getReviews, addReview } from '@/lib/db'
 import type { Plan, Review } from '@/types'
 
 export default function PlanDetailPage() {
@@ -12,6 +12,15 @@ export default function PlanDetailPage() {
   const [plan, setPlan] = useState<Plan | null>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
+
+  // Form state
+  const [author, setAuthor] = useState('')
+  const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('')
+  const [hovered, setHovered] = useState(0)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (!id) return
@@ -26,6 +35,24 @@ export default function PlanDetailPage() {
     })
   }, [id])
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!plan) return
+    if (!author.trim()) { setError('Veuillez entrer votre prénom.'); return }
+    if (!comment.trim()) { setError('Veuillez écrire un commentaire.'); return }
+    setError('')
+    setSubmitting(true)
+    await addReview({ plan_id: plan.id, author: author.trim(), rating, comment: comment.trim() })
+    const updated = await getReviews(plan.id)
+    setReviews(updated)
+    setAuthor('')
+    setRating(5)
+    setComment('')
+    setSubmitting(false)
+    setSubmitted(true)
+    setTimeout(() => setSubmitted(false), 4000)
+  }
+
   if (loading) return (
     <div className="pt">
       <div className="container" style={{padding:'4rem 0',textAlign:'center',color:'var(--muted)'}}>
@@ -33,7 +60,6 @@ export default function PlanDetailPage() {
       </div>
     </div>
   )
-
   if (!plan) return null
 
   return (
@@ -112,14 +138,14 @@ export default function PlanDetailPage() {
             </div>
           )}
 
-          {/* Avis */}
+          {/* Avis existants */}
           <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:'1.3rem',marginBottom:'1.25rem'}}>
             Avis ({reviews.length})
           </h2>
           {reviews.length === 0 ? (
-            <p style={{color:'var(--muted)',fontSize:'.9rem'}}>Aucun avis pour le moment. Soyez le premier !</p>
+            <p style={{color:'var(--muted)',fontSize:'.9rem',marginBottom:'2rem'}}>Aucun avis pour le moment. Soyez le premier !</p>
           ) : (
-            <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
+            <div style={{display:'flex',flexDirection:'column',gap:'1rem',marginBottom:'2rem'}}>
               {reviews.map(r => (
                 <div key={r.id} style={{background:'#fff',border:'1px solid var(--border)',borderRadius:'var(--r-lg)',padding:'1rem 1.25rem',boxShadow:'var(--sh)'}}>
                   <div style={{display:'flex',justifyContent:'space-between',marginBottom:'.4rem'}}>
@@ -134,6 +160,91 @@ export default function PlanDetailPage() {
               ))}
             </div>
           )}
+
+          {/* Formulaire avis */}
+          <div style={{background:'#fff',border:'1px solid var(--border)',borderRadius:'var(--r-lg)',padding:'1.5rem',boxShadow:'var(--sh)'}}>
+            <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:'1.1rem',marginBottom:'1.25rem',marginTop:0}}>
+              Laisser un avis
+            </h3>
+            {submitted ? (
+              <div style={{background:'#f0fdf4',border:'1px solid #86efac',borderRadius:'var(--r)',padding:'1rem',color:'#166534',fontSize:'.9rem',textAlign:'center'}}>
+                ✅ Merci pour votre avis !
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
+                {/* Prénom */}
+                <div>
+                  <label style={{display:'block',fontSize:'.8rem',fontWeight:600,color:'var(--muted)',marginBottom:'.35rem',textTransform:'uppercase',letterSpacing:'.05em'}}>
+                    Votre prénom
+                  </label>
+                  <input
+                    type="text"
+                    value={author}
+                    onChange={e => setAuthor(e.target.value)}
+                    placeholder="Ex : Ahmed"
+                    maxLength={50}
+                    style={{width:'100%',padding:'.6rem .9rem',border:'1px solid var(--border)',borderRadius:'var(--r)',fontSize:'.9rem',outline:'none',boxSizing:'border-box',fontFamily:'inherit'}}
+                  />
+                </div>
+
+                {/* Note étoiles */}
+                <div>
+                  <label style={{display:'block',fontSize:'.8rem',fontWeight:600,color:'var(--muted)',marginBottom:'.35rem',textTransform:'uppercase',letterSpacing:'.05em'}}>
+                    Note
+                  </label>
+                  <div style={{display:'flex',gap:'.25rem'}}>
+                    {[1,2,3,4,5].map(n => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setRating(n)}
+                        onMouseEnter={() => setHovered(n)}
+                        onMouseLeave={() => setHovered(0)}
+                        style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.6rem',padding:'0 .1rem',color:(hovered || rating) >= n ? '#f59e0b' : '#d1d5db',transition:'color .1s'}}
+                      >
+                        ★
+                      </button>
+                    ))}
+                    <span style={{fontSize:'.85rem',color:'var(--muted)',marginLeft:'.5rem',alignSelf:'center'}}>
+                      {rating}/5
+                    </span>
+                  </div>
+                </div>
+
+                {/* Commentaire */}
+                <div>
+                  <label style={{display:'block',fontSize:'.8rem',fontWeight:600,color:'var(--muted)',marginBottom:'.35rem',textTransform:'uppercase',letterSpacing:'.05em'}}>
+                    Commentaire
+                  </label>
+                  <textarea
+                    value={comment}
+                    onChange={e => setComment(e.target.value)}
+                    placeholder="Partagez votre expérience…"
+                    rows={3}
+                    maxLength={500}
+                    style={{width:'100%',padding:'.6rem .9rem',border:'1px solid var(--border)',borderRadius:'var(--r)',fontSize:'.9rem',outline:'none',resize:'vertical',boxSizing:'border-box',fontFamily:'inherit'}}
+                  />
+                  <div style={{fontSize:'.75rem',color:'var(--muted)',textAlign:'right',marginTop:'.2rem'}}>
+                    {comment.length}/500
+                  </div>
+                </div>
+
+                {error && (
+                  <div style={{fontSize:'.85rem',color:'#dc2626',background:'#fef2f2',border:'1px solid #fca5a5',borderRadius:'var(--r)',padding:'.6rem .9rem'}}>
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  style={{background:'var(--sea)',color:'#fff',border:'none',borderRadius:'var(--r)',padding:'.75rem 1.5rem',fontSize:'.9rem',fontWeight:600,cursor:submitting?'not-allowed':'pointer',opacity:submitting?.6:1,transition:'opacity .2s',fontFamily:'inherit'}}
+                >
+                  {submitting ? 'Envoi…' : 'Publier mon avis'}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
 
         {/* Sidebar */}
