@@ -145,3 +145,19 @@ export async function addPlan(data: {
   const sb = getSupabase()
   await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false })
 }
+
+export async function getPendingPlans(): Promise<Plan[]> {
+  const sb = getSupabase()
+  const { data, error } = await sb
+    .from('plans')
+    .select('*')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false })
+  if (error || !data) return []
+  return data.map(mapPlan)
+}
+
+export async function updatePlanStatus(id: number, status: 'published' | 'rejected'): Promise<void> {
+  const sb = getSupabase()
+  await sb.from('plans').update({ status }).eq('id', id)
+}
