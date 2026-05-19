@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useAuth } from '@/lib/auth-context'
 import {
   getAdminStats, getAllPlans, getAllEvents, getAdminImmoListings,
-  getUsers, updatePlanStatus, deletePlan, deleteEvent, addAdminEvent
+  getUsers, updatePlanStatus, deletePlan, deleteEvent, addAdminEvent, updateUserRole
 } from '@/lib/db'
 import type { Plan, Event, ImmoListing } from '@/types'
 
@@ -11,7 +11,7 @@ const ADMIN_EMAIL = 'mohamedamine.khemiri@gmail.com'
 type Section = 'dash' | 'plans' | 'events' | 'immo' | 'users'
 type PlanRow = Plan & { status: string }
 type EventRow = Event & { status: string }
-type UserRow = { id: string; full_name?: string; created_at?: string }
+type UserRow = { id: string; full_name?: string; email?: string; role?: string; created_at?: string }
 type Stats = { plans: number; pending: number; events: number; users: number; immo: number }
 
 const STATUS: Record<string, { bg: string; color: string; label: string }> = {
@@ -36,7 +36,7 @@ function SbBtn({ label, icon, active, badge, onClick }: { label: string; icon: R
 }
 
 export default function AdminPage() {
-  const { user, loading } = useAuth()
+  const { user, loading, signInWithPassword } = useAuth()
   const [section, setSection] = useState<Section>('dash')
   const [stats, setStats] = useState<Stats>({ plans: 0, pending: 0, events: 0, users: 0, immo: 0 })
   const [plans, setPlans] = useState<PlanRow[]>([])
@@ -48,6 +48,10 @@ export default function AdminPage() {
   const [showAddEv, setShowAddEv] = useState(false)
   const [addingEv, setAddingEv] = useState(false)
   const [evForm, setEvForm] = useState({ title: '', description: '', event_date: '', event_time: '18:00', loc: '', cat: 'culture', attendees: '50' })
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
 
   function safe<T>(p: Promise<T>, fallback: T): Promise<T> {
     const timeout = new Promise<T>(resolve => setTimeout(() => resolve(fallback), 6000))
@@ -114,13 +118,55 @@ export default function AdminPage() {
     </div>
   )
 
-  if (!user || user.email !== ADMIN_EMAIL) return (
-    <div className="pt">
-      <div className="container" style={{ padding: '4rem 0', textAlign: 'center', color: 'var(--muted)' }}>
-        Accès refusé.
+  if (!user || user.email !== ADMIN_EMAIL) {
+    async function handleLogin(e: React.FormEvent) {
+      e.preventDefault()
+      setLoginError('')
+      setLoginLoading(true)
+      const err = await signInWithPassword(loginEmail.trim(), loginPassword)
+      setLoginLoading(false)
+      if (err) setLoginError(err)
+    }
+    return (
+      <div className="pt">
+        <div className="container" style={{ padding: '5rem 0', maxWidth: 420 }}>
+          <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '2.5rem', boxShadow: 'var(--sh)' }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <div style={{ width: 52, height: 52, background: 'var(--sea)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.3rem', marginBottom: '.4rem' }}>Administration</h2>
+              <p style={{ color: 'var(--muted)', fontSize: '.85rem' }}>Connectez-vous pour accéder au panneau admin</p>
+            </div>
+            <form onSubmit={handleLogin}>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Email</label>
+                <input className="fi" type="email" autoComplete="email" required
+                  value={loginEmail} onChange={e => setLoginEmail(e.target.value)}
+                  placeholder="admin@exemple.com" />
+              </div>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Mot de passe</label>
+                <input className="fi" type="password" autoComplete="current-password" required
+                  value={loginPassword} onChange={e => setLoginPassword(e.target.value)}
+                  placeholder="••••••••" />
+              </div>
+              {loginError && (
+                <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 'var(--r)', padding: '.75rem 1rem', fontSize: '.83rem', color: '#dc2626', marginBottom: '1rem' }}>
+                  {loginError}
+                </div>
+              )}
+              <button type="submit" disabled={loginLoading} style={{ width: '100%', background: 'var(--sea)', color: '#fff', border: 'none', borderRadius: 'var(--r)', padding: '.7rem 1rem', fontSize: '.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+                {loginLoading ? 'Connexion…' : 'Se connecter'}
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   const pending = plans.filter(p => p.status === 'pending')
   const th = (label: string) => <th style={{ padding: '.6rem 1rem', textAlign: 'left', fontSize: '.75rem', fontWeight: 600, color: 'var(--muted)', borderBottom: '1px solid var(--border)', background: '#f9fafb', whiteSpace: 'nowrap' }}>{label}</th>
@@ -311,20 +357,57 @@ export default function AdminPage() {
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Utilisateurs ({users.length})</h2>
             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', boxShadow: 'var(--sh)', overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead><tr>{[th('Utilisateur'), th('ID'), th('Inscrit le')]}</tr></thead>
+                <thead><tr>{[th('Utilisateur'), th('Email'), th('Rôle'), th('Inscrit le'), th('Actions')]}</tr></thead>
                 <tbody>
                   {users.length === 0 ? (
-                    <tr><td colSpan={3} style={{ padding: '2rem', textAlign: 'center', color: 'var(--muted)', fontSize: '.9rem' }}>Aucun utilisateur pour le moment.</td></tr>
+                    <tr><td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: 'var(--muted)', fontSize: '.9rem' }}>Aucun utilisateur pour le moment.</td></tr>
                   ) : users.map(u => (
                     <tr key={u.id} style={{ borderBottom: '1px solid var(--border)' }}>
                       {td(<div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
-                        <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--sea)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '.8rem', fontWeight: 600, flexShrink: 0 }}>
+                        <div style={{ width: 30, height: 30, borderRadius: '50%', background: u.role === 'admin' ? '#7c3aed' : 'var(--sea)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '.8rem', fontWeight: 600, flexShrink: 0 }}>
                           {u.full_name?.[0] ?? '?'}
                         </div>
                         <span style={{ fontSize: '.85rem', fontWeight: 500 }}>{u.full_name ?? 'Anonyme'}</span>
                       </div>)}
-                      {td(<span style={{ fontSize: '.75rem', color: 'var(--muted)', fontFamily: 'monospace' }}>{u.id.slice(0, 8)}…</span>)}
+                      {td(<span style={{ fontSize: '.78rem', color: 'var(--muted)' }}>{u.email ?? '—'}</span>)}
+                      {td(<span style={{
+                        background: u.role === 'admin' ? '#f3e8ff' : '#f1f5f9',
+                        color: u.role === 'admin' ? '#7c3aed' : '#64748b',
+                        borderRadius: '50px', padding: '.15rem .6rem', fontSize: '.72rem', fontWeight: 600
+                      }}>{u.role === 'admin' ? '👑 Admin' : 'Membre'}</span>)}
                       {td(<span style={{ fontSize: '.8rem', color: 'var(--muted)' }}>{u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '-'}</span>)}
+                      {td(<div style={{ display: 'flex', gap: '.4rem' }}>
+                        {u.email !== ADMIN_EMAIL && (
+                          u.role === 'admin' ? (
+                            <button
+                              onClick={async () => {
+                                if (!confirm(`Rétrograder ${u.full_name ?? u.email} en membre ?`)) return
+                                setProcessing(u.id as never)
+                                try { await updateUserRole(u.id, 'member'); await loadAll() }
+                                finally { setProcessing(null) }
+                              }}
+                              disabled={processing === (u.id as never)}
+                              style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+                              Rétrograder
+                            </button>
+                          ) : (
+                            <button
+                              onClick={async () => {
+                                if (!confirm(`Promouvoir ${u.full_name ?? u.email} en administrateur ?`)) return
+                                setProcessing(u.id as never)
+                                try { await updateUserRole(u.id, 'admin'); await loadAll() }
+                                finally { setProcessing(null) }
+                              }}
+                              disabled={processing === (u.id as never)}
+                              style={{ background: '#f3e8ff', border: '1px solid #d8b4fe', color: '#7c3aed', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+                              👑 Promouvoir admin
+                            </button>
+                          )
+                        )}
+                        {u.email === ADMIN_EMAIL && (
+                          <span style={{ fontSize: '.75rem', color: 'var(--muted)', fontStyle: 'italic' }}>Compte principal</span>
+                        )}
+                      </div>)}
                     </tr>
                   ))}
                 </tbody>
