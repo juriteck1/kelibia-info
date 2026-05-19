@@ -87,7 +87,7 @@ export async function getImmoListings(type?: string): Promise<ImmoListing[]> {
   if (type && type !== 'all') query = query.eq('type', type)
   const { data, error } = await query
   if (error || !data) return []
-  return data.map(row => ({
+  return (data as Record<string, unknown>[]).map(row => ({
     id: row.id as number,
     title: row.title as string,
     type: row.type as 'vente' | 'location' | 'vacances',
