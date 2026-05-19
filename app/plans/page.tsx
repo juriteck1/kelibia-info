@@ -12,11 +12,14 @@ export default function PlansPage() {
   const [plans, setPlans] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
 
+  // Charger les plans depuis Supabase
   useEffect(() => {
-    getPlans().then(data => {
-      setPlans(data)
-      setLoading(false)
-    })
+    getPlans()
+      .then(data => {
+        setPlans(data)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
   }, [])
 
   const filtered = useMemo(() => {
