@@ -1,8 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
+import { createClient as createAuthClient } from './supabase'
 import type { Plan, Review, Event, ImmoListing } from '@/types'
 
 let _db: ReturnType<typeof createClient> | null = null
 
+// Client public (anon, sans session) — pour les pages publiques
 function getSupabase() {
   if (!_db) {
     _db = createClient(
@@ -12,6 +14,11 @@ function getSupabase() {
     )
   }
   return _db
+}
+
+// Client auth (avec JWT) — pour les fonctions admin qui nécessitent le RLS
+function getAuthSb() {
+  return createAuthClient()
 }
 
 function mapPlan(row: Record<string, unknown>): Plan {
@@ -122,20 +129,9 @@ export async function addPlan(data: {
   await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false } as never)
 }
 
-export async function getPendingPlans(): Promise<Plan[]> {
-  const sb = getSupabase()
-  const { data, error } = await sb.from('plans').select('*').eq('status', 'pending').order('created_at', { ascending: false })
-  if (error || !data) return []
-  return data.map(mapPlan)
-}
-
-export async function updatePlanStatus(id: number, status: 'published' | 'rejected'): Promise<void> {
-  const sb = getSupabase()
-  await sb.from('plans').update({ status } as never).eq('id', id)
-}
 
 export async function getAdminStats(): Promise<{ plans: number; pending: number; events: number; users: number; immo: number }> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   const [plans, pending, events, immo] = await Promise.all([
     sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'published'),
     sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
@@ -152,21 +148,21 @@ export async function getAdminStats(): Promise<{ plans: number; pending: number;
 }
 
 export async function getAllPlans(): Promise<(Plan & { status: string })[]> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   const { data, error } = await sb.from('plans').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({ ...mapPlan(row), status: row.status as string }))
 }
 
 export async function getAllEvents(): Promise<(Event & { status: string })[]> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({ ...mapEvent(row), status: row.status as string }))
 }
 
 export async function getAdminImmoListings(): Promise<ImmoListing[]> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   const { data, error } = await sb.from('immo_listings').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({
@@ -188,26 +184,31 @@ export async function getAdminImmoListings(): Promise<ImmoListing[]> {
 }
 
 export async function getUsers(): Promise<{ id: string; full_name?: string; created_at?: string }[]> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
   return data as { id: string; full_name?: string; created_at?: string }[]
 }
 
 export async function deletePlan(id: number): Promise<void> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   await sb.from('plans').delete().eq('id', id)
 }
 
 export async function deleteEvent(id: number): Promise<void> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   await sb.from('events').delete().eq('id', id)
+}
+
+export async function updatePlanStatus(id: number, status: 'published' | 'rejected'): Promise<void> {
+  const sb = getAuthSb()
+  await sb.from('plans').update({ status } as never).eq('id', id)
 }
 
 export async function addAdminEvent(data: {
   title: string; description: string; event_date: string
   event_time: string; loc: string; cat: string; attendees: number
 }): Promise<void> {
-  const sb = getSupabase()
+  const sb = getAuthSb()
   await sb.from('events').insert({ ...data, status: 'published', featured: false } as never)
 }
