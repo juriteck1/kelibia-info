@@ -1,12 +1,10 @@
 'use client'
 import { useRef, useState, useEffect } from 'react'
 import { useAuth } from '@/lib/auth-context'
-
 export function AuthButton() {
   const { user, profile, loading, signInWithGoogle, signOut } = useAuth()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
@@ -14,13 +12,9 @@ export function AuthButton() {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
-
-  if (loading) return null
-
   if (user) {
     return (
       <div ref={ref} style={{position:'relative',marginLeft:'.5rem'}}>
-        {/* Avatar cliquable */}
         <button
           onClick={() => setOpen(!open)}
           style={{display:'flex',alignItems:'center',gap:'.5rem',background:'none',border:'none',cursor:'pointer',padding:0,fontFamily:'inherit'}}
@@ -38,11 +32,8 @@ export function AuthButton() {
             <polyline points="6 9 12 15 18 9"/>
           </svg>
         </button>
-
-        {/* Menu déroulant */}
         {open && (
           <div style={{position:'absolute',right:0,top:'calc(100% + .6rem)',background:'#fff',border:'1px solid var(--border)',borderRadius:'var(--r-lg)',boxShadow:'0 8px 24px rgba(0,0,0,.12)',minWidth:220,zIndex:999}}>
-            {/* Infos utilisateur */}
             <div style={{padding:'1rem 1.1rem',borderBottom:'1px solid var(--border)'}}>
               <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
                 <div style={{width:40,height:40,borderRadius:'50%',overflow:'hidden',background:'var(--sea)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
@@ -64,8 +55,6 @@ export function AuthButton() {
                 </div>
               </div>
             </div>
-
-            {/* Bouton Déconnexion */}
             <div style={{padding:'.5rem'}}>
               <button
                 onClick={() => { signOut(); setOpen(false) }}
@@ -86,7 +75,6 @@ export function AuthButton() {
       </div>
     )
   }
-
   return (
     <button
       onClick={signInWithGoogle}
