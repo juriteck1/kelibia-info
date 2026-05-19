@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { createClient } from './supabase'
 
@@ -13,9 +13,6 @@ type Profile = {
   role: 'member' | 'admin'
   created_at: string
 }
-
-// Singleton : créé une seule fois, en dehors du composant
-const supabase = createClient()
 
 type AuthContextType = {
   user: User | null
@@ -41,7 +38,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
+  // useRef : une seule instance, créée uniquement dans le browser (jamais côté serveur)
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
+
   useEffect(() => {
+    // Session initiale
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
@@ -49,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     })
 
+    // Écouter les changements d'auth
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session)
