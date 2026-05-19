@@ -6,26 +6,21 @@ import {
   getUsers, updatePlanStatus, deletePlan, deleteEvent, addAdminEvent
 } from '@/lib/db'
 import type { Plan, Event, ImmoListing } from '@/types'
-
 const ADMIN_EMAIL = 'mohamedamine.khemiri@gmail.com'
-
 type Section = 'dash' | 'plans' | 'events' | 'immo' | 'users'
 type PlanRow = Plan & { status: string }
 type EventRow = Event & { status: string }
 type UserRow = { id: string; full_name?: string; created_at?: string }
 type Stats = { plans: number; pending: number; events: number; users: number; immo: number }
-
 const STATUS: Record<string, { bg: string; color: string; label: string }> = {
   published: { bg: '#f0fdf4', color: '#166534', label: 'Publié' },
   pending:   { bg: '#fefce8', color: '#854d0e', label: 'En attente' },
   rejected:  { bg: '#fef2f2', color: '#dc2626', label: 'Rejeté' },
 }
-
 function Badge({ status }: { status: string }) {
   const s = STATUS[status] ?? { bg: '#f3f4f6', color: '#6b7280', label: status }
   return <span style={{ background: s.bg, color: s.color, borderRadius: '50px', padding: '.15rem .6rem', fontSize: '.72rem', fontWeight: 600 }}>{s.label}</span>
 }
-
 function SbBtn({ id, label, icon, active, badge, onClick }: { id: string; label: string; icon: React.ReactNode; active: boolean; badge?: number; onClick: () => void }) {
   return (
     <button onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: '.55rem', padding: '.6rem 1rem', fontSize: '.82rem', color: active ? '#fff' : 'rgba(255,255,255,.55)', cursor: 'pointer', border: 'none', background: active ? 'rgba(255,255,255,.15)' : 'none', width: '100%', textAlign: 'left', borderRadius: 'var(--r)', marginBottom: '.1rem', fontFamily: 'inherit' }}>
@@ -35,7 +30,6 @@ function SbBtn({ id, label, icon, active, badge, onClick }: { id: string; label:
     </button>
   )
 }
-
 export default function AdminPage() {
   const { user, loading } = useAuth()
   const [section, setSection] = useState<Section>('dash')
@@ -49,19 +43,21 @@ export default function AdminPage() {
   const [showAddEv, setShowAddEv] = useState(false)
   const [addingEv, setAddingEv] = useState(false)
   const [evForm, setEvForm] = useState({ title: '', description: '', event_date: '', event_time: '18:00', loc: '', cat: 'culture', attendees: '50' })
-
   const loadAll = useCallback(async () => {
     setFetching(true)
-    const [s, p, e, i, u] = await Promise.all([getAdminStats(), getAllPlans(), getAllEvents(), getAdminImmoListings(), getUsers()])
-    setStats(s); setPlans(p); setEvents(e); setImmo(i); setUsers(u)
-    setFetching(false)
+    try {
+      const [s, p, e, i, u] = await Promise.all([getAdminStats(), getAllPlans(), getAllEvents(), getAdminImmoListings(), getUsers()])
+      setStats(s); setPlans(p); setEvents(e); setImmo(i); setUsers(u)
+    } catch (err) {
+      console.error('Admin loadAll error:', err)
+    } finally {
+      setFetching(false)
+    }
   }, [])
-
   useEffect(() => {
     if (!user || user.email !== ADMIN_EMAIL) return
     loadAll()
   }, [user, loadAll])
-
   async function handlePlan(id: number, action: 'published' | 'rejected' | 'delete') {
     setProcessing(id)
     if (action === 'delete') await deletePlan(id)
@@ -69,7 +65,6 @@ export default function AdminPage() {
     await loadAll()
     setProcessing(null)
   }
-
   async function handleDeleteEvent(id: number) {
     if (!confirm('Supprimer cet événement ?')) return
     setProcessing(id)
@@ -77,7 +72,6 @@ export default function AdminPage() {
     await loadAll()
     setProcessing(null)
   }
-
   async function handleAddEvent(e: React.FormEvent) {
     e.preventDefault()
     if (!evForm.title || !evForm.event_date || !evForm.loc) return
@@ -87,20 +81,16 @@ export default function AdminPage() {
     setShowAddEv(false); setAddingEv(false)
     await loadAll()
   }
-
   if (loading) return null
   if (!user || user.email !== ADMIN_EMAIL) {
     return <div className="pt"><div className="container" style={{ padding: '4rem 0', textAlign: 'center', color: 'var(--muted)' }}>Accès refusé.</div></div>
   }
-
   const pending = plans.filter(p => p.status === 'pending')
   const th = (label: string) => <th style={{ padding: '.6rem 1rem', textAlign: 'left', fontSize: '.75rem', fontWeight: 600, color: 'var(--muted)', borderBottom: '1px solid var(--border)', background: '#f9fafb', whiteSpace: 'nowrap' }}>{label}</th>
   const td = (content: React.ReactNode, extra?: React.CSSProperties) => <td style={{ padding: '.7rem 1rem', ...extra }}>{content}</td>
-
   return (
     <div className="pt" style={{ minHeight: '100vh', background: '#f1f5f9' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', minHeight: 'calc(100vh - 64px)' }}>
-
         {/* SIDEBAR */}
         <aside style={{ background: 'var(--sea)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '1.25rem 1.25rem 1rem', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
@@ -123,11 +113,9 @@ export default function AdminPage() {
               icon={<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></>} />
           </nav>
         </aside>
-
         {/* MAIN */}
         <main style={{ padding: '2rem', overflow: 'auto' }}>
           {fetching ? <p style={{ color: 'var(--muted)' }}>Chargement…</p> : <>
-
             {/* ── DASHBOARD ── */}
             {section === 'dash' && <>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Tableau de bord</h2>
@@ -175,7 +163,6 @@ export default function AdminPage() {
                 )}
               </div>
             </>}
-
             {/* ── BONS PLANS ── */}
             {section === 'plans' && <>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Gestion des bons plans ({plans.length})</h2>
@@ -204,7 +191,6 @@ export default function AdminPage() {
                 </table>
               </div>
             </>}
-
             {/* ── ÉVÉNEMENTS ── */}
             {section === 'events' && <>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
@@ -266,7 +252,6 @@ export default function AdminPage() {
                 </table>
               </div>
             </>}
-
             {/* ── IMMOBILIER ── */}
             {section === 'immo' && <>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Annonces immobilières ({immo.length})</h2>
@@ -287,7 +272,6 @@ export default function AdminPage() {
                 </table>
               </div>
             </>}
-
             {/* ── UTILISATEURS ── */}
             {section === 'users' && <>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Utilisateurs ({users.length})</h2>
@@ -313,7 +297,6 @@ export default function AdminPage() {
                 </table>
               </div>
             </>}
-
           </>}
         </main>
       </div>
