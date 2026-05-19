@@ -1,8 +1,18 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useMemo } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { createClient, Profile } from './supabase'
+import { createClient } from './supabase'
+
+// Type Profile défini localement
+type Profile = {
+  id: string
+  full_name: string | null
+  avatar_url: string | null
+  email: string | null
+  role: 'member' | 'admin'
+  created_at: string
+}
 
 // Singleton : créé une seule fois, en dehors du composant
 const supabase = createClient()
