@@ -132,3 +132,16 @@ export async function addTreRequest(data: {
   const sb = getSupabase()
   await sb.from('tre_requests').insert(data)
 }
+
+export async function addPlan(data: {
+  title: string
+  cat: string
+  description: string
+  addr: string
+  phone?: string
+  tags: string[]
+  user_id?: string
+}): Promise<void> {
+  const sb = getSupabase()
+  await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false })
+}
