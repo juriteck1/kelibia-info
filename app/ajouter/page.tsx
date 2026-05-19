@@ -4,14 +4,14 @@ import { useAuth } from '@/lib/auth-context'
 import { addPlan } from '@/lib/db'
 
 const CATS = [
-  { id: 'plage',      label: '🏖️ Plage / Nature' },
-  { id: 'restaurant', label: '🍽️ Restaurant' },
-  { id: 'cafe',       label: '☕ Café / Pâtisserie' },
-  { id: 'activite',   label: '🤿 Activité / Sport' },
-  { id: 'culture',    label: '🏛️ Culture / Patrimoine' },
-  { id: 'commerce',   label: '🛍️ Commerce / Shopping' },
-  { id: 'service',    label: '🔧 Service' },
-  { id: 'hebergement',label: '🏨 Hébergement' },
+  { id: 'plage',       label: '🏖️ Plage / Nature' },
+  { id: 'restaurant',  label: '🍽️ Restaurant' },
+  { id: 'cafe',        label: '☕ Café / Pâtisserie' },
+  { id: 'activite',    label: '🤿 Activité / Sport' },
+  { id: 'culture',     label: '🏛️ Culture / Patrimoine' },
+  { id: 'commerce',    label: '🛍️ Commerce / Shopping' },
+  { id: 'service',     label: '🔧 Service' },
+  { id: 'hebergement', label: '🏨 Hébergement' },
 ]
 
 const SUGGESTED_TAGS: Record<string, string[]> = {
@@ -28,37 +28,28 @@ const SUGGESTED_TAGS: Record<string, string[]> = {
 type Step = 1 | 2 | 3
 
 export default function AjouterPage() {
-  const { user, loading, signInWithGoogle } = useAuth()
+  const { user } = useAuth()
   const [step, setStep] = useState<Step>(1)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
 
   const [form, setForm] = useState({
-    title: '',
-    cat: '',
-    description: '',
-    addr: '',
-    phone: '',
-    tags: [] as string[],
-    tagInput: '',
+    title: '', cat: '', description: '', addr: '', phone: '',
+    tags: [] as string[], tagInput: '',
   })
 
   function set(field: string, value: string) {
     setForm(f => ({ ...f, [field]: value }))
   }
-
   function addTag(tag: string) {
     const t = tag.trim()
-    if (t && !form.tags.includes(t) && form.tags.length < 8) {
+    if (t && !form.tags.includes(t) && form.tags.length < 8)
       setForm(f => ({ ...f, tags: [...f.tags, t], tagInput: '' }))
-    }
   }
-
   function removeTag(tag: string) {
     setForm(f => ({ ...f, tags: f.tags.filter(t => t !== tag) }))
   }
-
   function canGoNext() {
     if (step === 1) return form.title.trim().length >= 3 && form.cat !== ''
     if (step === 2) return form.description.trim().length >= 20 && form.addr.trim().length >= 3
@@ -66,18 +57,14 @@ export default function AjouterPage() {
   }
 
   async function handleSubmit() {
-    if (!user) return
     setSubmitting(true)
     setError('')
     try {
       await addPlan({
-        title: form.title.trim(),
-        cat: form.cat,
-        description: form.description.trim(),
-        addr: form.addr.trim(),
-        phone: form.phone.trim() || undefined,
-        tags: form.tags,
-        user_id: user.id,
+        title: form.title.trim(), cat: form.cat,
+        description: form.description.trim(), addr: form.addr.trim(),
+        phone: form.phone.trim() || undefined, tags: form.tags,
+        user_id: user?.id,
       })
       setSubmitted(true)
     } catch {
@@ -87,40 +74,6 @@ export default function AjouterPage() {
     }
   }
 
-  if (loading) return (
-    <div className="pt">
-      <div className="container" style={{ padding: '4rem 0', textAlign: 'center', color: 'var(--muted)' }}>Chargement…</div>
-    </div>
-  )
-
-  // Not logged in
-  if (!user) return (
-    <div className="pt">
-      <div className="ph">
-        <div className="container">
-          <h1>Proposer un bon plan</h1>
-          <p>Partagez vos adresses et découvertes avec la communauté de Kélibia</p>
-        </div>
-      </div>
-      <div className="container" style={{ padding: '4rem 0', maxWidth: 480, textAlign: 'center' }}>
-        <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '2.5rem', boxShadow: 'var(--sh)' }}>
-          <div style={{ width: 56, height: 56, background: 'var(--sea)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M12 21s-8-6.5-8-12a8 8 0 0 1 16 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          </div>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.35rem', marginBottom: '.75rem' }}>Connectez-vous pour contribuer</h2>
-          <p style={{ color: 'var(--muted)', fontSize: '.9rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
-            Rejoignez la communauté Kélibia.info et partagez vos bonnes adresses avec les habitants et les visiteurs.
-          </p>
-          <button onClick={signInWithGoogle} style={{ display: 'flex', alignItems: 'center', gap: '.75rem', background: '#fff', border: '1.5px solid var(--border)', borderRadius: 'var(--r)', padding: '.75rem 1.5rem', fontSize: '.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', margin: '0 auto', color: 'var(--text)', boxShadow: '0 1px 3px rgba(0,0,0,.08)' }}>
-            <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.5 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.5 26.8 36 24 36c-5.2 0-9.7-3.3-11.3-7.9l-6.6 5.1C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.3 5.5l6.2 5.2C42.2 35.9 44 30.4 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
-            Continuer avec Google
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-
-  // Success
   if (submitted) return (
     <div className="pt">
       <div className="container" style={{ padding: '5rem 0', maxWidth: 480, textAlign: 'center' }}>
@@ -154,10 +107,7 @@ export default function AjouterPage() {
           <p>Partagez vos adresses et découvertes avec la communauté</p>
         </div>
       </div>
-
       <div className="container" style={{ padding: '2.5rem 0', maxWidth: 640 }}>
-
-        {/* Steps indicator */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginBottom: '2rem' }}>
           {([1, 2, 3] as Step[]).map((s, i) => (
             <div key={s} style={{ display: 'flex', alignItems: 'center', flex: i < 2 ? 1 : 'none' }}>
@@ -175,19 +125,15 @@ export default function AjouterPage() {
         </div>
 
         <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '2rem', boxShadow: 'var(--sh)' }}>
-
-          {/* ── ÉTAPE 1 ── */}
           {step === 1 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Nom et catégorie</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Comment s'appelle ce bon plan et dans quelle catégorie ?</p>
-
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Nom du bon plan *</label>
                 <input className="fi" type="text" placeholder="Ex: Restaurant Le Pêcheur, Plage El Mansourah…" value={form.title} onChange={e => set('title', e.target.value)} maxLength={80} />
                 <div style={{ fontSize: '.72rem', color: 'var(--muted)', marginTop: '.25rem', textAlign: 'right' }}>{form.title.length}/80</div>
               </div>
-
               <div>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.75rem' }}>Catégorie *</label>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '.6rem' }}>
@@ -202,12 +148,10 @@ export default function AjouterPage() {
             </div>
           )}
 
-          {/* ── ÉTAPE 2 ── */}
           {step === 2 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Description et adresse</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Décrivez ce qui rend cet endroit spécial.</p>
-
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Description *</label>
                 <textarea className="fta" rows={4} placeholder="Décrivez l'endroit : spécialités, ambiance, ce qui le rend unique à Kélibia…" value={form.description} onChange={e => set('description', e.target.value)} maxLength={500} />
@@ -216,17 +160,14 @@ export default function AjouterPage() {
                   <span>{form.description.length}/500</span>
                 </div>
               </div>
-
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Adresse / Quartier *</label>
                 <input className="fi" type="text" placeholder="Ex: Avenue Habib Bourguiba, Centre-ville Kélibia…" value={form.addr} onChange={e => set('addr', e.target.value)} />
               </div>
-
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Téléphone <span style={{ fontWeight: 400 }}>(optionnel)</span></label>
                 <input className="fi" type="tel" placeholder="Ex: +216 XX XXX XXX" value={form.phone} onChange={e => set('phone', e.target.value)} />
               </div>
-
               <div>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Tags <span style={{ fontWeight: 400 }}>(optionnel, max 8)</span></label>
                 {suggestedTags.length > 0 && (
@@ -260,12 +201,10 @@ export default function AjouterPage() {
             </div>
           )}
 
-          {/* ── ÉTAPE 3 ── */}
           {step === 3 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Vérification</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Vérifiez les informations avant d'envoyer.</p>
-
               <div style={{ background: '#f8fafc', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '1.25rem', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '.75rem' }}>
                   <div>
@@ -286,16 +225,13 @@ export default function AjouterPage() {
                   )}
                 </div>
               </div>
-
               <div style={{ background: '#fefce8', border: '1px solid #fde68a', borderRadius: 'var(--r)', padding: '1rem', fontSize: '.82rem', color: '#92400e' }}>
                 ⏳ Votre bon plan sera <strong>examiné par notre équipe</strong> avant publication (généralement sous 24h).
               </div>
-
               {error && <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 'var(--r)', padding: '.75rem 1rem', fontSize: '.85rem', color: '#dc2626', marginTop: '1rem' }}>{error}</div>}
             </div>
           )}
 
-          {/* Navigation */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
             <button onClick={() => setStep(s => (s - 1) as Step)} disabled={step === 1}
               style={{ padding: '.6rem 1.25rem', borderRadius: 'var(--r)', border: '1px solid var(--border)', background: '#fff', fontSize: '.875rem', color: step === 1 ? '#9ca3af' : 'var(--text)', cursor: step === 1 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
