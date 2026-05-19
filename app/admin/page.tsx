@@ -348,7 +348,7 @@ export default function AdminPage() {
               icon={<><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>} />
             <SbBtn label="Immobilier" active={section === 'immo'} onClick={() => setSection('immo')}
               icon={<><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>} />
-            <SbBtn label="Utilisateurs" active={section === 'users'} badge={stats.users} onClick={() => setSection('users')}
+            <SbBtn label="Utilisateurs" active={section === 'users'} onClick={() => setSection('users')}
               icon={<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></>} />
           </nav>
         </aside>
@@ -356,16 +356,15 @@ export default function AdminPage() {
         {/* MAIN */}
         <main style={{ padding: '2rem', overflow: 'auto' }}>
 
-          {/* ── DASHBOARD ── */}
+          {/* DASHBOARD */}
           {section === 'dash' && <>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Tableau de bord</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: '1rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1rem', marginBottom: '2rem' }}>
               {[
                 { label: 'Plans publiés', value: stats.plans, color: '#1e4d8c' },
                 { label: 'En attente', value: stats.pending, color: '#f59e0b' },
                 { label: 'Événements', value: stats.events, color: '#29a8d8' },
                 { label: 'Annonces immo', value: stats.immo, color: '#16a34a' },
-                { label: 'Utilisateurs', value: stats.users, color: '#7c3aed' },
               ].map(s => (
                 <div key={s.label} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '1.1rem', boxShadow: 'var(--sh)' }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '2rem', fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
@@ -405,7 +404,7 @@ export default function AdminPage() {
             </div>
           </>}
 
-          {/* ── BONS PLANS ── */}
+          {/* BONS PLANS */}
           {section === 'plans' && <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem' }}>Bons plans ({plans.length})</h2>
@@ -413,8 +412,6 @@ export default function AdminPage() {
                 {showAddPlan ? '✕ Annuler' : '+ Créer un plan'}
               </button>
             </div>
-
-            {/* Formulaire création */}
             {showAddPlan && (
               <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '1.5rem', boxShadow: 'var(--sh)', marginBottom: '1.5rem' }}>
                 <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1rem', marginBottom: '1.25rem' }}>Nouveau bon plan</h3>
@@ -426,22 +423,19 @@ export default function AdminPage() {
                 </form>
               </div>
             )}
-
             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', boxShadow: 'var(--sh)', overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead><tr>{[th('Nom'), th('Catégorie'), th('Note'), th('Statut'), th('Actions')]}</tr></thead>
                 <tbody>
                   {plans.map(p => (
                     <tr key={p.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                      {td(<>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
-                          {p.img && <img src={p.img} alt="" style={{ width: 36, height: 36, objectFit: 'cover', borderRadius: 'var(--r)', flexShrink: 0 }} />}
-                          <div>
-                            <div style={{ fontSize: '.85rem', fontWeight: 500 }}>{p.title}</div>
-                            <div style={{ fontSize: '.75rem', color: 'var(--muted)' }}>{p.addr}</div>
-                          </div>
+                      {td(<div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+                        {p.img && <img src={p.img} alt="" style={{ width: 36, height: 36, objectFit: 'cover', borderRadius: 'var(--r)', flexShrink: 0 }} />}
+                        <div>
+                          <div style={{ fontSize: '.85rem', fontWeight: 500 }}>{p.title}</div>
+                          <div style={{ fontSize: '.75rem', color: 'var(--muted)' }}>{p.addr}</div>
                         </div>
-                      </>)}
+                      </div>)}
                       {td(<span style={{ fontSize: '.8rem', color: 'var(--muted)' }}>{CAT_LABELS[p.cat] ?? p.cat}</span>)}
                       {td(<span style={{ fontSize: '.85rem' }}>⭐ {p.rating.toFixed(1)}</span>)}
                       {td(<Badge status={p.status} />)}
@@ -462,7 +456,7 @@ export default function AdminPage() {
             </div>
           </>}
 
-          {/* ── ÉVÉNEMENTS ── */}
+          {/* ÉVÉNEMENTS */}
           {section === 'events' && <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem' }}>Événements ({events.length})</h2>
@@ -475,7 +469,7 @@ export default function AdminPage() {
                 <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1rem', marginBottom: '1.25rem' }}>Nouvel événement</h3>
                 <form onSubmit={handleAddEvent}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                    {([['Titre *', 'text', 'title', "Nom de l'événement"], ['Lieu *', 'text', 'loc', "Lieu"], ['Date *', 'date', 'event_date', ''], ['Heure', 'time', 'event_time', ''], ['Participants', 'number', 'attendees', '50']] as const).map(([label, type, key, placeholder]) => (
+                    {([['Titre *', 'text', 'title', "Nom de l'événement"], ['Lieu *', 'text', 'loc', 'Lieu'], ['Date *', 'date', 'event_date', ''], ['Heure', 'time', 'event_time', ''], ['Participants', 'number', 'attendees', '50']] as const).map(([label, type, key, placeholder]) => (
                       <div key={key}>
                         <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.35rem' }}>{label}</label>
                         <input className="fi" type={type} value={(evForm as Record<string, string>)[key]} onChange={e => setEvForm(f => ({ ...f, [key]: e.target.value }))} placeholder={placeholder} />
@@ -517,7 +511,7 @@ export default function AdminPage() {
             </div>
           </>}
 
-          {/* ── IMMOBILIER ── */}
+          {/* IMMOBILIER */}
           {section === 'immo' && <>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Annonces immobilières ({immo.length})</h2>
             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', boxShadow: 'var(--sh)', overflowX: 'auto' }}>
@@ -538,7 +532,7 @@ export default function AdminPage() {
             </div>
           </>}
 
-          {/* ── UTILISATEURS ── */}
+          {/* UTILISATEURS */}
           {section === 'users' && <>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.5rem', marginBottom: '1.5rem' }}>Utilisateurs ({users.length})</h2>
             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', boxShadow: 'var(--sh)', overflowX: 'auto' }}>
@@ -561,9 +555,9 @@ export default function AdminPage() {
                       {td(<div style={{ display: 'flex', gap: '.4rem' }}>
                         {u.email !== ADMIN_EMAIL && (
                           u.role === 'admin' ? (
-                            <button onClick={async () => { if (!confirm(`Rétrograder ${u.full_name ?? u.email} en membre ?`)) return; setProcessing(u.id as never); try { await updateUserRole(u.id, 'member'); await loadAll() } finally { setProcessing(null) } }} disabled={processing === (u.id as never)} style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Rétrograder</button>
+                            <button onClick={async () => { if (!confirm(`Rétrograder ${u.full_name ?? u.email} ?`)) return; setProcessing(u.id as never); try { await updateUserRole(u.id, 'member'); await loadAll() } finally { setProcessing(null) } }} disabled={processing === (u.id as never)} style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Rétrograder</button>
                           ) : (
-                            <button onClick={async () => { if (!confirm(`Promouvoir ${u.full_name ?? u.email} en administrateur ?`)) return; setProcessing(u.id as never); try { await updateUserRole(u.id, 'admin'); await loadAll() } finally { setProcessing(null) } }} disabled={processing === (u.id as never)} style={{ background: '#f3e8ff', border: '1px solid #d8b4fe', color: '#7c3aed', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>👑 Promouvoir admin</button>
+                            <button onClick={async () => { if (!confirm(`Promouvoir ${u.full_name ?? u.email} admin ?`)) return; setProcessing(u.id as never); try { await updateUserRole(u.id, 'admin'); await loadAll() } finally { setProcessing(null) } }} disabled={processing === (u.id as never)} style={{ background: '#f3e8ff', border: '1px solid #d8b4fe', color: '#7c3aed', borderRadius: 'var(--r)', padding: '.3rem .7rem', fontSize: '.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>👑 Promouvoir</button>
                           )
                         )}
                         {u.email === ADMIN_EMAIL && <span style={{ fontSize: '.75rem', color: 'var(--muted)', fontStyle: 'italic' }}>Compte principal</span>}
