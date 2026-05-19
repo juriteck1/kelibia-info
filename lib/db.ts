@@ -214,3 +214,28 @@ export async function addAdminEvent(data: {
   const sb = getAuthSb()
   await sb.from('events').insert({ ...data, status: 'published', featured: false } as never)
 }
+export async function uploadPlanImage(file: File): Promise<string | null> {
+  const sb = getAuthSb()
+  const ext = file.name.split('.').pop() ?? 'jpg'
+  const path = `plan-${Date.now()}.${ext}`
+  const { error } = await sb.storage.from('plans').upload(path, file, { upsert: true })
+  if (error) return null
+  const { data } = sb.storage.from('plans').getPublicUrl(path)
+  return data.publicUrl
+}
+
+export async function addAdminPlan(data: {
+  title: string; cat: string; description: string; addr: string
+  phone?: string; tags: string[]; img?: string
+}): Promise<void> {
+  const sb = getAuthSb()
+  await sb.from('plans').insert({ ...data, status: 'published', rating: 0, rc: 0, featured: false } as never)
+}
+
+export async function updatePlan(id: number, data: {
+  title?: string; cat?: string; description?: string; addr?: string
+  phone?: string; tags?: string[]; img?: string; status?: string; featured?: boolean
+}): Promise<void> {
+  const sb = getAuthSb()
+  await sb.from('plans').update(data as never).eq('id', id)
+}
