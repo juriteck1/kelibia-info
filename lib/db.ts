@@ -1,11 +1,8 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from './supabase'
 import type { Plan, Review, Event, ImmoListing } from '@/types'
 
 function getSupabase() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  return createClient()
 }
 
 function mapPlan(row: Record<string, unknown>): Plan {
