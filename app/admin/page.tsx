@@ -49,11 +49,21 @@ export default function AdminPage() {
   const [addingEv, setAddingEv] = useState(false)
   const [evForm, setEvForm] = useState({ title: '', description: '', event_date: '', event_time: '18:00', loc: '', cat: 'culture', attendees: '50' })
 
+  function safe<T>(p: Promise<T>, fallback: T): Promise<T> {
+    const timeout = new Promise<T>(resolve => setTimeout(() => resolve(fallback), 6000))
+    return Promise.race([p.catch(() => fallback), timeout])
+  }
+
   const loadAll = useCallback(async () => {
     setFetching(true)
     try {
+      const defaultStats = { plans: 0, pending: 0, events: 0, users: 0, immo: 0 }
       const [s, p, e, i, u] = await Promise.all([
-        getAdminStats(), getAllPlans(), getAllEvents(), getAdminImmoListings(), getUsers()
+        safe(getAdminStats(), defaultStats),
+        safe(getAllPlans(), []),
+        safe(getAllEvents(), []),
+        safe(getAdminImmoListings(), []),
+        safe(getUsers(), []),
       ])
       setStats(s); setPlans(p); setEvents(e); setImmo(i); setUsers(u)
     } catch (err) {
