@@ -1,8 +1,8 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { supabase } from './supabase'
+import { createClient } from './supabase'
 
 type Profile = {
   id: string
@@ -36,6 +36,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const clientRef = useRef(createClient())
+  const supabase = clientRef.current
 
   useEffect(() => {
     const fallback = setTimeout(() => setLoading(false), 4000)
