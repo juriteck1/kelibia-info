@@ -44,33 +44,21 @@ function mapEvent(row: Record<string, unknown>): Event {
 
 export async function getPlans(): Promise<Plan[]> {
   const sb = getSupabase()
-  const { data, error } = await sb
-    .from('plans')
-    .select('*')
-    .eq('status', 'published')
-    .order('id')
+  const { data, error } = await sb.from('plans').select('*').eq('status', 'published').order('id')
   if (error || !data) return []
   return data.map(mapPlan)
 }
 
 export async function getPlan(id: number): Promise<Plan | null> {
   const sb = getSupabase()
-  const { data, error } = await sb
-    .from('plans')
-    .select('*')
-    .eq('id', id)
-    .single()
+  const { data, error } = await sb.from('plans').select('*').eq('id', id).single()
   if (error || !data) return null
   return mapPlan(data)
 }
 
 export async function getReviews(planId: number): Promise<Review[]> {
   const sb = getSupabase()
-  const { data, error } = await sb
-    .from('reviews')
-    .select('*')
-    .eq('plan_id', planId)
-    .order('created_at', { ascending: false })
+  const { data, error } = await sb.from('reviews').select('*').eq('plan_id', planId).order('created_at', { ascending: false })
   if (error || !data) return []
   return data as Review[]
 }
@@ -82,23 +70,15 @@ export async function addReview(review: Omit<Review, 'id' | 'created_at'>): Prom
 
 export async function getEvents(): Promise<Event[]> {
   const sb = getSupabase()
-  const { data, error } = await sb
-    .from('events')
-    .select('*')
-    .eq('status', 'published')
-    .order('event_date')
+  const { data, error } = await sb.from('events').select('*').eq('status', 'published').order('event_date')
   if (error || !data) return []
   return data.map(mapEvent)
 }
 
 export async function getImmoListings(type?: string): Promise<ImmoListing[]> {
   const sb = getSupabase()
-  let query = sb
-    .from('immo_listings')
-    .select('*')
-    .eq('status', 'published')
-    .order('featured', { ascending: false })
-    .order('created_at', { ascending: false })
+  let query = sb.from('immo_listings').select('*').eq('status', 'published')
+    .order('featured', { ascending: false }).order('created_at', { ascending: false })
   if (type && type !== 'all') query = query.eq('type', type)
   const { data, error } = await query
   if (error || !data) return []
@@ -121,26 +101,16 @@ export async function getImmoListings(type?: string): Promise<ImmoListing[]> {
 }
 
 export async function addTreRequest(data: {
-  prenom: string
-  email: string
-  phone?: string
-  pays: string
-  budget?: string
-  type_bien?: string
-  message?: string
+  prenom: string; email: string; phone?: string; pays: string
+  budget?: string; type_bien?: string; message?: string
 }): Promise<void> {
   const sb = getSupabase()
   await sb.from('tre_requests').insert(data)
 }
 
 export async function addPlan(data: {
-  title: string
-  cat: string
-  description: string
-  addr: string
-  phone?: string
-  tags: string[]
-  user_id?: string
+  title: string; cat: string; description: string; addr: string
+  phone?: string; tags: string[]; user_id?: string
 }): Promise<void> {
   const sb = getSupabase()
   await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false })
@@ -148,11 +118,7 @@ export async function addPlan(data: {
 
 export async function getPendingPlans(): Promise<Plan[]> {
   const sb = getSupabase()
-  const { data, error } = await sb
-    .from('plans')
-    .select('*')
-    .eq('status', 'pending')
-    .order('created_at', { ascending: false })
+  const { data, error } = await sb.from('plans').select('*').eq('status', 'pending').order('created_at', { ascending: false })
   if (error || !data) return []
   return data.map(mapPlan)
 }
@@ -160,4 +126,85 @@ export async function getPendingPlans(): Promise<Plan[]> {
 export async function updatePlanStatus(id: number, status: 'published' | 'rejected'): Promise<void> {
   const sb = getSupabase()
   await sb.from('plans').update({ status }).eq('id', id)
+}
+
+// ── ADMIN ──────────────────────────────────────────────
+
+export async function getAdminStats(): Promise<{ plans: number; pending: number; events: number; users: number; immo: number }> {
+  const sb = getSupabase()
+  const [plans, pending, events, users, immo] = await Promise.all([
+    sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+    sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
+    sb.from('events').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+    sb.from('profiles').select('id', { count: 'exact', head: true }),
+    sb.from('immo_listings').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+  ])
+  return {
+    plans: plans.count ?? 0,
+    pending: pending.count ?? 0,
+    events: events.count ?? 0,
+    users: users.count ?? 0,
+    immo: immo.count ?? 0,
+  }
+}
+
+export async function getAllPlans(): Promise<(Plan & { status: string })[]> {
+  const sb = getSupabase()
+  const { data, error } = await sb.from('plans').select('*').order('created_at', { ascending: false })
+  if (error || !data) return []
+  return data.map(row => ({ ...mapPlan(row), status: row.status as string }))
+}
+
+export async function getAllEvents(): Promise<(Event & { status: string })[]> {
+  const sb = getSupabase()
+  const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: false })
+  if (error || !data) return []
+  return data.map(row => ({ ...mapEvent(row), status: row.status as string }))
+}
+
+export async function getAdminImmoListings(): Promise<ImmoListing[]> {
+  const sb = getSupabase()
+  const { data, error } = await sb.from('immo_listings').select('*').order('created_at', { ascending: false })
+  if (error || !data) return []
+  return data.map(row => ({
+    id: row.id as number,
+    title: row.title as string,
+    type: row.type as 'vente' | 'location' | 'vacances',
+    price: row.price as number,
+    surface: row.surface as number,
+    rooms: row.rooms as number,
+    beds: row.beds as number,
+    addr: row.addr as string,
+    desc: (row.description ?? '') as string,
+    img: (row.img ?? '') as string,
+    agent_name: row.agent_name as string | undefined,
+    agent_phone: row.agent_phone as string | undefined,
+    featured: (row.featured ?? false) as boolean,
+    created_at: row.created_at as string | undefined,
+  }))
+}
+
+export async function getUsers(): Promise<{ id: string; full_name?: string; created_at?: string }[]> {
+  const sb = getSupabase()
+  const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false })
+  if (error || !data) return []
+  return data as { id: string; full_name?: string; created_at?: string }[]
+}
+
+export async function deletePlan(id: number): Promise<void> {
+  const sb = getSupabase()
+  await sb.from('plans').delete().eq('id', id)
+}
+
+export async function deleteEvent(id: number): Promise<void> {
+  const sb = getSupabase()
+  await sb.from('events').delete().eq('id', id)
+}
+
+export async function addAdminEvent(data: {
+  title: string; description: string; event_date: string
+  event_time: string; loc: string; cat: string; attendees: number
+}): Promise<void> {
+  const sb = getSupabase()
+  await sb.from('events').insert({ ...data, status: 'published', featured: false })
 }
