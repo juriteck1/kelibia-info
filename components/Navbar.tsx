@@ -2,11 +2,11 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { AuthButton } from '@/components/AuthButton'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [mob, setMob] = useState(false)
-
   const links = [
     { href: '/', label: 'Accueil' },
     { href: '/plans', label: 'Bons Plans' },
@@ -15,7 +15,6 @@ export default function Navbar() {
     { href: '/immo', label: 'Immobilier', highlight: true },
     { href: '/ajouter', label: 'Ajouter' },
   ]
-
   return (
     <header className="navbar">
       <div className="container nav-in">
@@ -28,26 +27,24 @@ export default function Navbar() {
             <span className="nls">.info</span>
           </div>
         </Link>
-
         <nav className="nav-links">
           {links.map(l => (
             <Link
               key={l.href}
               href={l.href}
-              className={`nl${pathname === l.href ? ' on' : ''}${l.highlight ? '' : ''}`}
+              className={`nl${pathname === l.href ? ' on' : ''}`}
               style={l.highlight ? { color: 'var(--sea)', fontWeight: 600, border: '1px solid var(--sea)', borderRadius: 'var(--r)' } : {}}
             >
               {l.label}
             </Link>
           ))}
           <Link href="/ajouter" className="nav-cta">+ Proposer un bon plan</Link>
+          <AuthButton />
         </nav>
-
         <button className="burger" onClick={() => setMob(!mob)} aria-label="Menu">
           <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
-
       <div className={`mob-menu${mob ? ' open' : ''}`}>
         <div className="mob-links">
           {links.map(l => (
@@ -56,6 +53,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/ajouter" className="mob-cta" onClick={() => setMob(false)}>+ Proposer un bon plan</Link>
+          <div style={{padding:'0 1rem 1rem'}}><AuthButton /></div>
         </div>
       </div>
     </header>
