@@ -70,7 +70,7 @@ export async function getReviews(planId: number): Promise<Review[]> {
 
 export async function addReview(review: Omit<Review, 'id' | 'created_at'>): Promise<void> {
   const sb = getSupabase()
-  await sb.from('reviews').insert(review)
+  await sb.from('reviews').insert(review as never)
 }
 
 export async function getEvents(): Promise<Event[]> {
@@ -110,7 +110,7 @@ export async function addTreRequest(data: {
   budget?: string; type_bien?: string; message?: string
 }): Promise<void> {
   const sb = getSupabase()
-  await sb.from('tre_requests').insert(data)
+  await sb.from('tre_requests').insert(data as never)
 }
 
 export async function addPlan(data: {
@@ -118,7 +118,7 @@ export async function addPlan(data: {
   phone?: string; tags: string[]; user_id?: string
 }): Promise<void> {
   const sb = getSupabase()
-  await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false })
+  await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false } as never)
 }
 
 export async function getPendingPlans(): Promise<Plan[]> {
@@ -130,7 +130,7 @@ export async function getPendingPlans(): Promise<Plan[]> {
 
 export async function updatePlanStatus(id: number, status: 'published' | 'rejected'): Promise<void> {
   const sb = getSupabase()
-  await sb.from('plans').update({ status }).eq('id', id)
+  await sb.from('plans').update({ status } as never).eq('id', id)
 }
 
 // ── ADMIN ──────────────────────────────────────────────
@@ -211,5 +211,5 @@ export async function addAdminEvent(data: {
   event_time: string; loc: string; cat: string; attendees: number
 }): Promise<void> {
   const sb = getSupabase()
-  await sb.from('events').insert({ ...data, status: 'published', featured: false })
+  await sb.from('events').insert({ ...data, status: 'published', featured: false } as never)
 }
