@@ -157,21 +157,21 @@ export async function getAllPlans(): Promise<(Plan & { status: string })[]> {
   const sb = getSupabase()
   const { data, error } = await sb.from('plans').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
-  return data.map(row => ({ ...mapPlan(row), status: row.status as string }))
+  return (data as Record<string, unknown>[]).map(row => ({ ...mapPlan(row), status: row.status as string }))
 }
 
 export async function getAllEvents(): Promise<(Event & { status: string })[]> {
   const sb = getSupabase()
   const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: false })
   if (error || !data) return []
-  return data.map(row => ({ ...mapEvent(row), status: row.status as string }))
+  return (data as Record<string, unknown>[]).map(row => ({ ...mapEvent(row), status: row.status as string }))
 }
 
 export async function getAdminImmoListings(): Promise<ImmoListing[]> {
   const sb = getSupabase()
   const { data, error } = await sb.from('immo_listings').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
-  return data.map(row => ({
+  return (data as Record<string, unknown>[]).map(row => ({
     id: row.id as number,
     title: row.title as string,
     type: row.type as 'vente' | 'location' | 'vacances',
