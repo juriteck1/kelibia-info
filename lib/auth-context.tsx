@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useRef } from 'react'
-import { createClient, User, Session, SupabaseClient } from '@supabase/supabase-js'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { User, Session } from '@supabase/supabase-js'
+import { supabase } from './supabase'
 
 type Profile = {
   id: string
@@ -36,17 +37,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const supabaseRef = useRef<SupabaseClient | null>(null)
-  if (!supabaseRef.current) {
-    supabaseRef.current = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-  }
-  const supabase = supabaseRef.current
-
   useEffect(() => {
-    const fallback = setTimeout(() => setLoading(false), 3000)
+    const fallback = setTimeout(() => setLoading(false), 4000)
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       clearTimeout(fallback)
       setSession(session)
@@ -83,9 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function signInWithGoogle() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
   }
 
