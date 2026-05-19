@@ -4,7 +4,6 @@ import type { Plan, Review, Event, ImmoListing } from '@/types'
 
 let _db: ReturnType<typeof createClient> | null = null
 
-// Client public (anon, sans session) — pour les pages publiques
 function getSupabase() {
   if (!_db) {
     _db = createClient(
@@ -16,7 +15,6 @@ function getSupabase() {
   return _db
 }
 
-// Client auth (avec JWT) — pour les fonctions admin qui nécessitent le RLS
 function getAuthSb() {
   return createAuthClient()
 }
@@ -129,7 +127,6 @@ export async function addPlan(data: {
   await sb.from('plans').insert({ ...data, status: 'pending', rating: 0, rc: 0, featured: false } as never)
 }
 
-
 export async function getAdminStats(): Promise<{ plans: number; pending: number; events: number; users: number; immo: number }> {
   const sb = getAuthSb()
   const [plans, pending, events, immo] = await Promise.all([
@@ -183,11 +180,16 @@ export async function getAdminImmoListings(): Promise<ImmoListing[]> {
   }))
 }
 
-export async function getUsers(): Promise<{ id: string; full_name?: string; created_at?: string }[]> {
+export async function getUsers(): Promise<{ id: string; full_name?: string; email?: string; role?: string; created_at?: string }[]> {
   const sb = getAuthSb()
   const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
-  return data as { id: string; full_name?: string; created_at?: string }[]
+  return data as { id: string; full_name?: string; email?: string; role?: string; created_at?: string }[]
+}
+
+export async function updateUserRole(id: string, role: 'member' | 'admin'): Promise<void> {
+  const sb = getAuthSb()
+  await sb.from('profiles').update({ role } as never).eq('id', id)
 }
 
 export async function deletePlan(id: number): Promise<void> {
