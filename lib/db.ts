@@ -1,16 +1,8 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from './supabase'
 import type { Plan, Review, Event, ImmoListing } from '@/types'
 
-// ── Singleton Supabase — une seule instance pour tout le site ──
-let _supabase: ReturnType<typeof createClient> | null = null
 function getSupabase() {
-  if (!_supabase) {
-    _supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-  }
-  return _supabase
+  return createClient()
 }
 
 function mapPlan(row: Record<string, unknown>): Plan {
