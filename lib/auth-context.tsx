@@ -1,17 +1,11 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { createClient } from './supabase'
+import { createClient, Profile } from './supabase'
 
-type Profile = {
-  id: string
-  full_name: string | null
-  avatar_url: string | null
-  email: string | null
-  role: 'member' | 'admin'
-  created_at: string
-}
+// Singleton : créé une seule fois, en dehors du composant
+const supabase = createClient()
 
 type AuthContextType = {
   user: User | null
@@ -36,8 +30,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const supabase = createClient()
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
