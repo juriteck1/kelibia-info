@@ -131,7 +131,7 @@ export async function addPlan(data: {
 
 
 export async function getAdminStats(): Promise<{ plans: number; pending: number; events: number; users: number; immo: number }> {
-  const sb = getAuthSb()
+  const sb = getSupabase()
   const [plans, pending, events, immo] = await Promise.all([
     sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'published'),
     sb.from('plans').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
@@ -148,21 +148,21 @@ export async function getAdminStats(): Promise<{ plans: number; pending: number;
 }
 
 export async function getAllPlans(): Promise<(Plan & { status: string })[]> {
-  const sb = getAuthSb()
+  const sb = getSupabase()
   const { data, error } = await sb.from('plans').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({ ...mapPlan(row), status: row.status as string }))
 }
 
 export async function getAllEvents(): Promise<(Event & { status: string })[]> {
-  const sb = getAuthSb()
+  const sb = getSupabase()
   const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({ ...mapEvent(row), status: row.status as string }))
 }
 
 export async function getAdminImmoListings(): Promise<ImmoListing[]> {
-  const sb = getAuthSb()
+  const sb = getSupabase()
   const { data, error } = await sb.from('immo_listings').select('*').order('created_at', { ascending: false })
   if (error || !data) return []
   return (data as Record<string, unknown>[]).map(row => ({
