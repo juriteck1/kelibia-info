@@ -58,7 +58,7 @@ export function AuthButton() {
             </div>
             <div style={{padding:'.5rem'}}>
               <button
-                onClick={() => { signOut(); setOpen(false) }}
+                onClick={() => { setOpen(false); signOut().then(() => { window.location.href = '/' }) }}
                 style={{width:'100%',display:'flex',alignItems:'center',gap:'.6rem',padding:'.6rem .75rem',background:'none',border:'none',borderRadius:'var(--r)',cursor:'pointer',fontSize:'.875rem',color:'#dc2626',fontFamily:'inherit',textAlign:'left'}}
                 onMouseEnter={e => (e.currentTarget.style.background='#fef2f2')}
                 onMouseLeave={e => (e.currentTarget.style.background='none')}
