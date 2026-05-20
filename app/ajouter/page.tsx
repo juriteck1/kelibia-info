@@ -4,14 +4,14 @@ import { useAuth } from '@/lib/auth-context'
 import { addPlan } from '@/lib/db'
 
 const CATS = [
-  { id: 'plage',       label: '🏖️ Plage / Nature' },
-  { id: 'restaurant',  label: '🍽️ Restaurant' },
-  { id: 'cafe',        label: '☕ Café / Pâtisserie' },
-  { id: 'activite',    label: '🤿 Activité / Sport' },
-  { id: 'culture',     label: '🏛️ Culture / Patrimoine' },
-  { id: 'commerce',    label: '🛍️ Commerce / Shopping' },
-  { id: 'service',     label: '🔧 Service' },
-  { id: 'hebergement', label: '🏨 Hébergement' },
+  { id: 'plage',      label: '🏖️ Plage / Nature' },
+  { id: 'restaurant', label: '🍽️ Restaurant' },
+  { id: 'cafe',       label: '☕ Café / Pâtisserie' },
+  { id: 'activite',   label: '🤿 Activité / Sport' },
+  { id: 'culture',    label: '🏛️ Culture / Patrimoine' },
+  { id: 'commerce',   label: '🛍️ Commerce / Shopping' },
+  { id: 'service',    label: '🔧 Service' },
+  { id: 'hebergement',label: '🏨 Hébergement' },
 ]
 
 const SUGGESTED_TAGS: Record<string, string[]> = {
@@ -35,21 +35,30 @@ export default function AjouterPage() {
   const [error, setError] = useState('')
 
   const [form, setForm] = useState({
-    title: '', cat: '', description: '', addr: '', phone: '',
-    tags: [] as string[], tagInput: '',
+    title: '',
+    cat: '',
+    description: '',
+    addr: '',
+    phone: '',
+    tags: [] as string[],
+    tagInput: '',
   })
 
   function set(field: string, value: string) {
     setForm(f => ({ ...f, [field]: value }))
   }
+
   function addTag(tag: string) {
     const t = tag.trim()
-    if (t && !form.tags.includes(t) && form.tags.length < 8)
+    if (t && !form.tags.includes(t) && form.tags.length < 8) {
       setForm(f => ({ ...f, tags: [...f.tags, t], tagInput: '' }))
+    }
   }
+
   function removeTag(tag: string) {
     setForm(f => ({ ...f, tags: f.tags.filter(t => t !== tag) }))
   }
+
   function canGoNext() {
     if (step === 1) return form.title.trim().length >= 3 && form.cat !== ''
     if (step === 2) return form.description.trim().length >= 20 && form.addr.trim().length >= 3
@@ -61,9 +70,12 @@ export default function AjouterPage() {
     setError('')
     try {
       await addPlan({
-        title: form.title.trim(), cat: form.cat,
-        description: form.description.trim(), addr: form.addr.trim(),
-        phone: form.phone.trim() || undefined, tags: form.tags,
+        title: form.title.trim(),
+        cat: form.cat,
+        description: form.description.trim(),
+        addr: form.addr.trim(),
+        phone: form.phone.trim() || undefined,
+        tags: form.tags,
         user_id: user?.id,
       })
       setSubmitted(true)
@@ -74,6 +86,7 @@ export default function AjouterPage() {
     }
   }
 
+  // Success
   if (submitted) return (
     <div className="pt">
       <div className="container" style={{ padding: '5rem 0', maxWidth: 480, textAlign: 'center' }}>
@@ -107,7 +120,10 @@ export default function AjouterPage() {
           <p>Partagez vos adresses et découvertes avec la communauté</p>
         </div>
       </div>
+
       <div className="container" style={{ padding: '2.5rem 0', maxWidth: 640 }}>
+
+        {/* Steps indicator */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginBottom: '2rem' }}>
           {([1, 2, 3] as Step[]).map((s, i) => (
             <div key={s} style={{ display: 'flex', alignItems: 'center', flex: i < 2 ? 1 : 'none' }}>
@@ -125,15 +141,19 @@ export default function AjouterPage() {
         </div>
 
         <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '2rem', boxShadow: 'var(--sh)' }}>
+
+          {/* ── ÉTAPE 1 ── */}
           {step === 1 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Nom et catégorie</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Comment s'appelle ce bon plan et dans quelle catégorie ?</p>
+
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Nom du bon plan *</label>
                 <input className="fi" type="text" placeholder="Ex: Restaurant Le Pêcheur, Plage El Mansourah…" value={form.title} onChange={e => set('title', e.target.value)} maxLength={80} />
                 <div style={{ fontSize: '.72rem', color: 'var(--muted)', marginTop: '.25rem', textAlign: 'right' }}>{form.title.length}/80</div>
               </div>
+
               <div>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.75rem' }}>Catégorie *</label>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '.6rem' }}>
@@ -148,10 +168,12 @@ export default function AjouterPage() {
             </div>
           )}
 
+          {/* ── ÉTAPE 2 ── */}
           {step === 2 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Description et adresse</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Décrivez ce qui rend cet endroit spécial.</p>
+
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Description *</label>
                 <textarea className="fta" rows={4} placeholder="Décrivez l'endroit : spécialités, ambiance, ce qui le rend unique à Kélibia…" value={form.description} onChange={e => set('description', e.target.value)} maxLength={500} />
@@ -160,14 +182,17 @@ export default function AjouterPage() {
                   <span>{form.description.length}/500</span>
                 </div>
               </div>
+
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Adresse / Quartier *</label>
                 <input className="fi" type="text" placeholder="Ex: Avenue Habib Bourguiba, Centre-ville Kélibia…" value={form.addr} onChange={e => set('addr', e.target.value)} />
               </div>
+
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Téléphone <span style={{ fontWeight: 400 }}>(optionnel)</span></label>
                 <input className="fi" type="tel" placeholder="Ex: +216 XX XXX XXX" value={form.phone} onChange={e => set('phone', e.target.value)} />
               </div>
+
               <div>
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '.4rem' }}>Tags <span style={{ fontWeight: 400 }}>(optionnel, max 8)</span></label>
                 {suggestedTags.length > 0 && (
@@ -201,10 +226,12 @@ export default function AjouterPage() {
             </div>
           )}
 
+          {/* ── ÉTAPE 3 ── */}
           {step === 3 && (
             <div>
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', marginBottom: '.4rem' }}>Vérification</h2>
               <p style={{ color: 'var(--muted)', fontSize: '.85rem', marginBottom: '1.5rem' }}>Vérifiez les informations avant d'envoyer.</p>
+
               <div style={{ background: '#f8fafc', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '1.25rem', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '.75rem' }}>
                   <div>
@@ -225,13 +252,16 @@ export default function AjouterPage() {
                   )}
                 </div>
               </div>
+
               <div style={{ background: '#fefce8', border: '1px solid #fde68a', borderRadius: 'var(--r)', padding: '1rem', fontSize: '.82rem', color: '#92400e' }}>
                 ⏳ Votre bon plan sera <strong>examiné par notre équipe</strong> avant publication (généralement sous 24h).
               </div>
+
               {error && <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 'var(--r)', padding: '.75rem 1rem', fontSize: '.85rem', color: '#dc2626', marginTop: '1rem' }}>{error}</div>}
             </div>
           )}
 
+          {/* Navigation */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
             <button onClick={() => setStep(s => (s - 1) as Step)} disabled={step === 1}
               style={{ padding: '.6rem 1.25rem', borderRadius: 'var(--r)', border: '1px solid var(--border)', background: '#fff', fontSize: '.875rem', color: step === 1 ? '#9ca3af' : 'var(--text)', cursor: step === 1 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
