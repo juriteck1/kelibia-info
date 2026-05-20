@@ -45,6 +45,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       clearTimeout(fallback)
+      // Session Google résiduelle → déconnecter immédiatement (email/password uniquement)
+      if (session?.user?.app_metadata?.provider === 'google') {
+        supabase.auth.signOut()
+        setLoading(false)
+        return
+      }
       setSession(session)
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
@@ -53,6 +59,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
+        // Session Google → déconnecter
+        if (session?.user?.app_metadata?.provider === 'google') {
+          await supabase.auth.signOut()
+          return
+        }
         setSession(session)
         setUser(session?.user ?? null)
         if (session?.user) {
