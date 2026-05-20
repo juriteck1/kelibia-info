@@ -151,7 +151,7 @@ export default function AdminPage() {
         {/* Tabs */}
         <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1.5rem' }}>
           {(['plans', 'events'] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)} style={{ padding: '.5rem 1.2rem', borderRadius: 'var(--r)', border: 'none', fontFamily: 'inherit', fontSize: '.875rem', fontWeight: 600, cursor: 'pointer', background: tab === t ? 'var(--sea)' : '#fff', color: tab === t ? '#fff' : 'var(--muted)', border: tab === t ? 'none' : '1px solid var(--border)' }}>
+            <button key={t} onClick={() => setTab(t)} style={{ padding: '.5rem 1.2rem', borderRadius: 'var(--r)', fontFamily: 'inherit', fontSize: '.875rem', fontWeight: 600, cursor: 'pointer', background: tab === t ? 'var(--sea)' : '#fff', color: tab === t ? '#fff' : 'var(--muted)', border: tab === t ? 'none' : '1px solid var(--border)' }}>
               {t === 'plans' ? `Bons Plans (${plans.length})` : `Événements (${events.length})`}
             </button>
           ))}
